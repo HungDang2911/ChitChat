@@ -9,6 +9,7 @@ import { faComments } from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
 import { useNavigation } from "@react-navigation/native"
 import { FORGOT_PASSWORD } from "../../constants"
+import { LoginButton, AccessToken } from 'react-native-fbsdk'
 
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
@@ -126,7 +127,22 @@ export const LoginScreen = observer(function LoginScreen() {
         }}
       />
       <Text text="Or using" preset="bold" style={styles.orUsing} />
-      <View></View>
+      <View>
+        <LoginButton
+          onLoginFinished={(error, result) => {
+            if (error) {
+              console.log("login has error: " + error)
+            } else if (result.isCancelled) {
+              console.log("login is cancelled.")
+            } else {
+              AccessToken.getCurrentAccessToken().then((data) => {
+                console.log(data.accessToken.toString())
+              })
+            }
+          }}
+          onLogoutFinished={() => console.log("logout.")}
+        />
+      </View>
     </Screen>
   )
 })
