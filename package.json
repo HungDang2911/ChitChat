@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "chat-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -24,6 +24,9 @@
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-native-fontawesome": "^0.2.6",
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.1.5",
@@ -43,6 +46,7 @@
     "react-native-safe-area-view": "1.1.1",
     "react-native-screens": "^2.10.1",
     "react-native-splash-screen": "3.2.0",
+    "react-native-svg": "^12.1.0",
     "reactotron-mst": "^3.1.1",
     "reactotron-react-native": "^5.0.0",
     "validate.js": "0.13.1"
@@ -137,7 +141,7 @@
       }
     },
     "globals": {
-      "__DEV__": false,
+      "__DEV__": true,
       "jasmine": false,
       "beforeAll": false,
       "afterAll": false,

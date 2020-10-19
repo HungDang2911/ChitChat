@@ -25,8 +25,8 @@ export const viewPresets = {
   /**
    * A smaller piece of secondard information.
    */
-  primary: { ...BASE_VIEW, backgroundColor: color.palette.orange } as ViewStyle,
-
+  primary: { ...BASE_VIEW, backgroundColor: color.primary } as ViewStyle,
+  secondary: { ...BASE_VIEW, backgroundColor: color.palette.white, borderColor: color.primary, borderWidth: 2 } as ViewStyle,
   /**
    * A button without extras.
    */
@@ -40,6 +40,7 @@ export const viewPresets = {
 
 export const textPresets = {
   primary: { ...BASE_TEXT, fontSize: 9, color: color.palette.white } as TextStyle,
+  secondary: { ...BASE_TEXT, fontSize: 9, color: color.primary } as TextStyle,
   link: {
     ...BASE_TEXT,
     color: color.text,

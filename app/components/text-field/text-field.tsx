@@ -8,7 +8,7 @@ import { mergeAll, flatten } from "ramda"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
-  paddingVertical: spacing[3],
+  paddingVertical: spacing[0],
 }
 
 // the base styling for the TextInput
@@ -36,8 +36,6 @@ export function TextField(props: TextFieldProps) {
   const {
     placeholderTx,
     placeholder,
-    labelTx,
-    label,
     preset = "default",
     style: styleOverride,
     inputStyle: inputStyleOverride,
@@ -53,7 +51,6 @@ export function TextField(props: TextFieldProps) {
 
   return (
     <View style={containerStyle}>
-      <Text preset="fieldLabel" tx={labelTx} text={label} />
       <TextInput
         placeholder={actualPlaceholder}
         placeholderTextColor={color.palette.lighterGrey}
