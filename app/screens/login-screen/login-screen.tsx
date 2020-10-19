@@ -132,6 +132,7 @@ export const LoginScreen = observer(function LoginScreen() {
           onLoginFinished={(error, result) => {
             if (error) {
               console.log("login has error: " + error)
+              console.log(result)
             } else if (result.isCancelled) {
               console.log("login is cancelled.")
             } else {
