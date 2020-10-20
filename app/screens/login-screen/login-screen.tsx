@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
@@ -9,18 +10,16 @@ import { faComments } from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
 import { useNavigation } from "@react-navigation/native"
 import { FORGOT_PASSWORD } from "../../constants"
-import { LoginButton, AccessToken } from 'react-native-fbsdk'
+import { LoginButton, AccessToken } from "react-native-fbsdk"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
   flex: 1,
+  alignItems: "center",
+  justifyContent: "center",
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
   forgotPasswordBtn: {
     alignSelf: "flex-end",
     marginVertical: 12,
@@ -83,25 +82,29 @@ export const LoginScreen = observer(function LoginScreen() {
     setPassword(value)
   }
 
-  const handleLogin = () => {}
+  const handleLogin = () => {
+    console.log()
+  }
 
   return (
-    <Screen style={ROOT} backgroundColor={color.background} style={styles.container}>
+    <Screen style={ROOT} backgroundColor={color.background}>
       <FontAwesomeIcon icon={faComments} color={color.primary} size={scaledSize(80)} />
       <View style={styles.inputContainersWrapper}>
         <View style={styles.inputContainer}>
-          <Text text="USERNAME" style={styles.inputLabel} />
+          <Text tx="loginScreen.username" style={styles.inputLabel} />
           <TextField
             style={styles.inputField}
-            placeholder="Enter your username"
+            textContentType="nickname"
+            placeholderTx="loginScreen.enterUsername"
             onChangeText={handleChangeUsername}
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text text="PASSWORD" style={styles.inputLabel} />
+          <Text tx="loginScreen.password" style={styles.inputLabel} />
           <TextField
             style={styles.inputField}
-            placeholder="Enter your password"
+            textContentType="password"
+            placeholderTx="loginScreen.enterPassword"
             onChangeText={handleChangePassword}
             secureTextEntry
           />
@@ -110,7 +113,7 @@ export const LoginScreen = observer(function LoginScreen() {
       <View style={{ width: 248 }}>
         <Button
           preset="link"
-          text="Forgot password?"
+          tx="loginScreen.forgotPassword"
           textStyle={styles.forgotPasswordTxt}
           style={styles.forgotPasswordBtn}
           onPress={() => {
@@ -119,14 +122,12 @@ export const LoginScreen = observer(function LoginScreen() {
         />
       </View>
       <Button
-        text="Login"
+        tx="loginScreen.login"
         style={styles.loginBtn}
         textStyle={styles.loginBtnTxt}
-        onPress={() => {
-          navigation.navigate("Login")
-        }}
+        onPress={handleLogin}
       />
-      <Text text="Or using" preset="bold" style={styles.orUsing} />
+      <Text tx="loginScreen.orUsing" preset="bold" style={styles.orUsing} />
       <View>
         <LoginButton
           onLoginFinished={(error, result) => {

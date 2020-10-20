@@ -11,6 +11,8 @@ import { useNavigation } from "@react-navigation/native"
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
   flex: 1,
+  alignItems: "center",
+  justifyContent: "center",
 }
 
 const styles = StyleSheet.create({
@@ -25,10 +27,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 70,
     width: 274,
-  },
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
   },
   loginBtn: {
     borderRadius: 24,
@@ -57,12 +55,12 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation()
 
   return (
-    <Screen style={ROOT} backgroundColor={color.background} style={styles.container}>
+    <Screen style={ROOT} backgroundColor={color.background}>
       <FontAwesomeIcon icon={faComments} color={color.primary} size={scaledSize(80)} />
       <Text text="Chit Chat" style={styles.appName} />
       <View style={styles.buttonsContainer}>
         <Button
-          text="Sign Up"
+          tx="welcomeScreen.signUp"
           preset="secondary"
           style={styles.signUpBtn}
           textStyle={styles.signUpBtnTxt}
@@ -71,7 +69,7 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
           }}
         />
         <Button
-          text="Login"
+          tx="welcomeScreen.login"
           style={styles.loginBtn}
           textStyle={styles.loginBtnTxt}
           onPress={() => {

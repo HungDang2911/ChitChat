@@ -7,8 +7,8 @@
 import React from "react"
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
-import { LOGIN, SIGN_UP, WELCOME } from "../constants"
-import { SignUpScreen, WelcomeScreen, LoginScreen } from "../screens"
+import { FORGOT_PASSWORD, LOGIN, SIGN_UP, WELCOME } from "../constants"
+import { SignUpScreen, WelcomeScreen, LoginScreen, ForgotPasswordScreen } from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -26,6 +26,7 @@ export type PrimaryParamList = {
   [WELCOME]: undefined
   [LOGIN]: undefined
   [SIGN_UP]: undefined
+  [FORGOT_PASSWORD]: undefined
 }
 
 // Documentation: https://github.com/software-mansion/react-native-screens/tree/master/native-stack
@@ -43,6 +44,7 @@ export function PrimaryNavigator() {
       <Stack.Screen name={WELCOME} component={WelcomeScreen} />
       <Stack.Screen name={LOGIN} component={LoginScreen} />
       <Stack.Screen name={SIGN_UP} component={SignUpScreen} />
+      <Stack.Screen name={FORGOT_PASSWORD} component={ForgotPasswordScreen} />
     </Stack.Navigator>
   )
 }

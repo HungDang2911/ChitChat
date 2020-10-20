@@ -9,6 +9,8 @@ import { scaledSize } from "../../theme/sizing"
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
   flex: 1,
+  alignItems: "center",
+  justifyContent: "center"
 }
 
 const styles = StyleSheet.create({
@@ -17,11 +19,6 @@ const styles = StyleSheet.create({
     fontSize: scaledSize(30),
     fontWeight: "bold",
     margin: spacing[1]
-  },
-  container: {
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "center"
   },
 })
 
@@ -34,7 +31,7 @@ export const SplashScreen = () => {
   // Pull in navigation via hook
   // const navigation = useNavigation()
   return (
-    <Screen style={ROOT} backgroundColor={ color.background } style={styles.container}>
+    <Screen style={ROOT} backgroundColor={ color.background }>
       <FontAwesomeIcon icon={faComments} color={color.primary} size={scaledSize(80)} />
       <Text text="Chit Chat" style={styles.appName}/>
     </Screen>

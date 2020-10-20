@@ -1,6 +1,5 @@
 {
   "common": {
-    "ok": "OK!",
     "cancel": "Cancel",
     "back": "Back"
   },
@@ -8,17 +7,32 @@
     "invalidEmail": "Invalid email address."
   },
   "welcomeScreen": {
-    "poweredBy": "POWERED BY BOWSER",
-    "readyForLaunch": "Ready for launch.",
-    "continue": "CONTINUE"
+    "login": "Login",
+    "signUp": "Sign Up"
   },
-  "demoScreen": {
-    "howTo": "HOW TO",
-    "title": "What’s In This Stack?",
-    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
-    "reactotron": "Demo Reactotron",
-    "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
-    "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  "loginScreen": {
+    "username": "USERNAME",
+    "password": "PASSWORD",
+    "enterUsername": "Enter your username",
+    "enterPassword": "Enter your password",
+    "forgotPassword": "Forgot password?",
+    "orUsing": "Or using",
+    "login": "Login"
+  },
+  "signUpScreen": {
+    "username": "USERNAME",
+    "password": "PASSWORD",
+    "confirmPassword": "CONFIRM PASSWORD",
+    "email": "EMAIL",
+    "enterEmail": "Enter your email",
+    "enterUsername": "Enter your username",
+    "enterPassword": "Enter your password",
+    "enterConfirmPassword": "Reenter your password",
+    "signUp": "Sign Up"
+  },
+  "forgotPasswordScreen": {
+    "enterEmail": "Enter your email to reset password",
+    "sendMail": "Send Mail"
   },
   "storybook": {
     "placeholder": "Placeholder",
