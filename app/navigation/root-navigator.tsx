@@ -9,7 +9,6 @@ import { NavigationContainer, NavigationContainerRef } from "@react-navigation/n
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { PrimaryNavigator } from "./primary-navigator"
-
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.

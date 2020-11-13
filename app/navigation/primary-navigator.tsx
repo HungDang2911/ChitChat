@@ -41,6 +41,7 @@ export function PrimaryNavigator() {
       }}
       initialRouteName={WELCOME}
     >
+      
       <Stack.Screen name={WELCOME} component={WelcomeScreen} />
       <Stack.Screen name={LOGIN} component={LoginScreen} />
       <Stack.Screen name={SIGN_UP} component={SignUpScreen} />
