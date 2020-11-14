@@ -11,6 +11,8 @@ import { scaledSize } from "../../theme/sizing"
 import { useNavigation } from "@react-navigation/native"
 import { FORGOT_PASSWORD } from "../../constants"
 import { LoginButton, AccessToken } from "react-native-fbsdk"
+import { useStores } from "../../models"
+import axios from "axios"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
@@ -69,6 +71,8 @@ export const LoginScreen = observer(function LoginScreen() {
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
+  const { userStore } = useStores()
+
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -82,8 +86,8 @@ export const LoginScreen = observer(function LoginScreen() {
     setPassword(value)
   }
 
-  const handleLogin = () => {
-    console.log()
+  const handleLogin = async () => {
+    await userStore.login({ username, password })
   }
 
   return (
