@@ -4,10 +4,15 @@ import * as Config from "./apiConfig"
 axios.interceptors.request.use(
   (config) => {
     // Request headers
-    config.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/x-www-form-urlencoded",
-    }
+    // config.headers["Content-Type"] = "application/x-www-form-urlencoded"
+    config.headers["Content-Type"] = "application/json"
+
+    // Object.assign(config.headers, {
+    //   abc: "acc",
+    //   Accept: "application/json",
+    //   "Content-Type": "application/x-www-form-urlencoded",
+    // })
+
     return config
   },
   (error) => {
@@ -31,7 +36,9 @@ export class Api {
   }
 
   static post(url: string, data: any = {}) {
-    return axios.post(Api.getFullUrl(url), JSON.stringify(data))
+    console.log(data)
+    // return axios.post(Api.getFullUrl(url), JSON.stringify(data))
+    return axios.post(Api.getFullUrl(url), data)
   }
 
   static put(url: string, data: any = {}) {
