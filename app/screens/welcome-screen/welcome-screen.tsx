@@ -1,12 +1,13 @@
-import React, { useState } from "react"
+import React from "react"
 import { observer } from "mobx-react-lite"
 import { StyleSheet, ViewStyle, View } from "react-native"
-import { Button, Screen, Text, TextField } from "../../components"
+import { Button, Screen, Text } from "../../components"
 import { color, spacing } from "../../theme"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faComments } from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
 import { useNavigation } from "@react-navigation/native"
+import { LOGIN, SIGN_UP } from "../../constants"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
@@ -65,7 +66,7 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
           style={styles.signUpBtn}
           textStyle={styles.signUpBtnTxt}
           onPress={() => {
-            navigation.navigate("SignUp")
+            navigation.navigate(SIGN_UP)
           }}
         />
         <Button
@@ -73,7 +74,7 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
           style={styles.loginBtn}
           textStyle={styles.loginBtnTxt}
           onPress={() => {
-            navigation.navigate("Login")
+            navigation.navigate(LOGIN)
           }}
         />
       </View>

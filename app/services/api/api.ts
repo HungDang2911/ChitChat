@@ -36,9 +36,7 @@ export class Api {
   }
 
   static post(url: string, data: any = {}) {
-    console.log(data)
-    // return axios.post(Api.getFullUrl(url), JSON.stringify(data))
-    return axios.post(Api.getFullUrl(url), data)
+    return axios.post(Api.getFullUrl(url), JSON.stringify(data))
   }
 
   static put(url: string, data: any = {}) {
