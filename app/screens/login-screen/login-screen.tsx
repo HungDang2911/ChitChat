@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native"
 import { FORGOT_PASSWORD } from "../../constants"
 import { LoginButton, AccessToken } from "react-native-fbsdk"
 import { useStores } from "../../models"
-import axios from "axios"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
@@ -86,8 +85,8 @@ export const LoginScreen = observer(function LoginScreen() {
     setPassword(value)
   }
 
-  const handleLogin = async () => {
-    await userStore.login({ username, password })
+  const handleLogin = () => {
+    userStore.login({ username, password })
   }
 
   return (

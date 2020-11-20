@@ -4,10 +4,10 @@
  *
  * You'll likely spend most of your time in this file.
  */
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import React from "react"
 
-import { createNativeStackNavigator } from "react-native-screens/native-stack"
-import { FORGOT_PASSWORD, LOGIN, SIGN_UP, WELCOME } from "../constants"
+import { MESSAGES } from "../constants"
 import { MessageScreen } from "../screens/message-screen/message-screen"
 
 /**
@@ -23,26 +23,17 @@ import { MessageScreen } from "../screens/message-screen/message-screen"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type PrimaryParamList = {
-  [WELCOME]: undefined
-  [LOGIN]: undefined
-  [SIGN_UP]: undefined
-  [FORGOT_PASSWORD]: undefined
+  [MESSAGES]: undefined
 }
 
 // Documentation: https://github.com/software-mansion/react-native-screens/tree/master/native-stack
-const Stack = createNativeStackNavigator<PrimaryParamList>()
+const Tab = createBottomTabNavigator<PrimaryParamList>()
 
 export function PrimaryNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        gestureEnabled: true,
-      }}
-      initialRouteName={WELCOME}
-    >
-      <Stack.Screen name={WELCOME} component={MessageScreen} />
-    </Stack.Navigator>
+    <Tab.Navigator>
+      <Tab.Screen name={MESSAGES} component={MessageScreen} />
+    </Tab.Navigator>
   )
 }
 
@@ -55,5 +46,5 @@ export function PrimaryNavigator() {
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = [WELCOME]
+const exitRoutes = [MESSAGES]
 export const canExit = (routeName: string) => exitRoutes.includes(routeName)

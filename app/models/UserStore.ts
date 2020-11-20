@@ -1,4 +1,5 @@
 import { Instance, types, flow } from "mobx-state-tree"
+import { Alert } from "react-native"
 import { login, register } from "../services/api/authAPI"
 import { withEnvironment } from "./extensions/with-environment"
 
@@ -18,9 +19,9 @@ export const UserStoreModel = types
       self.accessToken = accessToken
       self.refreshToken = refreshToken
     }),
-    register: async function (account) {
-      await register(account)
-    },
+    register: flow(function * (account) {
+      yield register(account)
+    }),
   }))
 
 export const defaults = {

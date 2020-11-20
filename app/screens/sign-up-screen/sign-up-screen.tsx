@@ -9,6 +9,9 @@ import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faComments } from "@fortawesome/free-solid-svg-icons"
+import { useStores } from "../../models"
+import { useNavigation } from "@react-navigation/native"
+import { WELCOME } from "../../constants"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
@@ -55,6 +58,10 @@ export const SignUpScreen = observer(function SignUpScreen() {
 
   // Pull in navigation via hook
   // const navigation = useNavigation()
+  const { userStore } = useStores()
+  const navigation = useNavigation()
+
+  // Form states
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -77,7 +84,8 @@ export const SignUpScreen = observer(function SignUpScreen() {
   }
 
   const handleSignUp = () => {
-    console.log()
+    userStore.register({ username, password, email })
+    navigation.navigate(WELCOME)
   }
 
   return (
