@@ -52,7 +52,7 @@ const RootStack = () => {
       ) : (
         <Stack.Screen
           name="authStack"
-          component={VideoCallScreen}
+          component={AuthNavigator}
           options={{
             headerShown: false,
           }}
@@ -69,7 +69,7 @@ export const RootNavigator = React.forwardRef<
   return (
     <NavigationContainer {...props} ref={ref}>
       <RootStack />
-    </NavigationContainer> 
+    </NavigationContainer>
   )
 })
 
