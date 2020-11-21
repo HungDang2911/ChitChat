@@ -17,20 +17,26 @@ const ROOT: ViewStyle = {
  }
 
 const styles = StyleSheet.create({
-    avatar: {
+    backgroundStyle: {
+        position: 'relative',
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    avatarContainer: {
         position: 'absolute',
         width: 174,
         height: 174,
-        left: -87,
+        //left: -87,
         top: -250,
+        alignItems: "center",
+        justifyContent: "center",
         //backgroundColor: url(pexels-photo-3047316.jpg);
         borderRadius: 130,
     },
     userName: {
         position: 'absolute',
-        left: -87,
         top: -65,
-        width: 176,
+        width: "100%",
         height: 31,
         fontFamily: 'Roboto',
         fontStyle: 'normal',
@@ -39,15 +45,18 @@ const styles = StyleSheet.create({
         lineHeight: 30,
 
         textAlign: 'center',
-
+        alignItems: "center",
+        justifyContent: "center",
         color: '#FFFFFF',
     },
     calling: {
         position: 'absolute',
-        left: -27,
+        //left: -40,
         top: -30,
-        width: 72.86,
+        width: 100,
         height: 23.92,
+        alignItems: "center",
+        justifyContent: "center",
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: 'normal',
@@ -71,13 +80,46 @@ const styles = StyleSheet.create({
         width: 82,
         height: 82,
     },
+    acceptText: {
+        position: 'absolute',
+        left: -165,
+        top: 280,
+        width: 100,
+        height: 65,
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: 14,
+        lineHeight: 18,
+
+        textAlign: 'center',
+
+        color: '#FFFFFF',
+    },
+    declineText: {
+        position: 'absolute',
+        right: -150,
+        top: 280,
+        width: 65,
+        height: 65,
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: 14,
+        lineHeight: 18,
+
+        textAlign: 'center',
+
+        color: '#FFFFFF',
+    },
     backgroundCalling: {
         position: 'absolute',
-        width: 533,
-        height: 819,
-        left: -285,
-        top: -390,
-
+        // width: 533,
+        // height: 819,
+        // left: -285,
+        // top: -390,
+        //width: "100%",
+        //height: "100%",
         //background: url(pexels-photo-3047316.jpg);
     }
 
@@ -93,25 +135,22 @@ const handleDecline = () => {
 export const CallingScreen = observer(function VideoCallScreen() {
      return (
         <Screen style = {ROOT}>
-            <View>
-                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.backgroundCalling} blurRadius = {2}/>
-            </View>
-            <View>
-                 <Image source = {require('../../../assets/call_icons/accept.png')} style = {styles.accept}/>
-                 <TouchableOpacity onPress = {handleAccept} style = {styles.accept}></TouchableOpacity>
-            </View>
-            <View>
+            <View style = {styles.backgroundStyle}>
+                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.backgroundCalling} blurRadius = {6}/>
+           
+                <Image source = {require('../../../assets/call_icons/accept.png')} style = {styles.accept}/>
+                <TouchableOpacity onPress = {handleAccept} style = {styles.accept}></TouchableOpacity>
+                <Text style = {styles.acceptText}>Chấp nhận</Text>
+
                 <Image source = {require('../../../assets/call_icons/decline.png')} style = {styles.decline}/>
                 <TouchableOpacity onPress = {handleDecline} style = {styles.decline}></TouchableOpacity>
-            </View>
-            <View>
-                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.avatar}/>
-            </View>
-            <View>
-                <Text style = {styles.userName}>Thanh Thảo Nguyễn</Text>
-            </View>
-            <View>
-                <Text style = {styles.calling}>Calling...</Text>
+                <Text style = {styles.declineText}>Từ chối</Text>
+                <View style = {styles.avatarContainer}>
+                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {{width: "100%", height: '100%', borderRadius: 130}}/>
+                </View>
+                <Text style = {styles.userName}>Thanh Thảo</Text>
+           
+                <Text style = {styles.calling}>Đang gọi...</Text>
             </View>
         </Screen>
      );
