@@ -9,10 +9,10 @@ import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 
 const ROOT: ViewStyle = {
-    position: 'relative',
-    width: 375,
-    height: 812,
-    backgroundColor: '#FFFFFF',
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: color.background,
  }
 
  const styles = StyleSheet.create({
@@ -21,20 +21,16 @@ const ROOT: ViewStyle = {
         position: 'absolute',
         width: 65,
         height: 65,
-        left: 155,
-        right: 0,
-        top: 680,
-        bottom: 0,
+        left: -30,
+        top: 290,
       //  backgroundColor: '#CF3232',
     },
     mute: {
         position: 'absolute',
         width: 55,
         height: 55,
-        left: 86,
-        right: 0,
-        top: 687,
-        bottom: 0,
+        left: -100,
+        top: 295,
         //backgroundColor: 'rgba(255, 255, 255, 0.9)',
         //color: 'rgba(255, 255, 255, 0.9)',
     },
@@ -42,25 +38,23 @@ const ROOT: ViewStyle = {
         position: 'absolute',
         width: 55,
         height: 55,
-        left: 235,
-        right: 0,
-        top: 687,
-        bottom: 0,
+        right: -100,
+        top: 295,
       //  backgroundColor: '#CF3232',
     },
-    conversationList: {
+    callerVideo: {
         position: 'absolute',
         width: 83,
         height: 128,
-        left: 276,
-        top: 55,
+        left: 100,
+        top: -310,
         backgroundColor: '#CF3232',
         borderRadius: 5,
     },
     userName: {
         position: 'absolute',
-        left: 119,
-        top: 58,
+        left: -66,
+        top: -315,
         height: 30,
         width: 136,
 
@@ -75,8 +69,8 @@ const ROOT: ViewStyle = {
     },
     time: {
         position: 'absolute',
-        left: 165,
-        top: 94,
+        left: -21,
+        top: -280,
         width: 46,
         height: 22,
 
@@ -92,17 +86,17 @@ const ROOT: ViewStyle = {
     },
     changeCamera: {
         position: 'absolute',
-        left: 26,
-        top: 59,
+        left: -170,
+        top: -340,
         width: 30,
         height: 30,
     },
     backgroundVideo: {
         position: 'absolute',
-        width: 375,
-        height: 812,
-        left: 0,
-        top: 0,
+        width: 400,
+        height: 900,
+        left: -200,
+        top: -385,
 
         //backgroundColor: '#CF3232',
     }
@@ -139,10 +133,10 @@ const handleChangeCamera = () => {
                 <TouchableOpacity onPress = {handleVideoOff} style = {styles.videoOff}></TouchableOpacity>
             </View>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test1.png')} style = {styles.conversationList}/>
+                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test1.png')} style = {styles.callerVideo}/>
             </View>
             <View>
-                <Text style = {styles.userName}>Thành</Text>
+                <Text style = {styles.userName}>Thành ml</Text>
             </View>
             <View>
                 <Text style = {styles.time}>69:59</Text>

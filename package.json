@@ -39,12 +39,7 @@
     "mobx-state-tree": "^3.14.1",
     "ramda": "0.27.1",
     "react": "16.13.1",
-<<<<<<< HEAD
     "react-native": "^0.63.2",
-=======
-    "react-icons": "^3.11.0",
-    "react-native": "0.63.2",
->>>>>>> 7dcc4c5b521282c54160ec653909617cbce04a79
     "react-native-fbsdk": "^2.0.0",
     "react-native-gesture-handler": "^1.5.0",
     "react-native-keychain": "6.1.1",

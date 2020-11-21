@@ -11,7 +11,7 @@ import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { PrimaryNavigator } from "./primary-navigator"
 import { useStores } from "../models"
 import { AuthNavigator } from "./auth-navigator"
-import VideoCallScreen  from "../screens/video-call-screen/video-call-screen"
+import VideoCallScreen from "../screens/video-call-screen/video-call-screen"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
