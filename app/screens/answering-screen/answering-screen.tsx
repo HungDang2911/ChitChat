@@ -99,34 +99,34 @@ const handleDecline = () => {
 const handleMute = () => {
     console.log()
   }
-export default function AnsweringScreen (props) {
+export const AnsweringScreen = observer(function AnsweringScreen() {
      return (
         <Screen style = {ROOT}>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test1.png')} style = {styles.backgroundAnswering} blurRadius = {2}/>
+                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.backgroundAnswering} blurRadius = {2}/>
             </View>
             <View>
-                 <Image source = {require('D:/mobile/ChitChat/assets/call_icons/decline.png')} style = {styles.decline} />
+                 <Image source = {require('../../../assets/call_icons/decline.png')} style = {styles.decline} />
                  <TouchableOpacity onPress = {handleDecline} style = {styles.decline} >
                  </TouchableOpacity>
             </View>
             <View> 
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/mute.png')} style = {styles.mute}/>
+                <Image source = {require('../../../assets/call_icons/mute.png')} style = {styles.mute}/>
                 <TouchableOpacity onPress = {handleMute} style = {styles.mute}></TouchableOpacity>
             </View>
             <View> 
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/speaker.png')} style = {styles.speaker}/>
+                <Image source = {require('../../../assets/call_icons/speaker.png')} style = {styles.speaker}/>
                 <TouchableOpacity onPress = {handleSpeaker} style = {styles.speaker}></TouchableOpacity>
             </View>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test1.png')} style = {styles.avatar}/>
+                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.avatar}/>
             </View>
             <View>
-                <Text style = {styles.userName}>Thành Nguyễn</Text>
+                <Text style = {styles.userName}>Thảo Xinh vcl</Text>
             </View>
             <View>
                 <Text style = {styles.time}>69:59</Text>
             </View>
         </Screen>
      );
-    }
+    })

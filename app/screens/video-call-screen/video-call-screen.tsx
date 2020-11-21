@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { observer } from "mobx-react-lite"
-import { StyleSheet, ViewStyle, View, Image, FlatList, TouchableOpacity} from "react-native"
+import { StyleSheet, ViewStyle, View, Image, FlatList, TouchableOpacity } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { useNavigation } from "@react-navigation/native"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
@@ -114,38 +114,38 @@ const ROOT: ViewStyle = {
 const handleChangeCamera = () => {
     console.log()
   }
- export default function VideoCallScreen (props) {
+export const VideoCallScreen = observer(function VideoCallScreen() {
      return (
         <Screen style = {ROOT}>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test2.png')} style = {styles.backgroundVideo}/>
+                <Image source = {require('../../../assets/call_icons/userImage-test2.png')} style = {styles.backgroundVideo}/>
             </View>
             <View>
-                 <Image source = {require('D:/mobile/ChitChat/assets/call_icons/mute.png')} style = {styles.mute}/>
+                 <Image source = {require('../../../assets/call_icons/mute.png')} style = {styles.mute}/>
                  <TouchableOpacity onPress = {handleMute} style = {styles.mute}></TouchableOpacity>
             </View>
             <View> 
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/decline.png')} style = {styles.decline}/>
+                <Image source = {require('../../../assets/call_icons/decline.png')} style = {styles.decline}/>
                 <TouchableOpacity onPress = {handleDecline} style = {styles.decline}></TouchableOpacity>
             </View>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/video-off.png')} style = {styles.videoOff} />
+                <Image source = {require('../../../assets/call_icons/video-off.png')} style = {styles.videoOff} />
                 <TouchableOpacity onPress = {handleVideoOff} style = {styles.videoOff}></TouchableOpacity>
             </View>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test1.png')} style = {styles.callerVideo}/>
+                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.callerVideo}/>
             </View>
             <View>
-                <Text style = {styles.userName}>Thành ml</Text>
+                <Text style = {styles.userName}>Thảo xinh</Text>
             </View>
             <View>
                 <Text style = {styles.time}>69:59</Text>
             </View>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/change-camera.png')} style = {styles.changeCamera}/>
+                <Image source = {require('../../../assets/call_icons/change-camera.png')} style = {styles.changeCamera}/>
                 <TouchableOpacity onPress = {handleChangeCamera} style = {styles.changeCamera}></TouchableOpacity>
             </View>
             
         </Screen>
-     );
- }
+     )
+})

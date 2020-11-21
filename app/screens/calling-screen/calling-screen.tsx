@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { observer } from "mobx-react-lite"
-import { StyleSheet, ViewStyle, View, Image, FlatList, TouchableOpacity} from "react-native"
+import { StyleSheet, ViewStyle, View, Image, FlatList, TouchableOpacity } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { useNavigation } from "@react-navigation/native"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
@@ -90,29 +90,29 @@ const handleDecline = () => {
     console.log()
   }
 
-export default function CallingScreen (props) {
+export const CallingScreen = observer(function VideoCallScreen() {
      return (
         <Screen style = {ROOT}>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test1.png')} style = {styles.backgroundCalling} blurRadius = {2}/>
+                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.backgroundCalling} blurRadius = {2}/>
             </View>
             <View>
-                 <Image source = {require('D:/mobile/ChitChat/assets/call_icons/accept.png')} style = {styles.accept}/>
+                 <Image source = {require('../../../assets/call_icons/accept.png')} style = {styles.accept}/>
                  <TouchableOpacity onPress = {handleAccept} style = {styles.accept}></TouchableOpacity>
             </View>
-            <View> 
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/decline.png')} style = {styles.decline}/>
+            <View>
+                <Image source = {require('../../../assets/call_icons/decline.png')} style = {styles.decline}/>
                 <TouchableOpacity onPress = {handleDecline} style = {styles.decline}></TouchableOpacity>
             </View>
             <View>
-                <Image source = {require('D:/mobile/ChitChat/assets/call_icons/userImage-test1.png')} style = {styles.avatar}/>
+                <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.avatar}/>
             </View>
             <View>
-                <Text style = {styles.userName}>Thành Nguyễn</Text>
+                <Text style = {styles.userName}>Thanh Thảo Nguyễn</Text>
             </View>
             <View>
                 <Text style = {styles.calling}>Calling...</Text>
             </View>
         </Screen>
      );
-    }
+    })

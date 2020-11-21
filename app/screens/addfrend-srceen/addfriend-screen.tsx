@@ -109,7 +109,7 @@ function IconIsFriend(prop) {
   }
 }
 
-export const AddFriendSrceen = observer(function AddFriendSrceen() {
+export const AddFriendScreen = observer(function AddFriendSrceen() {
   const users = [
     {
       id: 1,
