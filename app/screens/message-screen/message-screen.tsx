@@ -37,204 +37,203 @@ const ROOT: ViewStyle = {
 }
 
 const styles = StyleSheet.create({
-  messageHeader: {
-    position: "absolute",
-    width: "100%",
-    height: 97,
-    left: 0,
-    top: 0,
-    backgroundColor: "#FCFCFC",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  messageText: {
-    position: "absolute",
-    fontFamily: "Proxima Nova",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 18,
-    lineHeight: 22,
-    textAlign: "center",
-    justifyContent: "center",
-    color: "#000000",
-  },
-  messageImage: {
-    position: "absolute",
-    left: 16,
-    bottom: 32,
-  },
-  messageContainer: {
-    position: "absolute",
-    height: 597,
-    top: 107,
-  },
-  messageUser: {
-    position: "relative",
-    width: 375,
-    height: 77,
-    // borderWidth:2,
-    borderBottomWidth: 2,
-    borderBottomColor: "#E2E2E2",
-  },
-  messageUserTextName: {
-    position: "absolute",
-    left: 71,
-    top: 12,
-    fontFamily: "Geometria",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: 16,
-    lineHeight: 20,
-    color: "#000000",
-  },
-  messageUserAvatar: {
-    position: "absolute",
-    width: 55,
-    height: 55,
-    left: 6,
-    top: 8,
-    borderRadius: 50,
-  },
-  messageUserText: {
-    position: "absolute",
-    left: 71,
-    top: 39,
-    fontFamily: "Geometria",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 14,
-    lineHeight: 18,
-    color: "#000000",
-  },
-  messageUserLastTime: {
-    position: "absolute",
-    left: 309,
-    top: 12,
-    fontFamily: "Proxima Nova",
-    fontSize: 14,
-    lineHeight: 17,
-    textAlign: "center",
-  },
-  statusView: {
-    position: "absolute",
-    width: 22,
-    height: 22,
-    top: 33,
-    left: 315,
-    borderRadius: 20,
-    backgroundColor: "#1EBE71",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  statusViewSend: {
-    position: "absolute",
-    width: 19,
-    height: 11,
-    top: 40,
-    left: 317,
-  },
-  statusContent: {
-    position: "absolute",
-    fontFamily: "Geometria",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: 14,
-    lineHeight: 18,
-    color: "#FFFFFF",
-  },
-  messageOption: {
-    position: "relative",
-    height: 77,
-    width: "100%",
-    borderBottomWidth: 2,
-    borderBottomColor: "#E2E2E2",
-  },
-  messageUserOptionLastTime: {
-    position: "absolute",
-    right: 293,
-    top: 17,
-    fontFamily: "Proxima Nova",
-    fontSize: 14,
-    lineHeight: 17,
-    textAlign: "center",
-  },
-  statusOptionView: {
-    position: "absolute",
-    width: 22,
-    height: 22,
-    top: 38,
-    right: 298,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#1EBE71",
-  },
-  optionView: {
-    position: "absolute",
-    height: 77,
-    width: 261,
-    right: 0,
-    top: 0,
-    backgroundColor: "#1EBE71",
-  },
-  unReadView: {
-    position: "absolute",
+  gimView: {
     height: 52,
-    width: 52,
+    left: 122,
+    position: 'absolute',
     top: 14,
-    left: 21,
+    width: 25,
   },
   iconUnRead: {
-    top: 1,
     left: 13,
+    top: 1
   },
-  textUnRead: {
-    position: "absolute",
-    top: 31,
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "normal",
+  messageContainer: {
+    height: 597,
+    position: 'absolute',
+    top: 107,
+  },
+  messageHeader: {
+    alignItems: "center",
+    backgroundColor: '#FCFCFC',
+    height: 97,
+    justifyContent: "center",
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    width: "100%",
+  },
+  messageImage: {
+    bottom: 32,
+    left: 16,
+    position: 'absolute',
+  },
+  // messageOption: {
+  //   // borderBottomColor:"#E2E2E2",
+  //   borderBottomWidth: 2,
+  //   height: 77,
+  //   position: 'relative',
+  //   width:"100%"
+  // },
+  messageText: {
+    color: color.text,
+    fontFamily: 'Roboto',
+    fontSize: 18,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    justifyContent: "center",
+    lineHeight: 22,
+    position: 'absolute',
+    textAlign: 'center'
+  },
+  messageUser: {
+    borderBottomColor: "#E2E2E2",
+    borderBottomWidth: 2,
+    height: 77,
+    position: 'relative',
+    width: 375,
+  },
+  messageUserAvatar: {
+    borderRadius: 50,
+    height: 55,
+    left: 6,
+    position: 'absolute',
+    top: 8,
+    width: 55,
+  },
+  messageUserLastTime: {
+    fontFamily: 'Roboto',
     fontSize: 14,
-    lineHeight: 21,
-    textAlign: "center",
-    color: "#FFFFFF",
+    left: 309,
+    lineHeight: 17,
+    position: 'absolute',
+    textAlign: 'center',
+    top: 12,
   },
-  gimView: {
-    position: "absolute",
-    height: 52,
-    width: 25,
-    top: 14,
-    left: 122,
-  },
-  textGim: {
-    position: "absolute",
-    top: 31,
-    left: 4,
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "normal",
+  messageUserOptionLastTime: {
+    fontFamily: 'Roboto',
     fontSize: 14,
-    lineHeight: 21,
-    textAlign: "center",
-    color: "#FFFFFF",
+    lineHeight: 17,
+    position: 'absolute',
+    right: 293,
+    textAlign: 'center',
+    top: 17,
   },
-  moreView: {
-    position: "absolute",
-    height: 42,
-    width: 35,
-    left: 207,
-    top: 20,
+  messageUserText: {
+    color: color.text,
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    left: 71,
+    lineHeight: 18,
+    position: 'absolute',
+    top: 39
+  },
+  messageUserTextName: {
+    color: color.text,
+    fontFamily: 'Roboto',
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    left: 71,
+    lineHeight: 20,
+    position: 'absolute',
+    top: 14
   },
   moreText: {
-    position: "absolute",
-    top: 21,
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: "normal",
+    color: color.text,
+    fontFamily: 'Roboto',
     fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
     lineHeight: 21,
-    textAlign: "center",
-    color: "#FFFFFF",
+    position: 'absolute',
+    textAlign: 'center',
+    top: 21,
+  },
+  moreView: {
+    height: 42,
+    left: 207,
+    position: 'absolute',
+    top: 20,
+    width: 35,
+  },
+  optionView: {
+    backgroundColor: color.primary,
+    height: 75,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: 261,
+  },
+  statusContent: {
+    color: color.background,
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    lineHeight: 18,
+    position: 'absolute'
+  },
+  statusOptionView: {
+    alignItems: 'center',
+    backgroundColor: color.primary,
+    borderRadius: 20,
+    height: 22,
+    justifyContent: "center",
+    position: 'absolute',
+    right: 298,
+    top: 38,
+    width: 22
+  },
+  statusView: {
+    alignItems: 'center',
+    backgroundColor: color.primary,
+    borderRadius: 20,
+    height: 22,
+    justifyContent: "center",
+    left: 315,
+    position: 'absolute',
+    top: 33,
+    width: 22
+  },
+  statusViewSend: {
+    height: 11,
+    left: 317,
+    position: 'absolute',
+    top: 40,
+    width: 19
+  },
+  textGim: {
+    color: color.text,
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    left: 4,
+    lineHeight: 21,
+    position: 'absolute',
+    textAlign: 'center',
+    top: 31,
+  },
+  textUnRead: {
+    color: color.text,
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    lineHeight: 21,
+    position: 'absolute',
+    textAlign: 'center',
+    top: 31,
+  },
+  unReadView: {
+    height: 52,
+    left: 21,
+    position: "absolute",
+    top: 14,
+    width: 52,
   },
 })
 
@@ -291,25 +290,19 @@ function TouchOption(prop) {
           <Text style={styles.statusContent}>{user.status}</Text>
         </View>
         <View style={styles.optionView}>
-          <TouchableOpacity
-            onPress={() => {
-              Alert.alert("ajhdasjk")
-            }}
-          >
-            <View style={styles.unReadView}>
-              <FontAwesomeIcon
-                icon={faComment}
-                color={"#FFFFFF"}
-                style={styles.iconUnRead}
-                size={scaledSize(25)}
-              />
-              <Text style={styles.textUnRead}>Unread</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={styles.unReadView}>
+            <FontAwesomeIcon
+              icon={faComment}
+              color={"#FFFFFF"}
+              style={styles.iconUnRead}
+              size={scaledSize(25)}
+            />
+            <Text style={styles.textUnRead}>Unread</Text>
+          </View>
           <View
-            style={{
+            style={ {
               position: "absolute",
-              backgroundColor: "#4DC98D",
+              backgroundColor: "#FFFFFF",
               height: 37,
               width: 1,
               top: 22,
@@ -323,7 +316,7 @@ function TouchOption(prop) {
           <View
             style={{
               position: "absolute",
-              backgroundColor: "#4DC98D",
+              backgroundColor: "#FFFFFF",
               height: 37,
               width: 1,
               top: 22,
@@ -345,11 +338,11 @@ function TouchOption(prop) {
 }
 
 function HandelTouch() {
-  // Alert.alert("sjgjg")
+  Alert.alert("sjgjg")
 }
 
 function StatusMessage(prop) {
-  var status = prop.status
+  const status = prop.status
   if (status > 0) {
     return (
       <View style={styles.statusView}>
