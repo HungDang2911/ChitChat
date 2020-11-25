@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
-import { StyleSheet, View, ViewStyle } from "react-native"
+import { ScrollView, StyleSheet, View, ViewStyle } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     width: 274,
   },
   inputContainersWrapper: {
+    height: scaledSize(200),
     paddingTop: 45,
   },
   inputField: {
@@ -91,13 +92,31 @@ export const SignUpScreen = observer(function SignUpScreen() {
   return (
     <Screen style={ROOT} preset="scroll">
       <FontAwesomeIcon icon={faComments} color={color.primary} size={scaledSize(80)} />
-      <View style={styles.inputContainersWrapper}>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.inputContainersWrapper}>
         <View style={styles.inputContainer}>
           <Text tx="signUpScreen.username" style={styles.inputLabel} />
           <TextField
             style={styles.inputField}
             textContentType="nickname"
             placeholderTx="signUpScreen.enterUsername"
+            onChangeText={handleChangeUsername}
+          />
+        </View>
+        {/* <View style={styles.inputContainer}>
+          <Text tx="signUpScreen.fullName" style={styles.inputLabel} />
+          <TextField
+            style={styles.inputField}
+            textContentType="nickname"
+            placeholderTx="signUpScreen.enterFullName"
+            onChangeText={handleChangeUsername}
+          />
+        </View> */}
+        <View style={styles.inputContainer}>
+          <Text tx="signUpScreen.fullName" style={styles.inputLabel} />
+          <TextField
+            style={styles.inputField}
+            textContentType="nickname"
+            placeholderTx="signUpScreen.enterFullName"
             onChangeText={handleChangeUsername}
           />
         </View>
@@ -130,7 +149,7 @@ export const SignUpScreen = observer(function SignUpScreen() {
             secureTextEntry
           />
         </View>
-      </View>
+      </ScrollView>
       <Button
         tx="signUpScreen.signUp"
         style={styles.signUpBtn}

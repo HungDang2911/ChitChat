@@ -11,7 +11,8 @@ const ROOT: ViewStyle = {
   justifyContent: "center",
 }
 
-const styles = 
+const styles = {
+}
 
 export const ProfileUserScreen = observer(function ProfileUserScreen() {
   return (
