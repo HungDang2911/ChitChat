@@ -16,6 +16,7 @@ import { faComments } from "@fortawesome/free-solid-svg-icons"
 import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 import { background } from "@storybook/theming"
+import { palette } from "../../theme/palette"
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -57,18 +58,18 @@ const styles = StyleSheet.create({
     height: 65,
     left: -30,
     position: "absolute",
-    top: 280,
+    top: 260,
     width: 65,
   },
   mute: {
     height: 60,
     position: "absolute",
     right: -123,
-    top: 130,
+    top: 120,
     width: 60,
   },
   muteText: {
-    color: "#FFFFFF",
+    color: palette.offWhite,
     fontFamily: "Roboto",
     fontSize: 14,
     fontStyle: "normal",
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     right: -123,
     textAlign: "center",
 
-    top: 200,
+    top: 190,
 
     width: 60,
   },
@@ -87,11 +88,11 @@ const styles = StyleSheet.create({
     height: 60,
     left: -120,
     position: "absolute",
-    top: 130,
+    top: 120,
     width: 60,
   },
   speakerText: {
-    color: "#FFFFFF",
+    color: palette.offWhite,
     fontFamily: "Roboto",
     fontSize: 14,
     fontStyle: "normal",
@@ -102,12 +103,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     textAlign: "center",
 
-    top: 200,
+    top: 190,
 
     width: 100,
   },
   time: {
-    color: "#FFFFFF",
+    color: palette.offWhite,
     fontFamily: "Roboto",
     fontSize: 18,
     fontStyle: "normal",
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     width: 72.86,
   },
   userName: {
-    color: "#FFFFFF",
+    color: palette.offWhite,
     fontFamily: "Roboto",
     fontSize: 24,
     fontStyle: "normal",
@@ -142,11 +143,11 @@ const styles = StyleSheet.create({
     height: 60,
     position: "absolute",
     right: -33,
-    top: 130,
+    top: 120,
     width: 60,
   },
   videoCallText: {
-    color: "#FFFFFF",
+    color: palette.offWhite,
     fontFamily: "Roboto",
     fontSize: 14,
     fontStyle: "normal",
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     right: -54,
     textAlign: "center",
 
-    top: 200,
+    top: 190,
 
     width: 100,
   },
