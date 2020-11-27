@@ -15,7 +15,6 @@ const ROOT: ViewStyle = {
   alignItems: "center",
 }
 
-<<<<<<< HEAD
 const styles = StyleSheet.create({
   containerView: {
     alignItems: "center",
@@ -136,9 +135,6 @@ var user = {
   email:"haj@gmail.com",
   sex: "male",
   lastTime: "11:09",
-=======
-const styles = {
->>>>>>> 5a3f7ddec10092e126a1f40e507f63a640734825
 }
 
 export const ProfileUserScreen = observer(function ProfileUserScreen(props) {

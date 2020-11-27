@@ -11,10 +11,7 @@ import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { PrimaryNavigator } from "./primary-navigator"
 import { useStores } from "../models"
 import { AuthNavigator } from "./auth-navigator"
-<<<<<<< HEAD
-=======
-import { AnsweringScreen, CallingScreen, VideoCallScreen } from "../screens"
->>>>>>> 5a3f7ddec10092e126a1f40e507f63a640734825
+import { AnsweringScreen, CallingScreen, VideoCallScreen, MessageScreen } from "../screens"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -55,7 +52,7 @@ const RootStack = () => {
       ) : (
         <Stack.Screen
           name="authStack"
-          component={AuthNavigator}
+          component={MessageScreen}
           options={{
             headerShown: false,
           }}

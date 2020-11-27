@@ -37,11 +37,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   inputText: {
-<<<<<<< HEAD:app/screens/addfrend-srceen/addfriend-screen.tsx
     backgroundColor: color.backgroundSearch,
-=======
-    backgroundColor: "#DDDDDD",
->>>>>>> 5a3f7ddec10092e126a1f40e507f63a640734825:app/screens/addfriend-srceen/addfriend-screen.tsx
     borderColor: color.text,
     borderRadius: 18,
     borderWidth: 2,
