@@ -1,14 +1,18 @@
+/* eslint-disable react/display-name */
 /**
  * This is the navigator you will modify to display the logged-in screens of your app.
  * You can use RootNavigator to also display an auth flow or other user flows.
  *
  * You'll likely spend most of your time in this file.
  */
+import { faAddressBook, faComments, faUserCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import React from "react"
 
-import { MESSAGES } from "../constants"
+import { FRIENDS, MESSAGES, PROFILE } from "../constants"
 import { MessageScreen } from "../screens/message-screen/message-screen"
+import { color } from "../theme"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -31,7 +35,28 @@ const Tab = createBottomTabNavigator<PrimaryParamList>()
 
 export function PrimaryNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let icon
+
+          switch (route.name) {
+            case MESSAGES:
+              icon = faComments
+              break
+            case FRIENDS:
+              icon = faAddressBook
+              break
+            case PROFILE:
+              icon = faUserCircle
+              break
+          }
+
+          return <FontAwesomeIcon icon={icon} color={color} size={size} />
+        },
+      })}
+      tabBarOptions={{ activeTintColor: color.primary, inactiveTintColor: color.palette.grey }}
+    >
       <Tab.Screen name={MESSAGES} component={MessageScreen} />
     </Tab.Navigator>
   )

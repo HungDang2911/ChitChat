@@ -1,16 +1,27 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { StyleSheet, ViewStyle, View, Image, FlatList, TouchableOpacity, Alert, Animated, TextInput, ScrollView } from "react-native"
+import {
+  StyleSheet,
+  ViewStyle,
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  Animated,
+  TextInput,
+  ScrollView,
+} from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { useNavigation } from "@react-navigation/native"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faUserPlus, faUserFriends, faUserCheck } from "@fortawesome/free-solid-svg-icons"
 import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
-import { allowStateReadsStart } from 'mobx/lib/internal'
+import { allowStateReadsStart } from "mobx/lib/internal"
 
 const ROOT: ViewStyle = {
-  position: 'relative',
+  position: "relative",
   flex: 1,
   alignItems: "center",
   // justifyContent: "center"
@@ -26,12 +37,16 @@ const styles = StyleSheet.create({
     width: 40,
   },
   inputText: {
-    backgroundColor: '#DDDDDD',
+<<<<<<< HEAD:app/screens/addfrend-srceen/addfriend-screen.tsx
+    backgroundColor: color.backgroundSearch,
+=======
+    backgroundColor: "#DDDDDD",
+>>>>>>> 5a3f7ddec10092e126a1f40e507f63a640734825:app/screens/addfriend-srceen/addfriend-screen.tsx
     borderColor: color.text,
     borderRadius: 18,
     borderWidth: 2,
     height: 40,
-    width: "95%"
+    width: "95%",
   },
   inputView: {
     alignItems: "center",
@@ -39,37 +54,37 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     height: 60,
     justifyContent: "center",
-    width: "100%"
+    width: "100%",
   },
   messageUserAvatar: {
     borderRadius: 50,
     height: 55,
     left: 6,
-    position: 'absolute',
+    position: "absolute",
     top: 8,
     width: 55,
   },
   messageUserTextName: {
     color: color.text,
-    fontFamily: 'Geometria',
+    fontFamily: "Geometria",
     fontSize: 16,
-    fontStyle: 'normal',
-    fontWeight: 'bold',
+    fontStyle: "normal",
+    fontWeight: "bold",
     left: 71,
     lineHeight: 20,
-    position: 'absolute',
-    top: 14
+    position: "absolute",
+    top: 14,
   },
   messageUserView: {
     borderBottomColor: "#E2E2E2",
     borderBottomWidth: 2,
     height: 77,
-    position: 'relative',
+    position: "relative",
     width: 375,
   },
   userConstainer: {
     height: 597,
-    position: 'absolute',
+    position: "absolute",
     top: 58,
   },
 })
@@ -86,12 +101,12 @@ function MessageUser(props) {
   }
 
   return (
-    <View style = {styles.messageUserView}>
-      <Text style = {styles.messageUserTextName}>{user.name}</Text>
-      <Image source = {{ uri: user.avatar } } style = {styles.messageUserAvatar}/>
-      <View style = {styles.iconView}>
-        <TouchableOpacity onPress = {handelIsFriend}>
-          <IconIsFriend isFriend = {isFriend} />
+    <View style={styles.messageUserView}>
+      <Text style={styles.messageUserTextName}>{user.name}</Text>
+      <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
+      <View style={styles.iconView}>
+        <TouchableOpacity onPress={handelIsFriend}>
+          <IconIsFriend isFriend={isFriend} />
         </TouchableOpacity>
       </View>
     </View>
@@ -101,11 +116,12 @@ function MessageUser(props) {
 function IconIsFriend(prop) {
   const isFriend = prop.isFriend
   if (isFriend === 1) {
-    return (<FontAwesomeIcon icon={faUserFriends} size={scaledSize(35)}></FontAwesomeIcon>)
-  } if (isFriend === -1) {
-    return (<FontAwesomeIcon icon={faUserPlus} size={scaledSize(35)}></FontAwesomeIcon>)
+    return <FontAwesomeIcon icon={faUserFriends} size={scaledSize(35)}></FontAwesomeIcon>
+  }
+  if (isFriend === -1) {
+    return <FontAwesomeIcon icon={faUserPlus} size={scaledSize(35)}></FontAwesomeIcon>
   } else {
-    return (<FontAwesomeIcon icon={faUserCheck} size={scaledSize(35)}></FontAwesomeIcon>)
+    return <FontAwesomeIcon icon={faUserCheck} size={scaledSize(35)}></FontAwesomeIcon>
   }
 }
 
@@ -115,19 +131,19 @@ export const AddFriendScreen = observer(function AddFriendSrceen() {
       id: 1,
       lastTime: "11:09",
       name: "agdhagd",
-      message: 'hdjshdas',
+      message: "hdjshdas",
       status: 3,
-      isFriend: -1
+      isFriend: -1,
     },
     {
       id: 2,
       avatar: ".people.jpg",
-      lastTime: '11:12',
+      lastTime: "11:12",
       name: "agdassdhagd",
-      message: 'hdjsdsdas',
+      message: "hdjsdsdas",
       status: 0,
-      isFriend: -1
-    }
+      isFriend: -1,
+    },
   ]
   const [searchTerm, setSearchTerm] = useState("")
   const typingTimeoutRef = useRef(null)
@@ -147,17 +163,19 @@ export const AddFriendScreen = observer(function AddFriendSrceen() {
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <View style = {styles.inputView}>
-        <TextInput style={styles.inputText}
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.inputText}
           placeholder="Tìm kiếm bạn bè bằng tên người dùng"
-          value = {searchTerm}
-          onChangeText = {handelSearchTermChange}></TextInput>
+          value={searchTerm}
+          onChangeText={handelSearchTermChange}
+        ></TextInput>
       </View>
-      <View style = {styles.userConstainer}>
+      <View style={styles.userConstainer}>
         <FlatList
-          data = {users}
-          renderItem = {({ item }) => <MessageUser user={item} />}
-          keyExtractor = { item => `${item.id}`}
+          data={users}
+          renderItem={({ item }) => <MessageUser user={item} />}
+          keyExtractor={(item) => `${item.id}`}
         />
       </View>
     </Screen>

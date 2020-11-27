@@ -21,11 +21,15 @@
   },
   "signUpScreen": {
     "username": "TÊN TÀI KHOẢN",
+    "fullName": "HỌ TÊN",
+    "sex": "GIỚI TÍNH",
     "password": "MẬT KHẨU",
     "confirmPassword": "XÁC NHẬN MẬT KHẨU",
     "email": "EMAIL",
     "enterEmail": "Nhập email",
     "enterUsername": "Nhập tên tài khoản",
+    "enterFullName": "Nhập họ tên",
+    "chooseSex": "Chọn giới tính",
     "enterPassword": "Nhập mật khẩu",
     "enterConfirmPassword": "Nhập lại mật khẩu",
     "signUp": "Đăng ký"

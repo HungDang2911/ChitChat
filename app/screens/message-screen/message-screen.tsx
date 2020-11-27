@@ -51,12 +51,13 @@ const styles = StyleSheet.create({
   messageContainer: {
     height: 597,
     position: 'absolute',
-    top: 107,
+    top: 85,
   },
   messageHeader: {
     alignItems: "center",
-    backgroundColor: '#FCFCFC',
-    height: 97,
+    // backgroundColor: '#FCFCFC',
+    backgroundColor: color.background,
+    height: 85,
     justifyContent: "center",
     left: 0,
     position: 'absolute',
@@ -257,6 +258,10 @@ var users = [
   },
 ]
 
+function HandelTouch() {
+  Alert.alert("sjgjg")
+}
+
 function MessageUser(props) {
   const { user } = props
   const [isShowing, setIsShowing] = useState(false)
@@ -293,7 +298,7 @@ function TouchOption(prop) {
           <View style={styles.unReadView}>
             <FontAwesomeIcon
               icon={faComment}
-              color={"#FFFFFF"}
+              color={color.background}
               style={styles.iconUnRead}
               size={scaledSize(25)}
             />
@@ -302,7 +307,7 @@ function TouchOption(prop) {
           <View
             style={ {
               position: "absolute",
-              backgroundColor: "#FFFFFF",
+              backgroundColor: color.background,
               height: 37,
               width: 1,
               top: 22,
@@ -316,7 +321,7 @@ function TouchOption(prop) {
           <View
             style={{
               position: "absolute",
-              backgroundColor: "#FFFFFF",
+              backgroundColor: color.background,
               height: 37,
               width: 1,
               top: 22,
@@ -335,10 +340,6 @@ function TouchOption(prop) {
         </View>
       </View>
     )
-}
-
-function HandelTouch() {
-  Alert.alert("sjgjg")
 }
 
 function StatusMessage(prop) {
@@ -373,8 +374,8 @@ export const MessageScreen = observer(function MessageScreen() {
   return (
     <Screen style={ROOT} preset="scroll">
       <View style={styles.messageHeader}>
-        <Text style={styles.messageText}>Message</Text>
-        <FontAwesomeIcon icon={faCamera} style={styles.messageImage} size={scaledSize(25)} />
+        <Text style={styles.messageText}>Messages</Text>
+        {/* <FontAwesomeIcon icon={faCamera} style={styles.messageImage} size={scaledSize(25)} /> */}
       </View>
       <View style={styles.messageContainer}>
         <FlatList
