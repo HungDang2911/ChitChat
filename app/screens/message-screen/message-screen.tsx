@@ -258,119 +258,121 @@ var users = [
   },
 ]
 
-function HandelTouch() {
-  Alert.alert("sjgjg")
-}
+export const MessageScreen = observer(function MessageScreen() {
+  const navigation = useNavigation()
 
-function MessageUser(props) {
-  const { user } = props
-  const [isShowing, setIsShowing] = useState(false)
-  return (
-    <TouchableOpacity
-      activeOpacity={0.2}
-      onLongPress={() => setIsShowing(!isShowing)}
-      onPress={HandelTouch}
-    >
-      <View style={styles.messageUser}>
-        <Text style={styles.messageUserTextName}>{user.name}</Text>
-        <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
-        <Text style={styles.messageUserText}>{user.message}</Text>
-        <Text style={styles.messageUserLastTime}>{user.last_time}</Text>
-        <StatusMessage status={user.status} />
-      </View>
-      <TouchOption option={isShowing} user={user} />
-    </TouchableOpacity>
-  )
-}
+  function HandelTouch() {
+    Alert.alert("sjgjg")
+  }
 
-function TouchOption(prop) {
-  const user = prop.user
-  if (prop.option === false) {
-    return <View></View>
-  } else
+  function MessageUser(props) {
+    const { user } = props
+    const [isShowing, setIsShowing] = useState(false)
     return (
-      <View style={styles.messageUser}>
-        <Text style={styles.messageUserOptionLastTime}>{user.last_time}</Text>
-        <View style={styles.statusOptionView}>
-          <Text style={styles.statusContent}>{user.status}</Text>
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onLongPress={() => setIsShowing(!isShowing)}
+        onPress={HandelTouch}
+      >
+        <View style={styles.messageUser}>
+          <Text style={styles.messageUserTextName}>{user.name}</Text>
+          <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
+          <Text style={styles.messageUserText}>{user.message}</Text>
+          <Text style={styles.messageUserLastTime}>{user.last_time}</Text>
+          <StatusMessage status={user.status} />
         </View>
-        <View style={styles.optionView}>
-          <View style={styles.unReadView}>
-            <FontAwesomeIcon
-              icon={faComment}
-              color={color.background}
-              style={styles.iconUnRead}
-              size={scaledSize(25)}
-            />
-            <Text style={styles.textUnRead}>Unread</Text>
-          </View>
-          <View
-            style={ {
-              position: "absolute",
-              backgroundColor: color.background,
-              height: 37,
-              width: 1,
-              top: 22,
-              left: 95,
-            }}
-          />
-          <View style={styles.gimView}>
-            <FontAwesomeIcon icon={faThumbtack} color={"#FFFFFF"} size={scaledSize(25)} />
-            <Text style={styles.textGim}>Pin</Text>
-          </View>
-          <View
-            style={{
-              position: "absolute",
-              backgroundColor: color.background,
-              height: 37,
-              width: 1,
-              top: 22,
-              left: 178,
-            }}
-          />
-          <View style={styles.moreView}>
-            <FontAwesomeIcon
-              icon={faEllipsisH}
-              color={"#FFFFFF"}
-              style={{ left: 3 }}
-              size={scaledSize(25)}
-            />
-            <Text style={styles.moreText}>More</Text>
-          </View>
-        </View>
-      </View>
-    )
-}
-
-function StatusMessage(prop) {
-  const status = prop.status
-  if (status > 0) {
-    return (
-      <View style={styles.statusView}>
-        <Text style={styles.statusContent}>{status}</Text>
-      </View>
-    )
-  } else {
-    return (
-      <View style={styles.statusViewSend}>
-        <FontAwesomeIcon
-          icon={faCheck}
-          color={"#1E98BE"}
-          style={{ top: 0 }}
-          size={scaledSize(11)}
-        />
-        <FontAwesomeIcon
-          icon={faCheck}
-          color={"#1E98BE"}
-          style={{ bottom: 0, left: 8, top: -11 }}
-          size={scaledSize(11)}
-        />
-      </View>
+        <TouchOption option={isShowing} user={user} />
+      </TouchableOpacity>
     )
   }
-}
 
-export const MessageScreen = observer(function MessageScreen() {
+  function TouchOption(prop) {
+    const user = prop.user
+    if (prop.option === false) {
+      return <View></View>
+    } else
+      return (
+        <View style={styles.messageUser}>
+          <Text style={styles.messageUserOptionLastTime}>{user.last_time}</Text>
+          <View style={styles.statusOptionView}>
+            <Text style={styles.statusContent}>{user.status}</Text>
+          </View>
+          <View style={styles.optionView}>
+            <View style={styles.unReadView}>
+              <FontAwesomeIcon
+                icon={faComment}
+                color={color.background}
+                style={styles.iconUnRead}
+                size={scaledSize(25)}
+              />
+              <Text style={styles.textUnRead}>Unread</Text>
+            </View>
+            <View
+              style={ {
+                position: "absolute",
+                backgroundColor: color.background,
+                height: 37,
+                width: 1,
+                top: 22,
+                left: 95,
+              }}
+            />
+            <View style={styles.gimView}>
+              <FontAwesomeIcon icon={faThumbtack} color={"#FFFFFF"} size={scaledSize(25)} />
+              <Text style={styles.textGim}>Pin</Text>
+            </View>
+            <View
+              style={{
+                position: "absolute",
+                backgroundColor: color.background,
+                height: 37,
+                width: 1,
+                top: 22,
+                left: 178,
+              }}
+            />
+            <View style={styles.moreView}>
+              <FontAwesomeIcon
+                icon={faEllipsisH}
+                color={"#FFFFFF"}
+                style={{ left: 3 }}
+                size={scaledSize(25)}
+              />
+              <Text style={styles.moreText}>More</Text>
+            </View>
+          </View>
+        </View>
+      )
+  }
+
+  function StatusMessage(prop) {
+    const status = prop.status
+    if (status > 0) {
+      return (
+        <View style={styles.statusView}>
+          <Text style={styles.statusContent}>{status}</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.statusViewSend}>
+          <FontAwesomeIcon
+            icon={faCheck}
+            color={"#1E98BE"}
+            style={{ top: 0 }}
+            size={scaledSize(11)}
+          />
+          <FontAwesomeIcon
+            icon={faCheck}
+            color={"#1E98BE"}
+            style={{ bottom: 0, left: 8, top: -11 }}
+            size={scaledSize(11)}
+          />
+        </View>
+      )
+    }
+  }
+
   return (
     <Screen style={ROOT} preset="scroll">
       <View style={styles.messageHeader}>

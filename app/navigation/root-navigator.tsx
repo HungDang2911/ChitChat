@@ -52,7 +52,7 @@ const RootStack = () => {
       ) : (
         <Stack.Screen
           name="authStack"
-          component={MessageScreen}
+          component={AuthNavigator}
           options={{
             headerShown: false,
           }}
