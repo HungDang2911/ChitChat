@@ -99,6 +99,7 @@ export const LoginScreen = observer(function LoginScreen() {
             style={styles.inputField}
             textContentType="nickname"
             placeholderTx="loginScreen.enterUsername"
+            autoCapitalize="none"
             onChangeText={handleChangeUsername}
           />
         </View>
@@ -109,6 +110,7 @@ export const LoginScreen = observer(function LoginScreen() {
             textContentType="password"
             placeholderTx="loginScreen.enterPassword"
             onChangeText={handleChangePassword}
+            autoCapitalize="none"
             secureTextEntry
           />
         </View>

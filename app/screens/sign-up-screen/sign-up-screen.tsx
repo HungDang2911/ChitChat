@@ -100,6 +100,7 @@ export const SignUpScreen = observer(function SignUpScreen() {
             textContentType="nickname"
             placeholderTx="signUpScreen.enterUsername"
             onChangeText={handleChangeUsername}
+            autoCapitalize="none"
           />
         </View>
         {/* <View style={styles.inputContainer}>
@@ -126,6 +127,7 @@ export const SignUpScreen = observer(function SignUpScreen() {
             style={styles.inputField}
             placeholderTx="signUpScreen.enterEmail"
             textContentType="emailAddress"
+            autoCapitalize="none"
             onChangeText={handleChangeEmail}
           />
         </View>
@@ -135,6 +137,7 @@ export const SignUpScreen = observer(function SignUpScreen() {
             style={styles.inputField}
             placeholderTx="signUpScreen.enterPassword"
             textContentType="password"
+            autoCapitalize="none"
             onChangeText={handleChangePassword}
             secureTextEntry
           />
@@ -145,6 +148,7 @@ export const SignUpScreen = observer(function SignUpScreen() {
             style={styles.inputField}
             placeholderTx="signUpScreen.enterConfirmPassword"
             textContentType="password"
+            autoCapitalize="none"
             onChangeText={handleChangeConfirmPassword}
             secureTextEntry
           />

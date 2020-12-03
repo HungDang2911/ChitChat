@@ -4,14 +4,7 @@ import * as Config from "./apiConfig"
 axios.interceptors.request.use(
   (config) => {
     // Request headers
-    // config.headers["Content-Type"] = "application/x-www-form-urlencoded"
     config.headers["Content-Type"] = "application/json"
-
-    // Object.assign(config.headers, {
-    //   abc: "acc",
-    //   Accept: "application/json",
-    //   "Content-Type": "application/x-www-form-urlencoded",
-    // })
 
     return config
   },

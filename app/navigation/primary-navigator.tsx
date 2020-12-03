@@ -36,6 +36,7 @@ const Tab = createBottomTabNavigator<PrimaryParamList>()
 
 export function PrimaryNavigator() {
   useEffect(() => {
+    // initiateSocket([])
   }, [])
 
   return (
