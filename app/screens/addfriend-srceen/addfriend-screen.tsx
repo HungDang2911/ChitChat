@@ -30,18 +30,28 @@ const ROOT: ViewStyle = {
 const styles = StyleSheet.create({
   iconView: {
     alignItems: "center",
+    backgroundColor: color.primary,
+    borderRadius: 25,
     height: 40,
     justifyContent: "center",
     left: 300,
-    top: 25,
+    top: 20,
     width: 40,
   },
   inputText: {
+    alignItems: "center",
     backgroundColor: color.backgroundSearch,
     borderColor: color.text,
     borderRadius: 18,
     borderWidth: 2,
     height: 40,
+    // justifyContent: "center",
+    width: "95%",
+  },
+  inputTextContent: {
+    bottom: -8,
+    fontSize: 15,
+    position: "absolute",
     width: "95%",
   },
   inputView: {
@@ -112,12 +122,12 @@ function MessageUser(props) {
 function IconIsFriend(prop) {
   const isFriend = prop.isFriend
   if (isFriend === 1) {
-    return <FontAwesomeIcon icon={faUserFriends} size={scaledSize(35)}></FontAwesomeIcon>
+    return <FontAwesomeIcon icon={faUserFriends} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
   }
   if (isFriend === -1) {
-    return <FontAwesomeIcon icon={faUserPlus} size={scaledSize(35)}></FontAwesomeIcon>
+    return <FontAwesomeIcon icon={faUserPlus} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
   } else {
-    return <FontAwesomeIcon icon={faUserCheck} size={scaledSize(35)}></FontAwesomeIcon>
+    return <FontAwesomeIcon icon={faUserCheck} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
   }
 }
 
@@ -160,12 +170,14 @@ export const AddFriendScreen = observer(function AddFriendSrceen() {
   return (
     <Screen style={ROOT} preset="scroll">
       <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Tìm kiếm bạn bè bằng tên người dùng"
-          value={searchTerm}
-          onChangeText={handelSearchTermChange}
-        ></TextInput>
+        <View style={styles.inputText}>
+          <TextInput
+            style = {styles.inputTextContent}
+            placeholder="Tìm kiếm bạn bè bằng tên người dùng"
+            value={searchTerm}
+            onChangeText={handelSearchTermChange}
+          ></TextInput>
+        </View>
       </View>
       <View style={styles.userConstainer}>
         <FlatList
