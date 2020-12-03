@@ -61,4 +61,9 @@ export const color = {
    * white background
    */
   storybookTextColor: palette.black,
+
+  /**
+   * Background search
+   */
+  backgroundSearch: palette.backgroundSearch,
 }

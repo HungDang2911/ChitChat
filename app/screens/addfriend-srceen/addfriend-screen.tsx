@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   inputText: {
-    backgroundColor: "#DDDDDD",
+    backgroundColor: color.backgroundSearch,
     borderColor: color.text,
     borderRadius: 18,
     borderWidth: 2,
