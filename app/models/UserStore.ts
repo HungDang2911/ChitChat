@@ -1,5 +1,4 @@
 import { Instance, types, flow, applySnapshot } from "mobx-state-tree"
-import { Alert } from "react-native"
 import { login, register } from "../services/api/authAPI"
 import { withEnvironment } from "./extensions/with-environment"
 

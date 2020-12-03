@@ -11,7 +11,6 @@ import {
   ScrollView,
 } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
-import { NavigationContainer, useRoute } from "@react-navigation/native"
 import { useStores } from "../../models"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faEdit } from "@fortawesome/free-solid-svg-icons"
