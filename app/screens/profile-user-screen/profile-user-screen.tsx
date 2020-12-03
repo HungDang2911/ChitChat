@@ -1,7 +1,15 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
 import { color } from "../../theme"
-import { StyleSheet, View, ViewStyle, Image, TouchableOpacity, Alert, ScrollView} from "react-native"
+import {
+  StyleSheet,
+  View,
+  ViewStyle,
+  Image,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { NavigationContainer, useRoute } from "@react-navigation/native"
 import { useStores } from "../../models"
@@ -19,7 +27,7 @@ const styles = StyleSheet.create({
   containerView: {
     alignItems: "center",
     flex: 1,
-    width: "100%"
+    width: "100%",
   },
   editIcon: {
     position: "absolute",
@@ -46,7 +54,7 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   scrollView: {
-    width: "100%"
+    width: "100%",
   },
   sexView: {
     backgroundColor: color.backgroundSearch,
@@ -62,7 +70,7 @@ const styles = StyleSheet.create({
     width: 274,
   },
   signOutButtonText: {
-    fontSize: 18
+    fontSize: 18,
   },
   titleView: {
     fontSize: 18,
@@ -70,13 +78,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     left: 16,
     position: "absolute",
-    top: 7
+    top: 7,
   },
   userTextName: {
     fontFamily: "Roboto",
     fontSize: 24,
     fontStyle: "normal",
-    fontWeight: 'normal',
+    fontWeight: "normal",
     marginBottom: 10,
     marginTop: 10,
   },
@@ -85,8 +93,8 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     left: 16,
     position: "absolute",
-    top: 30
-  }
+    top: 30,
+  },
 })
 
 function handelEdit() {
@@ -101,38 +109,23 @@ function Edit(props) {
   const isMe = props.isMe
   if (isMe) {
     return (
-      <TouchableOpacity style = {styles.editIcon} onPress = {handelEdit}>
-        <FontAwesomeIcon icon={faEdit} size={scaledSize(25)}/>
+      <TouchableOpacity style={styles.editIcon} onPress={handelEdit}>
+        <FontAwesomeIcon icon={faEdit} size={scaledSize(25)} />
       </TouchableOpacity>
     )
   } else {
-    return (<View/>)
+    return <View />
   }
 }
 
-function SignOut(props) {
-  const isMe = props.isMe
-  if (isMe) {
-    return (
-      <Button
-        style = {styles.signOutButton}
-        onPress = {handelSignOut}
-        textStyle = {styles.signOutButtonText}
-        text = "Sign Out"/>
-    )
-  } else {
-    return (<View/>)
-  }
-}
-
-var user = {
+const user = {
   id: 1,
-  name:"Thanh Thảo",
+  name: "Thanh Thảo",
   username: "agdhagd",
   avatar: "./people.jpg",
   message: "hdjshdas",
   status: 3,
-  email:"haj@gmail.com",
+  email: "haj@gmail.com",
   sex: "male",
   lastTime: "11:09",
 }
@@ -140,29 +133,40 @@ var user = {
 export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
   // const { isMe } = props.route.params
   // navigation.navigate("User", { user })
-  // const { userStore } = useStores()
-  // const user = userStore
+  const { userStore } = useStores()
   const isMe = true
+
+  const handleSignOut = () => {
+    userStore.signOut()
+  }
+
   return (
-    <Screen style = {ROOT} preset= "scroll">
-      <ScrollView style = {styles.scrollView}>
-        <View style = {styles.containerView}>
-          <Image source = {{ uri: user.avatar }} style = {styles.imageAvatar}/>
-          <Text style = {styles.userTextName}>{user.username}</Text>
-          <View style = {styles.nameView}>
-            <Text style = {styles.titleView}>Name</Text>
-            <Text style = {styles.value}>{user.name}</Text>
+    <Screen style={ROOT} preset="scroll">
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.containerView}>
+          <Image source={{ uri: user.avatar }} style={styles.imageAvatar} />
+          <Text style={styles.userTextName}>{user.username}</Text>
+          <View style={styles.nameView}>
+            <Text style={styles.titleView}>Name</Text>
+            <Text style={styles.value}>{user.name}</Text>
           </View>
-          <View style = {styles.sexView}>
-            <Text style = {styles.titleView}>Sex</Text>
-            <Text style = {styles.value}>{user.sex}</Text>
+          <View style={styles.sexView}>
+            <Text style={styles.titleView}>Sex</Text>
+            <Text style={styles.value}>{user.sex}</Text>
           </View>
-          <View style = {styles.emailView}>
-            <Text style = {styles.titleView}>Email</Text>
-            <Text style = {styles.value}>{user.email}</Text>
+          <View style={styles.emailView}>
+            <Text style={styles.titleView}>Email</Text>
+            <Text style={styles.value}>{user.email}</Text>
           </View>
-          <Edit isMe = {isMe} />
-          <SignOut isMe = {isMe}/>
+          <Edit isMe={isMe} />
+          {isMe && (
+            <Button
+              style={styles.signOutButton}
+              onPress={handleSignOut}
+              textStyle={styles.signOutButtonText}
+              text="Sign Out"
+            />
+          )}
         </View>
       </ScrollView>
     </Screen>

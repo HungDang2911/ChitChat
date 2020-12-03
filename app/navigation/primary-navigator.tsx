@@ -10,7 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import React, { useEffect } from "react"
 
-import { FRIENDS, MESSAGES, PROFILE } from "../constants"
+import { FRIENDS, MESSAGES, PROFILE_USER } from "../constants"
+import { ProfileUserScreen } from "../screens"
 import { MessageScreen } from "../screens/message-screen/message-screen"
 import { initiateSocket } from "../services/socket/socket"
 import { color } from "../theme"
@@ -29,6 +30,7 @@ import { color } from "../theme"
  */
 export type PrimaryParamList = {
   [MESSAGES]: undefined
+  [PROFILE_USER]: undefined
 }
 
 // Documentation: https://github.com/software-mansion/react-native-screens/tree/master/native-stack
@@ -52,7 +54,7 @@ export function PrimaryNavigator() {
             case FRIENDS:
               icon = faAddressBook
               break
-            case PROFILE:
+            case PROFILE_USER:
               icon = faUserCircle
               break
           }
@@ -63,6 +65,7 @@ export function PrimaryNavigator() {
       tabBarOptions={{ activeTintColor: color.primary, inactiveTintColor: color.palette.grey }}
     >
       <Tab.Screen name={MESSAGES} component={MessageScreen} />
+      <Tab.Screen name={PROFILE_USER} component={ProfileUserScreen} />
     </Tab.Navigator>
   )
 }

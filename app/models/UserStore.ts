@@ -1,7 +1,14 @@
-import { Instance, types, flow } from "mobx-state-tree"
+import { Instance, types, flow, applySnapshot } from "mobx-state-tree"
 import { Alert } from "react-native"
 import { login, register } from "../services/api/authAPI"
 import { withEnvironment } from "./extensions/with-environment"
+
+export const defaults = {
+  _id: "",
+  username: "",
+  accessToken: "",
+  refreshToken: "",
+}
 
 export const UserStoreModel = types
   .model()
@@ -13,23 +20,20 @@ export const UserStoreModel = types
   })
   .extend(withEnvironment) // ** IMPORTANT! **
   .actions((self) => ({
-    login: flow(function * (account) {
+    login: flow(function* (account) {
       const { accessToken, refreshToken } = (yield login(account)).data
       console.tron.log(accessToken, refreshToken)
       self.accessToken = accessToken
       self.refreshToken = refreshToken
     }),
-    register: flow(function * (account) {
+    register: flow(function* (account) {
       yield register(account)
     }),
+    signOut: function () {
+      applySnapshot(self, defaults)
+    },
   }))
 
-export const defaults = {
-  _id: "",
-  username: "",
-  accessToken: "",
-  refreshToken: "",
-}
 export const createUserStoreModel = () => types.optional(UserStoreModel, defaults as any)
 
 export type UserStore = Instance<typeof UserStoreModel>

@@ -12,6 +12,7 @@ import { PrimaryNavigator } from "./primary-navigator"
 import { useStores } from "../models"
 import { AuthNavigator } from "./auth-navigator"
 import { AnsweringScreen, CallingScreen, VideoCallScreen, MessageScreen } from "../screens"
+import { observer } from "mobx-react-lite"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -29,7 +30,7 @@ export type RootParamList = {
 
 const Stack = createNativeStackNavigator<RootParamList>()
 
-const RootStack = () => {
+const RootStack = observer(() => {
   const { userStore } = useStores()
 
   return (
@@ -60,7 +61,7 @@ const RootStack = () => {
       )}
     </Stack.Navigator>
   )
-}
+})
 
 export const RootNavigator = React.forwardRef<
   NavigationContainerRef,

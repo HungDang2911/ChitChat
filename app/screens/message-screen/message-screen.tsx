@@ -246,7 +246,7 @@ const users = [
     avatar: "./people.jpg",
     message: "hdjshdas",
     status: 3,
-    last_time: "11:09",
+    lastTime: "11:09",
   },
   {
     id: 2,
@@ -254,7 +254,7 @@ const users = [
     avatar: "./people.jpg",
     message: "hdjsdsdas",
     status: 0,
-    last_time: "11:12",
+    lastTime: "11:12",
   },
 ]
 
@@ -278,7 +278,7 @@ export const MessageScreen = observer(function MessageScreen() {
           <Text style={styles.messageUserTextName}>{user.name}</Text>
           <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
           <Text style={styles.messageUserText}>{user.message}</Text>
-          <Text style={styles.messageUserLastTime}>{user.last_time}</Text>
+          <Text style={styles.messageUserLastTime}>{user.lastTime}</Text>
           <StatusMessage status={user.status} />
         </View>
         <TouchOption option={isShowing} user={user} />
@@ -293,7 +293,7 @@ export const MessageScreen = observer(function MessageScreen() {
     } else {
       return (
         <View style={styles.messageUser}>
-          <Text style={styles.messageUserOptionLastTime}>{user.last_time}</Text>
+          <Text style={styles.messageUserOptionLastTime}>{user.lastTime}</Text>
           <View style={styles.statusOptionView}>
             <Text style={styles.statusContent}>{user.status}</Text>
           </View>
