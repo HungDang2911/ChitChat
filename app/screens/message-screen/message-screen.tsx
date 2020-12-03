@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
 })
 
 // Test
-var users = [
+const users = [
   {
     id: 1,
     name: "agdhagd",
@@ -290,7 +290,7 @@ export const MessageScreen = observer(function MessageScreen() {
     const user = prop.user
     if (prop.option === false) {
       return <View></View>
-    } else
+    } else {
       return (
         <View style={styles.messageUser}>
           <Text style={styles.messageUserOptionLastTime}>{user.last_time}</Text>
@@ -343,6 +343,7 @@ export const MessageScreen = observer(function MessageScreen() {
           </View>
         </View>
       )
+    }
   }
 
   function StatusMessage(prop) {
