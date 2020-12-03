@@ -8,10 +8,11 @@
 import { faAddressBook, faComments, faUserCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import React from "react"
+import React, { useEffect } from "react"
 
 import { FRIENDS, MESSAGES, PROFILE } from "../constants"
 import { MessageScreen } from "../screens/message-screen/message-screen"
+import { initiateSocket } from "../services/socket/socket"
 import { color } from "../theme"
 
 /**
@@ -34,6 +35,10 @@ export type PrimaryParamList = {
 const Tab = createBottomTabNavigator<PrimaryParamList>()
 
 export function PrimaryNavigator() {
+  useEffect(() => {
+    initiateSocket()
+  }, [])
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
