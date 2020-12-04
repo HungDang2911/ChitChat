@@ -12,6 +12,7 @@ import React, { useEffect } from "react"
 
 import { FRIENDS, MESSAGES, PROFILE_USER } from "../constants"
 import { ProfileUserScreen } from "../screens"
+import ListFriendScreen from "../screens/list-friend-screen/list-friend-screen"
 import { MessageScreen } from "../screens/message-screen/message-screen"
 import { initiateSocket } from "../services/socket/socket"
 import { color } from "../theme"
@@ -31,6 +32,7 @@ import { color } from "../theme"
 export type PrimaryParamList = {
   [MESSAGES]: undefined
   [PROFILE_USER]: undefined
+  [FRIENDS]: undefined
 }
 
 // Documentation: https://github.com/software-mansion/react-native-screens/tree/master/native-stack
@@ -65,11 +67,11 @@ export function PrimaryNavigator() {
       tabBarOptions={{ activeTintColor: color.primary, inactiveTintColor: color.palette.grey }}
     >
       <Tab.Screen name={MESSAGES} component={MessageScreen} />
+      <Tab.Screen name={FRIENDS} component={ListFriendScreen} />
       <Tab.Screen name={PROFILE_USER} component={ProfileUserScreen} />
     </Tab.Navigator>
   )
 }
-
 /**
  * A list of routes from which we're allowed to leave the app when
  * the user presses the back button on Android.
