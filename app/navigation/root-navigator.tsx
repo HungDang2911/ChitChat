@@ -13,6 +13,8 @@ import { useStores } from "../models"
 import { AuthNavigator } from "./auth-navigator"
 import { AnsweringScreen, CallingScreen, VideoCallScreen, MessageScreen } from "../screens"
 import { observer } from "mobx-react-lite"
+import { EditProfileScreen } from "../screens/edit-profile-screen/edit-profile-screen"
+import ListFriendScreen from "../screens/list-friend-screen/list-friend-screen"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
