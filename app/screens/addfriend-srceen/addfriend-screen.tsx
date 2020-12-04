@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react"
+/* eslint-disable react-native/no-color-literals */
+import React, { useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import {
   StyleSheet,
@@ -14,11 +15,12 @@ import {
 } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { useNavigation } from "@react-navigation/native"
+import _ from "lodash"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faUserPlus, faUserFriends, faUserCheck } from "@fortawesome/free-solid-svg-icons"
 import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
-import { allowStateReadsStart } from "mobx/lib/internal"
+import { searchUser } from "../../services/api/usersAPI"
 
 const ROOT: ViewStyle = {
   position: "relative",
@@ -81,6 +83,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 14,
   },
+  messageUserTextUsername: {
+    left: 71,
+    position: "absolute",
+    top: 36
+  },
   messageUserView: {
     borderBottomColor: "#E2E2E2",
     borderBottomWidth: 2,
@@ -99,7 +106,7 @@ function MessageUser(props) {
   const { user } = props
   const [isFriend, setIsFriend] = useState(user.isFriend)
 
-  function handelIsFriend() {
+  function handleIsFriend() {
     if (isFriend === -1) {
       setIsFriend(0)
       user.isFriend = 0
@@ -108,10 +115,11 @@ function MessageUser(props) {
 
   return (
     <View style={styles.messageUserView}>
-      <Text style={styles.messageUserTextName}>{user.name}</Text>
-      <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
+      <Text style={styles.messageUserTextName}>{user.fullName}</Text>
+      <Text style={styles.messageUserTextUsername} >{user.username}</Text>
+      <Image source={ user.avatar ? { uri: user.avatar } : require("../../../assets/imgs/default-avatar.jpg")} style={styles.messageUserAvatar} />
       <View style={styles.iconView}>
-        <TouchableOpacity onPress={handelIsFriend}>
+        <TouchableOpacity onPress={handleIsFriend}>
           <IconIsFriend isFriend={isFriend} />
         </TouchableOpacity>
       </View>
@@ -122,49 +130,35 @@ function MessageUser(props) {
 function IconIsFriend(prop) {
   const isFriend = prop.isFriend
   if (isFriend === 1) {
-    return <FontAwesomeIcon icon={faUserFriends} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
+    return (
+      <FontAwesomeIcon
+        icon={faUserFriends}
+        color={"#ffffff"}
+        size={scaledSize(25)}
+      ></FontAwesomeIcon>
+    )
   }
   if (isFriend === -1) {
-    return <FontAwesomeIcon icon={faUserPlus} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
+    return (
+      <FontAwesomeIcon icon={faUserPlus} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
+    )
   } else {
-    return <FontAwesomeIcon icon={faUserCheck} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
+    return (
+      <FontAwesomeIcon icon={faUserCheck} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
+    )
   }
 }
 
 export const AddFriendScreen = observer(function AddFriendSrceen() {
-  const users = [
-    {
-      id: 1,
-      lastTime: "11:09",
-      name: "agdhagd",
-      message: "hdjshdas",
-      status: 3,
-      isFriend: -1,
-    },
-    {
-      id: 2,
-      avatar: ".people.jpg",
-      lastTime: "11:12",
-      name: "agdassdhagd",
-      message: "hdjsdsdas",
-      status: 0,
-      isFriend: -1,
-    },
-  ]
-  const [searchTerm, setSearchTerm] = useState("")
-  const typingTimeoutRef = useRef(null)
+  const [userList, setUserList] = useState([])
 
-  function handelSearchTermChange(e) {
-    setSearchTerm(e)
+  const search = _.debounce(async (query) => {
+    const response = await searchUser(query)
+    setUserList(response.data)
+  }, 300)
 
-    if (typingTimeoutRef.current) {
-      clearTimeout(typingTimeoutRef.current)
-    }
-
-    typingTimeoutRef.current = setTimeout(() => {
-      // API lấy dữ liệu
-      console.log(e)
-    }, 300)
+  const handleSearchChange = (username: string) => {
+    search(username)
   }
 
   return (
@@ -172,18 +166,17 @@ export const AddFriendScreen = observer(function AddFriendSrceen() {
       <View style={styles.inputView}>
         <View style={styles.inputText}>
           <TextInput
-            style = {styles.inputTextContent}
+            style={styles.inputTextContent}
             placeholder="Tìm kiếm bạn bè bằng tên người dùng"
-            value={searchTerm}
-            onChangeText={handelSearchTermChange}
+            onChangeText={handleSearchChange}
           ></TextInput>
         </View>
       </View>
       <View style={styles.userConstainer}>
         <FlatList
-          data={users}
+          data={userList}
           renderItem={({ item }) => <MessageUser user={item} />}
-          keyExtractor={(item) => `${item.id}`}
+          keyExtractor={(item) => `${item._id}`}
         />
       </View>
     </Screen>

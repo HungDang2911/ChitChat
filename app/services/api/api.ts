@@ -28,8 +28,8 @@ export class Api {
     return Config.API_URL + url
   }
 
-  static post(url: string, data: any = {}) {
-    return axios.post(Api.getFullUrl(url), JSON.stringify(data))
+  static post(url: string, data: any = {}, config: any = {}) {
+    return axios.post(Api.getFullUrl(url), JSON.stringify(data), config)
   }
 
   static put(url: string, data: any = {}) {
@@ -40,8 +40,8 @@ export class Api {
     return axios.patch(Api.getFullUrl(url), JSON.stringify(data))
   }
 
-  static get(url: string) {
-    return axios.get(Api.getFullUrl(url))
+  static get(url: string, config: any = {}) {
+    return axios.get(Api.getFullUrl(url), config)
   }
 
   static delete(url: string) {

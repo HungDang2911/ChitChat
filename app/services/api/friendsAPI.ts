@@ -9,7 +9,7 @@ export const sendFriendRequest = (friendId: string) => {
 }
 
 export const getFriendRequests = () => {
-  return Api.get(`/users/friend-requests`);
+  return Api.get(`/users/friend-requests`)
 }
 
 export const addFriend = (friendId: string) => {
