@@ -6,37 +6,34 @@ import { Screen, Text } from "../../components"
 import { useStores } from "../../models"
 import { color } from "../../theme"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import { faCamera, faImage, faPaperPlane } from "@fortawesome/free-solid-svg-icons"
+import { faCamera, faImage, faPaperPlane, faPhoneAlt, faVideo } from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
 import ImagePicker from 'react-native-image-crop-picker'
 import { initiateSocket, disconnectSocket, subscribeToChat, sendMessage } from "../../services/socket/socket"
 
 const ROOT: ViewStyle = {
-  // backgroundColor: color.palette.black,
   flexDirection: "column",
   height: "100%",
   width: "100%",
-  // alignItems: "center",
-  // justifyContent: "center",
 }
 
 const styles = StyleSheet.create({
+  call: {
+    height: 25,
+    position: "absolute",
+    right: 100,
+    width: 25,
+  },
+
   cameraInput: {
     color: color.primary,
-    // left: 20,
-    // position: "absolute",
     marginLeft: 20,
     marginRight: 10,
-    top: 7,
   },
 
   containerView: {
-    backgroundColor: color.background,
-    // bottom: 45,
-    height: 550,
-    // position: "relative",
-    // top: -50,
-    paddingBottom: 10,
+    height: "83%",
+    marginBottom: 10,
   },
 
   friendAvatar: {
@@ -51,7 +48,6 @@ const styles = StyleSheet.create({
   },
 
   friendContentImage: {
-    // marginRight: 10,
     maxHeight: 500,
     width: 250,
   },
@@ -66,11 +62,11 @@ const styles = StyleSheet.create({
   },
 
   headerView: {
-    // backgroundColor: color.text,
-    height: 70,
+    borderBottomWidth: 2,
+    borderColor: color.backgroundSearch,
+    height: "10%",
+    justifyContent: "center",
     width: "100%",
-    // top: 0,
-    // position: "absolute"
   },
 
   iContainer: {
@@ -97,19 +93,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: "100%",
     width: "100%",
-    // maxHeight:150
-    // height: 375,
-    // top: 0,
-    // width: "100%"
   },
 
   imageInput: {
     color: color.primary,
-    // left: 70,
-    // position: "absolute",
     marginLeft: 10,
     marginRight: 10,
-    top: 7,
   },
 
   input: {
@@ -117,10 +106,13 @@ const styles = StyleSheet.create({
   },
 
   inputContainerView: {
-    // backgroundColor:color.text,
+    borderColor: color.backgroundSearch,
+    borderTopWidth: 2,
     bottom: 0,
     flexDirection: "row",
-    height: 40,
+    height: "7%",
+    justifyContent: "center",
+    paddingTop: 5,
     position: "absolute",
     width: "100%",
   },
@@ -137,10 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.backgroundSearch,
     borderRadius: 25,
     height: 30,
-    // left: 110,
-    // right: 40,
     justifyContent: "center",
-    top: 5,
     width: "58%",
   },
 
@@ -150,11 +139,8 @@ const styles = StyleSheet.create({
 
   sendInput: {
     color: color.primary,
-    // position: "absolute",
-    // right: 20,
     marginLeft: 10,
     marginRight: 20,
-    top: 7,
   },
 
   time: {
@@ -165,6 +151,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 10,
+  },
+
+  video: {
+    height: 25,
+    position: "absolute",
+    right: 40,
+    width: 25,
   }
 
 })
@@ -178,8 +171,7 @@ export const ChatScreen = observer(function ChatScreen() {
   // Pull in navigation via hook
   // const navigation = useNavigation()
 
-  const roomId = 1
-
+  const roomId = "1"
   const [messageText, setMessageText] = useState('')
   const [chat, setChat] = useState([])
 
@@ -193,6 +185,14 @@ export const ChatScreen = observer(function ChatScreen() {
       disconnectSocket()
     }
   }, [roomId])
+
+  function handelCall() {
+    console.log()
+  }
+
+  function handelVideoCall() {
+    console.log()
+  }
 
   function handelSendMessage() {
     if (messageText.length > 0) {
@@ -216,7 +216,6 @@ export const ChatScreen = observer(function ChatScreen() {
   function handelCamera() {
     ImagePicker.openCamera({
       cropping: false,
-      includeExif: true,
     }).then(image => {
       sendMessageImage(image.path)
     })
@@ -225,8 +224,6 @@ export const ChatScreen = observer(function ChatScreen() {
   function handelImage() {
     ImagePicker.openPicker({
       cropping: true,
-      includeBase64: true,
-      includeExif: true,
     }).then(image => {
       sendMessageImage(image.path)
     })
@@ -267,7 +264,7 @@ export const ChatScreen = observer(function ChatScreen() {
       return (
         <View style = {styles.messContainer}>
           <View style = {styles.timeContainer}>
-            <Text style = {styles.time}>{mess.createAt}</Text>
+            <Text style = {styles.time}>{`${mess.createAt.toLocaleTimeString('it-IT')} ${mess.createAt.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}</Text>
           </View>
           <View style = {styles.iContainer}>
             <Content mess = {mess}/>
@@ -296,7 +293,12 @@ export const ChatScreen = observer(function ChatScreen() {
   return (
     <Screen style={ROOT} preset="scroll">
       <View style = {styles.headerView}>
-
+        <TouchableOpacity style = {styles.call} onPress = {handelCall}>
+          <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
+        </TouchableOpacity>
+        <TouchableOpacity style = {styles.video} onPress = {handelVideoCall}>
+          <FontAwesomeIcon icon={faVideo} color={color.primary} size={scaledSize(25)} />
+        </TouchableOpacity>
       </View>
       <View style = {styles.containerView}>
         <View>
