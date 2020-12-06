@@ -375,7 +375,7 @@ export const MessageScreen = observer(function MessageScreen() {
   }
 
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT}>
       <View style={styles.messageHeader}>
         <Text style={styles.messageText}>Messages</Text>
         {/* <FontAwesomeIcon icon={faCamera} style={styles.messageImage} size={scaledSize(25)} /> */}

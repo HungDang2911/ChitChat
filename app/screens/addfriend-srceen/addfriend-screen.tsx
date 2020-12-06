@@ -162,7 +162,7 @@ export const AddFriendScreen = observer(function AddFriendSrceen() {
   }
 
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT}>
       <View style={styles.inputView}>
         <View style={styles.inputText}>
           <TextInput

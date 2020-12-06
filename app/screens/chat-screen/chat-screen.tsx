@@ -215,6 +215,8 @@ export const ChatScreen = observer(function ChatScreen() {
 
   function handelCamera() {
     ImagePicker.openCamera({
+      height: 1928,
+      width: 1080,
       cropping: false,
     }).then(image => {
       sendMessageImage(image.path)
@@ -223,6 +225,8 @@ export const ChatScreen = observer(function ChatScreen() {
 
   function handelImage() {
     ImagePicker.openPicker({
+      height: 1928,
+      width: 1080,
       cropping: true,
     }).then(image => {
       sendMessageImage(image.path)
@@ -291,7 +295,7 @@ export const ChatScreen = observer(function ChatScreen() {
   }
 
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT}>
       <View style = {styles.headerView}>
         <TouchableOpacity style = {styles.call} onPress = {handelCall}>
           <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
