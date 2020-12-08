@@ -8,64 +8,57 @@ import { faComments } from "@fortawesome/free-solid-svg-icons"
 import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 import { palette } from "../../theme/palette"
+import { mediaDevices, RTCView } from 'react-native-webrtc'
 
 const ROOT: ViewStyle = {
   flex: 1,
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: color.background,
+  width: "100%",
+  height: "100%"
 }
 
 const styles = StyleSheet.create({
   backgroundStyle: {
     alignItems: "center",
+    height: "100%",
     justifyContent: "center",
     position: "relative",
+    width: "100%"
   },
   backgroundVideo: {
+    height: "100%",
     position: "absolute",
-    // width: 400,
-    // height: 900,
-    // left: -200,
-    // top: -385,
     width: "100%",
-    // height:'100%',
-    // backgroundColor: '#CF3232',
   },
   callerVideoContainer: {
-    // backgroundColor: "#CF3232",
     borderRadius: 5,
-    height: 128,
-    left: 100,
+    height: 150,
     position: "absolute",
-    top: -310,
-    width: 83,
+    right: "5%",
+    top: "10%",
+    width: 90
   },
   changeCamera: {
     height: 30,
-    left: -170,
+    left: "10%",
     position: "absolute",
-    top: -320,
+    top: "10%",
     width: 30,
   },
   decline: {
-    alignItems: "center",
+    bottom: "15%",
     height: 65,
-    justifyContent: "center",
     position: "absolute",
-    top: 270,
-    width: 65,
-    // left: -30,
-    //  backgroundColor: '#CF3232',
+    width: 65
   },
   mute: {
+    bottom: "15%",
     height: 55,
-    left: -110,
+    left: "20%",
     position: "absolute",
-    top: 275,
-    width: 55,
-    // backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    // color: 'rgba(255, 255, 255, 0.9)',
+    width: 55
   },
   time: {
     alignItems: "center",
@@ -98,41 +91,84 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   videoOff: {
+    bottom: "15%",
     height: 55,
     position: "absolute",
-    right: -110,
-    top: 275,
-    width: 55,
-    //  backgroundColor: '#CF3232',
+    right: "20%",
+    width: 55
   },
 })
 
-const handleMute = () => {
-  console.log()
-}
-const handleDecline = () => {
-  console.log()
-}
-const handleVideoOff = () => {
-  console.log()
-}
-const handleChangeCamera = () => {
-  console.log()
-}
 export const VideoCallScreen = observer(function VideoCallScreen() {
+  // Test
+  const [localStream, setLocalStream] = useState(null)
+  const [mic, setMic] = useState(true)
+  const [camera, setCamera] = useState(true)
+
+  if (localStream !== null) {
+    console.log(localStream._tracks[0])
+  }
+
+  const start = async () => {
+    console.log('start')
+    if (!localStream) {
+      let s
+      try {
+        s = await mediaDevices.getUserMedia({ video: true })
+        setLocalStream(s)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+  }
+
+  const stop = () => {
+    console.log('stop')
+    if (localStream) {
+      localStream.getTracks().forEach(track => track.stop())
+      localStream.release()
+      setLocalStream(null)
+    }
+  }
+
+  const handleMute = () => {
+    localStream._tracks[0].muted = !localStream._tracks[0].muted
+    setMic(!localStream._tracks[0].muted)
+  }
+  const handleDecline = () => {
+    stop()
+  }
+  const handleVideoOff = () => {
+    // debugger
+    const videoTrack = localStream.getTracks().filter(track => track.kind === 'video')
+    videoTrack[0].enabled = !videoTrack[0].enabled
+    setCamera(videoTrack[0].enabled)
+  }
+
+  start()
+
   return (
     <Screen style={ROOT}>
       <View style={styles.backgroundStyle}>
-        <Image
+        {/* <Image
           source={require("../../../assets/call_icons/userImage-test2.png")}
           style={styles.backgroundVideo}
-        />
+        /> */}
+        <View style={styles.backgroundVideo}>
+          {
+            localStream &&
+            <RTCView
+              streamURL={localStream.toURL()}
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{ flex: 1 }} />
+          }
+        </View>
 
         <Image source={require("../../../assets/call_icons/mute.png")} style={styles.mute} />
         <TouchableOpacity onPress={handleMute} style={styles.mute}></TouchableOpacity>
 
         <Image source={require("../../../assets/call_icons/decline.png")} style={styles.decline} />
-        <TouchableOpacity onPress={handleDecline} style={styles.decline}></TouchableOpacity>
+        <TouchableOpacity onPress={stop} style={styles.decline}></TouchableOpacity>
 
         <Image
           source={require("../../../assets/call_icons/video-off.png")}
@@ -141,11 +177,18 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
         <TouchableOpacity onPress={handleVideoOff} style={styles.videoOff}></TouchableOpacity>
 
         <View style={styles.callerVideoContainer}>
-          <Image
+          {/* <Image
             source={require("../../../assets/call_icons/userImage-test3.png")}
             // eslint-disable-next-line react-native/no-inline-styles
             style={{ width: "100%", height: "100%", borderRadius: 5 }}
-          />
+          /> */}
+          {
+            localStream &&
+          <RTCView
+            streamURL={localStream.toURL()}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{ flex: 1 }} />
+          }
         </View>
 
         <Text style={styles.userName}>Thảo xinh</Text>
@@ -157,7 +200,7 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
           style={styles.changeCamera}
         />
         <TouchableOpacity
-          onPress={handleChangeCamera}
+          onPress={() => { localStream._tracks[0]._switchCamera() }}
           style={styles.changeCamera}
         ></TouchableOpacity>
       </View>
