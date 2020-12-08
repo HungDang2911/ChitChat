@@ -16,45 +16,43 @@ const ROOT: ViewStyle = {
   justifyContent: "center",
   backgroundColor: color.background,
   width: "100%",
-  height: "100%"
+  // height: "100%"
 }
 
 const styles = StyleSheet.create({
   backgroundStyle: {
     alignItems: "center",
-    height: "100%",
+    flex: 1,
     justifyContent: "center",
-    position: "relative",
     width: "100%"
   },
   backgroundVideo: {
     height: "100%",
-    position: "absolute",
-    width: "100%",
+    width: "121%",
   },
   callerVideoContainer: {
     borderRadius: 5,
     height: 150,
     position: "absolute",
     right: "5%",
-    top: "10%",
+    top: "5%",
     width: 90
   },
   changeCamera: {
     height: 30,
     left: "10%",
     position: "absolute",
-    top: "10%",
+    top: "5%",
     width: 30,
   },
   decline: {
-    bottom: "15%",
+    bottom: "10%",
     height: 65,
     position: "absolute",
     width: 65
   },
   mute: {
-    bottom: "15%",
+    bottom: "10%",
     height: 55,
     left: "20%",
     position: "absolute",
@@ -91,7 +89,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   videoOff: {
-    bottom: "15%",
+    bottom: "10%",
     height: 55,
     position: "absolute",
     right: "20%",
