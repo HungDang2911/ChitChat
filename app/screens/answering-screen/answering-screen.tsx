@@ -8,6 +8,8 @@ import {
   FlatList,
   TouchableOpacity,
   ImageBackground,
+  TouchableHighlight,
+  TouchableNativeFeedbackBase,
 } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { useNavigation } from "@react-navigation/native"
@@ -61,11 +63,19 @@ const styles = StyleSheet.create({
     top: 260,
     width: 65,
   },
+  declineImg: {
+    height: 65,
+    width: 65,
+  },
   mute: {
     height: 60,
     position: "absolute",
     right: -123,
     top: 120,
+    width: 60,
+  },
+  muteImg: {
+    height: 60,
     width: 60,
   },
   muteText: {
@@ -77,10 +87,10 @@ const styles = StyleSheet.create({
     height: 60,
     lineHeight: 18,
     position: "absolute",
-    right: -123,
+    right: -1,
     textAlign: "center",
 
-    top: 190,
+    top: 70,
 
     width: 60,
   },
@@ -89,6 +99,10 @@ const styles = StyleSheet.create({
     left: -120,
     position: "absolute",
     top: 120,
+    width: 60,
+  },
+  speakerImg: {
+    height: 60,
     width: 60,
   },
   speakerText: {
@@ -146,6 +160,10 @@ const styles = StyleSheet.create({
     top: 120,
     width: 60,
   },
+  videoCallImg: {
+    height: 60,
+    width: 60,
+  },
   videoCallText: {
     color: palette.offWhite,
     fontFamily: "Roboto",
@@ -164,19 +182,29 @@ const styles = StyleSheet.create({
   },
 })
 
-const handleSpeaker = () => {
-  console.log()
-}
-const handleDecline = () => {
-  console.log()
-}
-const handleMute = () => {
-  console.log()
-}
-const handleVideoCall = () => {
-  console.log()
-}
 export const AnsweringScreen = observer(function AnsweringScreen() {
+  const [isMuted, setMuted] = useState(false)
+  const muteImage = require("../../../assets/call_icons/mute.png")
+  const unMuteImage = require("../../../assets/call_icons/unmute.png")
+  function handleSpeaker () {
+    console.log()
+  }
+  function handleDecline () {
+    console.log()
+  }
+  function handleMute () {
+    console.log()
+    const imgSrc = isMuted ? muteImage : unMuteImage
+    return (
+      <View>
+        <Image source = {imgSrc} style={styles.muteImg} />
+        {isMuted ? <Text style={styles.muteText}>Tắt tiếng</Text> : <Text style={styles.muteText}>Bật tiếng</Text>}
+      </View>
+    )
+  }
+  function handleVideoCall () {
+    console.log()
+  }
   return (
     <Screen style={ROOT}>
       <View style={styles.backgroundStyle}>
@@ -185,22 +213,27 @@ export const AnsweringScreen = observer(function AnsweringScreen() {
           style={styles.backgroundAnswering}
           blurRadius={6}
         />
-        <Image source={require("../../../assets/call_icons/decline.png")} style={styles.decline} />
-        <TouchableOpacity onPress={handleDecline} style={styles.decline}></TouchableOpacity>
 
-        <Image source={require("../../../assets/call_icons/mute.png")} style={styles.mute} />
-        <TouchableOpacity onPress={handleMute} style={styles.mute}></TouchableOpacity>
-        <Text style={styles.muteText}>Tắt tiếng</Text>
+        <TouchableOpacity onPress={handleDecline} style={styles.decline}>
+          <Image source={require("../../../assets/call_icons/decline.png")} style={styles.declineImg} />
+        </TouchableOpacity>
 
-        <Image source={require("../../../assets/call_icons/speaker.png")} style={styles.speaker} />
-        <TouchableOpacity onPress={handleSpeaker} style={styles.speaker}></TouchableOpacity>
+        {/* <TouchableOpacity onPress={handleMute} style={styles.mute}>
+          <Image source={require("../../../assets/call_icons/mute.png")} style={styles.muteImg} /></TouchableOpacity>
+        <Text style={styles.muteText}>Tắt tiếng</Text> */}
+        <TouchableOpacity onPress={() => setMuted(!isMuted)} style={styles.mute}>
+          {handleMute()}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSpeaker} style={styles.speaker}>
+          <Image source={require("../../../assets/call_icons/speaker.png")} style={styles.speakerImg} />
+        </TouchableOpacity>
         <Text style={styles.speakerText}>Loa ngoài</Text>
 
-        <Image
-          source={require("../../../assets/call_icons/video-call.png")}
-          style={styles.videoCall}
-        />
-        <TouchableOpacity onPress={handleVideoCall} style={styles.videoCall}></TouchableOpacity>
+        <TouchableOpacity onPress={handleVideoCall} style={styles.videoCall}>
+          <Image
+            source={require("../../../assets/call_icons/video-call.png")}
+            style={styles.videoCallImg}
+          /></TouchableOpacity>
         <Text style={styles.videoCallText}>Gọi Video</Text>
 
         <Image

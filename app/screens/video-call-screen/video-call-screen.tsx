@@ -45,11 +45,19 @@ const styles = StyleSheet.create({
     top: "5%",
     width: 30,
   },
+  changeCameraImg: {
+    height: 30,
+    width: 30,
+  },
   decline: {
     bottom: "10%",
     height: 65,
     position: "absolute",
     width: 65
+  },
+  declineImg: {
+    height: 65,
+    width: 65,
   },
   mute: {
     bottom: "10%",
@@ -57,6 +65,10 @@ const styles = StyleSheet.create({
     left: "20%",
     position: "absolute",
     width: 55
+  },
+  muteImg: {
+    height: 55,
+    width: 55,
   },
   time: {
     alignItems: "center",
@@ -95,6 +107,10 @@ const styles = StyleSheet.create({
     right: "20%",
     width: 55
   },
+  videoOffImg: {
+    height: 55,
+    width: 55,
+  }
 })
 
 export const VideoCallScreen = observer(function VideoCallScreen() {
@@ -102,7 +118,9 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
   const [localStream, setLocalStream] = useState(null)
   const [mic, setMic] = useState(true)
   const [camera, setCamera] = useState(true)
-
+  const [isMuted, setMuted] = useState(false)
+  const muteImage = require("../../../assets/call_icons/mute.png")
+  const unMuteImage = require("../../../assets/call_icons/unmute.png")
   if (localStream !== null) {
     console.log(localStream._tracks[0])
   }
@@ -133,6 +151,14 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
     localStream._tracks[0].muted = !localStream._tracks[0].muted
     setMic(!localStream._tracks[0].muted)
   }
+  const muteChange = () => {
+    const imgSrc = isMuted ? muteImage : unMuteImage
+    return (
+      <View>
+        <Image source = {imgSrc} style={styles.muteImg} />
+      </View>
+    )
+  }
   const handleDecline = () => {
     stop()
   }
@@ -161,18 +187,21 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
               style={{ flex: 1 }} />
           }
         </View>
-
-        <Image source={require("../../../assets/call_icons/mute.png")} style={styles.mute} />
         <TouchableOpacity onPress={handleMute} style={styles.mute}></TouchableOpacity>
+        <TouchableOpacity onPress={() => setMuted(!isMuted)} style={styles.mute}>
+          {muteChange()}
+        </TouchableOpacity>
 
-        <Image source={require("../../../assets/call_icons/decline.png")} style={styles.decline} />
-        <TouchableOpacity onPress={stop} style={styles.decline}></TouchableOpacity>
+        <TouchableOpacity onPress={stop} style={styles.decline}>
+          <Image source={require("../../../assets/call_icons/decline.png")} style={styles.declineImg} />
+        </TouchableOpacity>
 
-        <Image
-          source={require("../../../assets/call_icons/video-off.png")}
-          style={styles.videoOff}
-        />
-        <TouchableOpacity onPress={handleVideoOff} style={styles.videoOff}></TouchableOpacity>
+        <TouchableOpacity onPress={handleVideoOff} style={styles.videoOff}>
+          <Image
+            source={require("../../../assets/call_icons/video-off.png")}
+            style={styles.videoOffImg}
+          />
+        </TouchableOpacity>
 
         <View style={styles.callerVideoContainer}>
           {/* <Image
@@ -193,14 +222,15 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
 
         <Text style={styles.time}>69:59</Text>
 
-        <Image
-          source={require("../../../assets/call_icons/change-camera.png")}
-          style={styles.changeCamera}
-        />
         <TouchableOpacity
           onPress={() => { localStream._tracks[0]._switchCamera() }}
           style={styles.changeCamera}
-        ></TouchableOpacity>
+        >
+          <Image
+            source={require("../../../assets/call_icons/change-camera.png")}
+            style={styles.changeCameraImg}
+          />
+        </TouchableOpacity>
       </View>
     </Screen>
   )

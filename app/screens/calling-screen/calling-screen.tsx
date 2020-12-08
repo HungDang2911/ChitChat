@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
     top: 180,
     width: 82,
   },
+  acceptImg: {
+    height: 82,
+    width: 82,
+  },
   acceptText: {
     color: palette.offWhite,
     fontFamily: 'Roboto',
@@ -86,6 +90,10 @@ const styles = StyleSheet.create({
     top: 180,
     width: 82,
   },
+  declineImg: {
+    height: 82,
+    width: 82,
+  },
   declineText: {
     color: palette.offWhite,
     fontFamily: 'Roboto',
@@ -131,12 +139,14 @@ export const CallingScreen = observer(function VideoCallScreen() {
       <View style = {styles.backgroundStyle}>
         <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {styles.backgroundCalling} blurRadius = {6}/>
 
-        <Image source = {require('../../../assets/call_icons/accept.png')} style = {styles.accept}/>
-        <TouchableOpacity onPress = {handleAccept} style = {styles.accept}></TouchableOpacity>
+        <TouchableOpacity onPress = {handleAccept} style = {styles.accept}>
+          <Image source = {require('../../../assets/call_icons/accept.png')} style = {styles.acceptImg}/>
+        </TouchableOpacity>
         <Text style = {styles.acceptText}>Chấp nhận</Text>
 
-        <Image source = {require('../../../assets/call_icons/decline.png')} style = {styles.decline}/>
-        <TouchableOpacity onPress = {handleDecline} style = {styles.decline}></TouchableOpacity>
+        <TouchableOpacity onPress = {handleDecline} style = {styles.decline}>
+          <Image source = {require('../../../assets/call_icons/decline.png')} style = {styles.declineImg}/>
+        </TouchableOpacity>
         <Text style = {styles.declineText}>Từ chối</Text>
         <View style = {styles.avatarContainer}>
           <Image source = {require('../../../assets/call_icons/userImage-test1.png')} style = {{ width: "100%", height: '100%', borderRadius: 130 }}/>
