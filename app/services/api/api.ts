@@ -4,7 +4,8 @@ import * as Config from "./apiConfig"
 axios.interceptors.request.use(
   (config) => {
     // Request headers
-    const AccessToken = glo
+    const globalAny: any = global
+    const accessToken = globalAny.rootStore.userStore.accessToken
 
     config.headers.Authorization = accessToken
     config.headers["Content-Type"] = "application/json"
@@ -21,7 +22,9 @@ axios.interceptors.response.use(
     return response
   },
   (error) => {
+    const globalAny: any = global
     // Handle response errors
+    if (error.response.status === 401) globalAny.rootStore.userStore.signOut()
     return Promise.reject(error)
   },
 )

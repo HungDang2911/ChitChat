@@ -12,6 +12,8 @@ import { PrimaryNavigator } from "./primary-navigator"
 import { useStores } from "../models"
 import { AuthNavigator } from "./auth-navigator"
 import { observer } from "mobx-react-lite"
+import { CHAT } from "../constants"
+import { ChatScreen } from "../screens"
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -25,6 +27,7 @@ import { observer } from "mobx-react-lite"
 export type RootParamList = {
   primaryTab: undefined
   authStack: undefined
+  [CHAT]: undefined
 }
 
 const Stack = createNativeStackNavigator<RootParamList>()
@@ -42,13 +45,19 @@ const RootStack = observer(() => {
       }}
     >
       {userStore.accessToken ? (
-        <Stack.Screen
-          name="primaryTab"
-          component={PrimaryNavigator}
-          options={{
-            headerShown: false,
-          }}
-        />
+        <>
+          <Stack.Screen
+            name="primaryTab"
+            component={PrimaryNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={CHAT}
+            component={ChatScreen}
+          />
+        </>
       ) : (
         <Stack.Screen
           name="authStack"

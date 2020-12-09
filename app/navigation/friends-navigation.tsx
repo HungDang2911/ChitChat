@@ -12,7 +12,7 @@ export type PrimaryParamList = {
 // Documentation: https://github.com/software-mansion/react-native-screens/tree/master/native-stack
 const Stack = createNativeStackNavigator<PrimaryParamList>()
 
-export function MessagesNavigator() {
+export function FriendsNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{

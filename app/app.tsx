@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 /**
  * Welcome to the main entry point of the app. In this file, we'll
  * be kicking off our app or storybook.
@@ -32,13 +33,16 @@ enableScreens()
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
+// const globalAny: any = global
+declare var global: any
+
 /**
  * This is the root component of our app.
  */
 function App() {
   const navigationRef = useRef<NavigationContainerRef>()
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
-
+  global.rootStore = rootStore
   setRootNavigation(navigationRef)
   useBackButtonHandler(navigationRef, canExit)
   const { initialNavigationState, onNavigationStateChange } = useNavigationPersistence(

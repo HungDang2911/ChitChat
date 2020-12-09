@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import {
   StyleSheet,
@@ -18,6 +18,7 @@ import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 import { palette } from "../../theme/palette"
 import { ADD_FRIEND } from "../../constants"
+import { getFriendList } from "../../services/api/friendsAPI"
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -97,67 +98,27 @@ const styles = StyleSheet.create({
     top: 37,
   },
 })
-const user = [
-  {
-    id: 1,
-    image: "https://bootdey.com/img/Content/avatar/avatar6.png",
-    username: "thanh1",
-  },
 
-  {
-    id: 2,
-    image: "https://bootdey.com/img/Content/avatar/avatar2.png",
-    username: "thanh2",
-  },
-  {
-    id: 3,
-    image: "https://bootdey.com/img/Content/avatar/avatar3.png",
-    username: "thanh3",
-  },
-  {
-    id: 4,
-    image: "https://bootdey.com/img/Content/avatar/avatar4.png",
-    username: "thanh4",
-  },
-  {
-    id: 5,
-    image: "https://bootdey.com/img/Content/avatar/avatar1.png",
-    username: "thanh5",
-  },
-  {
-    id: 6,
-    image: "https://bootdey.com/img/Content/avatar/avatar6.png",
-    username: "thanh6",
-  },
-  {
-    id: 7,
-    image: "https://bootdey.com/img/Content/avatar/avatar1.png",
-    username: "thanh7",
-  },
-  {
-    id: 8,
-    image: "https://bootdey.com/img/Content/avatar/avatar1.png",
-    username: "thanh8",
-  },
-  {
-    id: 9,
-    image: "https://bootdey.com/img/Content/avatar/avatar6.png",
-    username: "thanh9",
-  },
-  {
-    id: 10,
-    image: "https://bootdey.com/img/Content/avatar/avatar1.png",
-    username: "thanh10",
-  },
-]
-function handleViewProfile() {
-  Alert.alert("abcd")
-}
 export const ListFriendScreen = observer(function ListFriendScreen() {
+  const [friendList, setFriendList] = useState([])
   const navigation = useNavigation()
+
+  useEffect(() => {
+    const fetchFriendList = async () => {
+      const response = await getFriendList()
+      console.log(response.data)
+      setFriendList(response.data)
+    }
+
+    fetchFriendList()
+  }, [])
 
   const handleAddFriend = () => {
     navigation.navigate(ADD_FRIEND)
+  }
+
+  const handleViewProfile(user) => {
+    // navigation.navigate()
   }
 
   return (
@@ -174,17 +135,16 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
         </View>
         <View style={styles.body}>
           <FlatList
-            enableEmptySections={true}
-            data={user}
+            data={friendList}
             keyExtractor={(user) => {
-              return user.id
+              return user._id
             }}
-            renderItem={(user) => {
+            renderItem={({ item }) => {
               return (
-                <TouchableOpacity onPress={handleViewProfile}>
+                <TouchableOpacity onPress={() => {handleViewProfile(item)}}>
                   <View style={styles.box}>
-                    <Image style={styles.image} source={{ uri: user.item.image }} />
-                    <Text style={styles.username}>{user.item.username}</Text>
+                    <Image style={styles.image} source={{ uri: item.avatar }} />
+                    <Text style={styles.username}>{item.fullName}</Text>
                   </View>
                 </TouchableOpacity>
               )

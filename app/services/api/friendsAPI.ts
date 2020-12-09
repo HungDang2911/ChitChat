@@ -1,6 +1,6 @@
 import { Api } from "."
 
-export const getFriendsList = () => {
+export const getFriendList = () => {
   return Api.get(`/users/friends`)
 }
 

@@ -5,6 +5,7 @@ import { withEnvironment } from "./extensions/with-environment"
 export const defaults = {
   _id: "",
   username: "",
+  fullName: "",
   accessToken: "",
   refreshToken: "",
 }
@@ -14,18 +15,20 @@ export const UserStoreModel = types
   .props({
     _id: types.string,
     username: types.string,
+    fullName: types.string,
+    email: types.string,
     accessToken: types.string,
     refreshToken: types.string,
   })
   .extend(withEnvironment) // ** IMPORTANT! **
   .actions((self) => ({
-    login: flow(function* (account) {
+    login: flow(function * (account) {
       const { accessToken, refreshToken } = (yield login(account)).data
       console.tron.log(accessToken, refreshToken)
       self.accessToken = accessToken
       self.refreshToken = refreshToken
     }),
-    register: flow(function* (account) {
+    register: flow(function * (account) {
       yield register(account)
     }),
     signOut: function () {

@@ -55,13 +55,6 @@ const styles = StyleSheet.create({
   scrollView: {
     width: "100%",
   },
-  sexView: {
-    backgroundColor: color.backgroundSearch,
-    borderRadius: 15,
-    height: 60,
-    marginBottom: 5,
-    width: "95%",
-  },
   signOutButton: {
     borderRadius: 24,
     height: 48,
@@ -144,18 +137,14 @@ export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
       <ScrollView style={styles.scrollView}>
         <View style={styles.containerView}>
           <Image source={{ uri: user.avatar }} style={styles.imageAvatar} />
-          <Text style={styles.userTextName}>{user.username}</Text>
+          <Text style={styles.userTextName}>{userStore.username}</Text>
           <View style={styles.nameView}>
             <Text style={styles.titleView}>Name</Text>
-            <Text style={styles.value}>{user.name}</Text>
-          </View>
-          <View style={styles.sexView}>
-            <Text style={styles.titleView}>Sex</Text>
-            <Text style={styles.value}>{user.sex}</Text>
+            <Text style={styles.value}>{userStore.fullName}</Text>
           </View>
           <View style={styles.emailView}>
             <Text style={styles.titleView}>Email</Text>
-            <Text style={styles.value}>{user.email}</Text>
+            <Text style={styles.value}>{userStore.email}</Text>
           </View>
           <Edit isMe={isMe} />
           {isMe && (
