@@ -11,8 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import React, { useEffect } from "react"
 
 import { FRIENDS, MESSAGES, PROFILE_USER } from "../constants"
-import { AddFriendScreen, ProfileUserScreen } from "../screens"
-import ListFriendScreen from "../screens/list-friend-screen/list-friend-screen"
+import { AddFriendScreen, ListFriendScreen, ProfileUserScreen } from "../screens"
 import { MessageScreen } from "../screens/message-screen/message-screen"
 import { initiateSocket } from "../services/socket/socket"
 import { color } from "../theme"
@@ -67,7 +66,7 @@ export function PrimaryNavigator() {
       tabBarOptions={{ activeTintColor: color.primary, inactiveTintColor: color.palette.grey }}
     >
       <Tab.Screen name={MESSAGES} component={MessageScreen} />
-      <Tab.Screen name={FRIENDS} component={AddFriendScreen} />
+      <Tab.Screen name={FRIENDS} component={ListFriendScreen} />
       <Tab.Screen name={PROFILE_USER} component={ProfileUserScreen} />
     </Tab.Navigator>
   )

@@ -4,6 +4,9 @@ import * as Config from "./apiConfig"
 axios.interceptors.request.use(
   (config) => {
     // Request headers
+    const AccessToken = glo
+
+    config.headers.Authorization = accessToken
     config.headers["Content-Type"] = "application/json"
 
     return config
