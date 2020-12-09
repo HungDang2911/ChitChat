@@ -6,6 +6,7 @@ export const defaults = {
   _id: "",
   username: "",
   fullName: "",
+  email: "",
   accessToken: "",
   refreshToken: "",
 }
