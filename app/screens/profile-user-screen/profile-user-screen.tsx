@@ -13,7 +13,7 @@ import {
 import { Button, Screen, Text, TextField } from "../../components"
 import { useStores } from "../../models"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import { faEdit } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faComment } from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
 
 const ROOT: ViewStyle = {
@@ -74,11 +74,21 @@ const styles = StyleSheet.create({
   },
   userTextName: {
     fontFamily: "Roboto",
-    fontSize: 24,
+    fontSize: 18,
     fontStyle: "normal",
     fontWeight: "normal",
     marginBottom: 10,
-    marginTop: 10,
+    marginLeft: 10,
+    marginTop: 10
+  },
+  userView: {
+    backgroundColor: color.background,
+    borderRadius: 5,
+    height: 75,
+    justifyContent: "center",
+    position: "absolute",
+    top: 335,
+    width: 300
   },
   value: {
     fontSize: 16,
@@ -87,6 +97,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 30,
   },
+  comment: {
+    height: 25,
+    position: "absolute",
+    right: 20,
+    width: 25
+  }
 })
 
 function handelEdit() {
@@ -114,11 +130,9 @@ const user = {
   id: 1,
   name: "Thanh Thảo",
   username: "agdhagd",
-  avatar: "./people.jpg",
+  // avatar: "./people.jpg",
   message: "hdjshdas",
   status: 3,
-  email: "haj@gmail.com",
-  sex: "male",
   lastTime: "11:09",
 }
 
@@ -126,18 +140,30 @@ export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
   // const { isMe } = props.route.params
   // navigation.navigate("User", { user })
   const { userStore } = useStores()
-  const isMe = true
+  const isMe = false
 
   const handleSignOut = () => {
     userStore.signOut()
+  }
+
+  const handleComment = () => {
+    console.log()
   }
 
   return (
     <Screen style={ROOT} preset="scroll">
       <ScrollView style={styles.scrollView}>
         <View style={styles.containerView}>
-          <Image source={{ uri: user.avatar }} style={styles.imageAvatar} />
-          <Text style={styles.userTextName}>{userStore.username}</Text>
+          <Image source={ user.avatar ? { uri: user.avatar } : require("../../../assets/imgs/default-avatar.jpg")} style={styles.imageAvatar} />
+          <Text style={styles.userTextName}></Text>
+          <View style = {styles.userView}>
+            <Text style={styles.userTextName}>{user.username}</Text>
+            {!isMe && (
+              <TouchableOpacity style={styles.comment} onPress={handleComment}>
+                <FontAwesomeIcon icon={faComment} color = {color.primary} size={scaledSize(25)} />
+              </TouchableOpacity>
+            )}
+          </View>
           <View style={styles.nameView}>
             <Text style={styles.titleView}>Name</Text>
             <Text style={styles.value}>{userStore.fullName}</Text>
