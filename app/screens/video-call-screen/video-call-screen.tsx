@@ -151,6 +151,25 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
     localStream._tracks[0].muted = !localStream._tracks[0].muted
     setMic(!localStream._tracks[0].muted)
   }
+
+  const VideoOff = () => {
+    if (camera) {
+      return (
+        <Image
+          source={require("../../../assets/call_icons/video-call.png")}
+          style={styles.videoOffImg}
+        />
+      )
+    } else {
+      return (
+        <Image
+          source={require("../../../assets/call_icons/video-off.png")}
+          style={styles.videoOffImg}
+        />
+      )
+    }
+  }
+
   const muteChange = () => {
     const imgSrc = isMuted ? muteImage : unMuteImage
     return (
@@ -197,10 +216,7 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleVideoOff} style={styles.videoOff}>
-          <Image
-            source={require("../../../assets/call_icons/video-off.png")}
-            style={styles.videoOffImg}
-          />
+          <VideoOff/>
         </TouchableOpacity>
 
         <View style={styles.callerVideoContainer}>

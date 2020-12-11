@@ -117,7 +117,7 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
     navigation.navigate(ADD_FRIEND)
   }
 
-  const handleViewProfile(user) => {
+  const handleViewProfile = (user) => {
     // navigation.navigate()
   }
 
