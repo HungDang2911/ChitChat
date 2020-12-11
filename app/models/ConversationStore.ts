@@ -25,11 +25,11 @@ export const ConversationStoreModel = types
   })
   .extend(withEnvironment) // ** IMPORTANT! **
   .actions((self) => ({
-    getConversations: flow(function* () {
+    getConversations: flow(function * () {
       const conversations = (yield getAllConversations()).data
       self.conversations = conversations
     }),
-    createConversation: flow(function* () {
+    createConversation: flow(function * () {
       return null
     }),
   }))
