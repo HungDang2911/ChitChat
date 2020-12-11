@@ -19,6 +19,7 @@ import { scaledSize } from "../../theme/sizing"
 import { palette } from "../../theme/palette"
 import { ADD_FRIEND } from "../../constants"
 import { getFriendList } from "../../services/api/friendsAPI"
+import { useStores } from "../../models"
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -100,24 +101,21 @@ const styles = StyleSheet.create({
 })
 
 export const ListFriendScreen = observer(function ListFriendScreen() {
+  const { friendStore } = useStores()
+
   const [friendList, setFriendList] = useState([])
   const navigation = useNavigation()
 
   useEffect(() => {
-    const fetchFriendList = async () => {
-      const response = await getFriendList()
-      console.log(response.data)
-      setFriendList(response.data)
-    }
-
-    fetchFriendList()
+    friendStore.getFriendList()
+    setFriendList(friendStore.friends)
   }, [])
 
   const handleAddFriend = () => {
     navigation.navigate(ADD_FRIEND)
   }
 
-  const handleViewProfile(user) => {
+  const handleViewProfile = (user: any) => {
     // navigation.navigate()
   }
 
@@ -137,14 +135,25 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
           <FlatList
             data={friendList}
             keyExtractor={(user) => {
-              return user._id
+              return user.info._id
             }}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity onPress={() => {handleViewProfile(item)}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleViewProfile(item)
+                  }}
+                >
                   <View style={styles.box}>
-                    <Image style={styles.image} source={{ uri: item.avatar }} />
-                    <Text style={styles.username}>{item.fullName}</Text>
+                    <Image
+                      style={styles.image}
+                      source={
+                        item.info.avatar
+                          ? { uri: item.info.avatar }
+                          : require("../../../assets/imgs/default-avatar.jpg")
+                      }
+                    />
+                    <Text style={styles.username}>{item.info.fullName}</Text>
                   </View>
                 </TouchableOpacity>
               )

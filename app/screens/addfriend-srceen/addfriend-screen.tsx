@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   messageUserTextUsername: {
     left: 71,
     position: "absolute",
-    top: 36
+    top: 36,
   },
   messageUserView: {
     borderBottomColor: "#E2E2E2",
@@ -116,8 +116,13 @@ function MessageUser(props) {
   return (
     <View style={styles.messageUserView}>
       <Text style={styles.messageUserTextName}>{user.fullName}</Text>
-      <Text style={styles.messageUserTextUsername} >{user.username}</Text>
-      <Image source={ user.avatar ? { uri: user.avatar } : require("../../../assets/imgs/default-avatar.jpg")} style={styles.messageUserAvatar} />
+      <Text style={styles.messageUserTextUsername}>{user.username}</Text>
+      <Image
+        source={
+          user.avatar ? { uri: user.avatar } : require("../../../assets/imgs/default-avatar.jpg")
+        }
+        style={styles.messageUserAvatar}
+      />
       <View style={styles.iconView}>
         <TouchableOpacity onPress={handleIsFriend}>
           <IconIsFriend isFriend={isFriend} />

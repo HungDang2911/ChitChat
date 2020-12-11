@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+/* eslint-disable react-native/no-color-literals */
+/* eslint-disable react-native/no-inline-styles */
+import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import {
   StyleSheet,
@@ -27,6 +29,7 @@ import { renderOnly } from "@storybook/addon-storyshots"
 import { createInstanceofPredicate } from "mobx/lib/internal"
 import { construct } from "ramda"
 import { setInternetCredentials } from "react-native-keychain"
+import { useStores } from "../../models"
 
 const ROOT: ViewStyle = {
   position: "relative",
@@ -40,17 +43,17 @@ const styles = StyleSheet.create({
   gimView: {
     height: 52,
     left: 122,
-    position: 'absolute',
+    position: "absolute",
     top: 14,
     width: 25,
   },
   iconUnRead: {
     left: 13,
-    top: 1
+    top: 1,
   },
   messageContainer: {
     height: 597,
-    position: 'absolute',
+    position: "absolute",
     top: 85,
   },
   messageHeader: {
@@ -60,14 +63,14 @@ const styles = StyleSheet.create({
     height: 85,
     justifyContent: "center",
     left: 0,
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     width: "100%",
   },
   messageImage: {
     bottom: 32,
     left: 16,
-    position: 'absolute',
+    position: "absolute",
   },
   // messageOption: {
   //   // borderBottomColor:"#E2E2E2",
@@ -78,155 +81,155 @@ const styles = StyleSheet.create({
   // },
   messageText: {
     color: color.text,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 18,
-    fontStyle: 'normal',
-    fontWeight: 'normal',
+    fontStyle: "normal",
+    fontWeight: "normal",
     justifyContent: "center",
     lineHeight: 22,
-    position: 'absolute',
-    textAlign: 'center'
+    position: "absolute",
+    textAlign: "center",
   },
   messageUser: {
     borderBottomColor: "#E2E2E2",
     borderBottomWidth: 2,
     height: 77,
-    position: 'relative',
+    position: "relative",
     width: 375,
   },
   messageUserAvatar: {
     borderRadius: 50,
     height: 55,
     left: 6,
-    position: 'absolute',
+    position: "absolute",
     top: 8,
     width: 55,
   },
   messageUserLastTime: {
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 14,
     left: 309,
     lineHeight: 17,
-    position: 'absolute',
-    textAlign: 'center',
+    position: "absolute",
+    textAlign: "center",
     top: 12,
   },
   messageUserOptionLastTime: {
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 14,
     lineHeight: 17,
-    position: 'absolute',
+    position: "absolute",
     right: 293,
-    textAlign: 'center',
+    textAlign: "center",
     top: 17,
   },
   messageUserText: {
     color: color.text,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 14,
-    fontStyle: 'normal',
-    fontWeight: 'normal',
+    fontStyle: "normal",
+    fontWeight: "normal",
     left: 71,
     lineHeight: 18,
-    position: 'absolute',
-    top: 39
+    position: "absolute",
+    top: 39,
   },
   messageUserTextName: {
     color: color.text,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 16,
-    fontStyle: 'normal',
-    fontWeight: 'bold',
+    fontStyle: "normal",
+    fontWeight: "bold",
     left: 71,
     lineHeight: 20,
-    position: 'absolute',
-    top: 14
+    position: "absolute",
+    top: 14,
   },
   moreText: {
     color: color.text,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 14,
-    fontStyle: 'normal',
-    fontWeight: 'normal',
+    fontStyle: "normal",
+    fontWeight: "normal",
     lineHeight: 21,
-    position: 'absolute',
-    textAlign: 'center',
+    position: "absolute",
+    textAlign: "center",
     top: 21,
   },
   moreView: {
     height: 42,
     left: 207,
-    position: 'absolute',
+    position: "absolute",
     top: 20,
     width: 35,
   },
   optionView: {
     backgroundColor: color.primary,
     height: 75,
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     top: 0,
     width: 261,
   },
   statusContent: {
     color: color.background,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 14,
-    fontStyle: 'normal',
-    fontWeight: 'normal',
+    fontStyle: "normal",
+    fontWeight: "normal",
     lineHeight: 18,
-    position: 'absolute'
+    position: "absolute",
   },
   statusOptionView: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: color.primary,
     borderRadius: 20,
     height: 22,
     justifyContent: "center",
-    position: 'absolute',
+    position: "absolute",
     right: 298,
     top: 38,
-    width: 22
+    width: 22,
   },
   statusView: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: color.primary,
     borderRadius: 20,
     height: 22,
     justifyContent: "center",
     left: 315,
-    position: 'absolute',
+    position: "absolute",
     top: 33,
-    width: 22
+    width: 22,
   },
   statusViewSend: {
     height: 11,
     left: 317,
-    position: 'absolute',
+    position: "absolute",
     top: 40,
-    width: 19
+    width: 19,
   },
   textGim: {
     color: color.text,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 14,
-    fontStyle: 'normal',
-    fontWeight: 'normal',
+    fontStyle: "normal",
+    fontWeight: "normal",
     left: 4,
     lineHeight: 21,
-    position: 'absolute',
-    textAlign: 'center',
+    position: "absolute",
+    textAlign: "center",
     top: 31,
   },
   textUnRead: {
     color: color.text,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 14,
-    fontStyle: 'normal',
-    fontWeight: 'normal',
+    fontStyle: "normal",
+    fontWeight: "normal",
     lineHeight: 21,
-    position: 'absolute',
-    textAlign: 'center',
+    position: "absolute",
+    textAlign: "center",
     top: 31,
   },
   unReadView: {
@@ -260,8 +263,15 @@ const users = [
 
 export const MessageScreen = observer(function MessageScreen() {
   const navigation = useNavigation()
+  const { userStore, conversationStore } = useStores()
+  const [conservations, setConversations] = useState([])
 
-  function HandelTouch() {
+  useEffect(() => {
+    conversationStore.getConversations()
+    setConversations(conversationStore.conversations)
+  }, [])
+
+  function handleTouch() {
     Alert.alert("sjgjg")
   }
 
@@ -272,7 +282,7 @@ export const MessageScreen = observer(function MessageScreen() {
       <TouchableOpacity
         activeOpacity={0.2}
         onLongPress={() => setIsShowing(!isShowing)}
-        onPress={HandelTouch}
+        onPress={handleTouch}
       >
         <View style={styles.messageUser}>
           <Text style={styles.messageUserTextName}>{user.name}</Text>
@@ -308,7 +318,7 @@ export const MessageScreen = observer(function MessageScreen() {
               <Text style={styles.textUnRead}>Unread</Text>
             </View>
             <View
-              style={ {
+              style={{
                 position: "absolute",
                 backgroundColor: color.background,
                 height: 37,

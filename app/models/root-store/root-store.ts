@@ -1,12 +1,16 @@
+import { createFriendStoreModel } from "./../FriendStore"
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { createUserStoreModel } from "../UserStore"
+import { createConversationStoreModel } from "../ConversationStore"
 
 /**
  * A RootStore model.
  */
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
-  userStore: createUserStoreModel()
+  userStore: createUserStoreModel(),
+  friendStore: createFriendStoreModel(),
+  conversationStore: createConversationStoreModel()
 })
 
 /**

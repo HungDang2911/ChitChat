@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import React, { useEffect } from "react"
 
 import { FRIENDS, MESSAGES, PROFILE_USER } from "../constants"
+import { useStores } from "../models"
 import { ProfileUserScreen } from "../screens"
 import { MessageScreen } from "../screens/message-screen/message-screen"
 import { initiateSocket } from "../services/socket/socket"
@@ -39,8 +40,12 @@ export type PrimaryParamList = {
 const Tab = createBottomTabNavigator<PrimaryParamList>()
 
 export function PrimaryNavigator() {
+  const { conversationStore } = useStores()
+
   useEffect(() => {
-    initiateSocket([])
+    conversationStore.getConversations()
+    const rooms = conversationStore.conversations.map((conversation) => conversation._id)
+    initiateSocket(rooms)
   }, [])
 
   return (

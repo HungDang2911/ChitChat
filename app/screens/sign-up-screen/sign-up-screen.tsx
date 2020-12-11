@@ -92,18 +92,17 @@ export const SignUpScreen = observer(function SignUpScreen() {
   return (
     <Screen style={ROOT} preset="scroll">
       <FontAwesomeIcon icon={faComments} color={color.primary} size={scaledSize(80)} />
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.inputContainersWrapper}>
-        <View style={styles.inputContainer}>
-          <Text tx="signUpScreen.username" style={styles.inputLabel} />
-          <TextField
-            style={styles.inputField}
-            textContentType="nickname"
-            placeholderTx="signUpScreen.enterUsername"
-            onChangeText={handleChangeUsername}
-            autoCapitalize="none"
-          />
-        </View>
-        {/* <View style={styles.inputContainer}>
+      <View style={styles.inputContainer}>
+        <Text tx="signUpScreen.username" style={styles.inputLabel} />
+        <TextField
+          style={styles.inputField}
+          textContentType="nickname"
+          placeholderTx="signUpScreen.enterUsername"
+          onChangeText={handleChangeUsername}
+          autoCapitalize="none"
+        />
+      </View>
+      {/* <View style={styles.inputContainer}>
           <Text tx="signUpScreen.fullName" style={styles.inputLabel} />
           <TextField
             style={styles.inputField}
@@ -112,48 +111,47 @@ export const SignUpScreen = observer(function SignUpScreen() {
             onChangeText={handleChangeUsername}
           />
         </View> */}
-        <View style={styles.inputContainer}>
-          <Text tx="signUpScreen.fullName" style={styles.inputLabel} />
-          <TextField
-            style={styles.inputField}
-            textContentType="nickname"
-            placeholderTx="signUpScreen.enterFullName"
-            onChangeText={handleChangeUsername}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text tx="signUpScreen.email" style={styles.inputLabel} />
-          <TextField
-            style={styles.inputField}
-            placeholderTx="signUpScreen.enterEmail"
-            textContentType="emailAddress"
-            autoCapitalize="none"
-            onChangeText={handleChangeEmail}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text tx="signUpScreen.password" style={styles.inputLabel} />
-          <TextField
-            style={styles.inputField}
-            placeholderTx="signUpScreen.enterPassword"
-            textContentType="password"
-            autoCapitalize="none"
-            onChangeText={handleChangePassword}
-            secureTextEntry
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text tx="signUpScreen.confirmPassword" style={styles.inputLabel} />
-          <TextField
-            style={styles.inputField}
-            placeholderTx="signUpScreen.enterConfirmPassword"
-            textContentType="password"
-            autoCapitalize="none"
-            onChangeText={handleChangeConfirmPassword}
-            secureTextEntry
-          />
-        </View>
-      </ScrollView>
+      <View style={styles.inputContainer}>
+        <Text tx="signUpScreen.fullName" style={styles.inputLabel} />
+        <TextField
+          style={styles.inputField}
+          textContentType="nickname"
+          placeholderTx="signUpScreen.enterFullName"
+          onChangeText={handleChangeUsername}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text tx="signUpScreen.email" style={styles.inputLabel} />
+        <TextField
+          style={styles.inputField}
+          placeholderTx="signUpScreen.enterEmail"
+          textContentType="emailAddress"
+          autoCapitalize="none"
+          onChangeText={handleChangeEmail}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text tx="signUpScreen.password" style={styles.inputLabel} />
+        <TextField
+          style={styles.inputField}
+          placeholderTx="signUpScreen.enterPassword"
+          textContentType="password"
+          autoCapitalize="none"
+          onChangeText={handleChangePassword}
+          secureTextEntry
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text tx="signUpScreen.confirmPassword" style={styles.inputLabel} />
+        <TextField
+          style={styles.inputField}
+          placeholderTx="signUpScreen.enterConfirmPassword"
+          textContentType="password"
+          autoCapitalize="none"
+          onChangeText={handleChangeConfirmPassword}
+          secureTextEntry
+        />
+      </View>
       <Button
         tx="signUpScreen.signUp"
         style={styles.signUpBtn}
