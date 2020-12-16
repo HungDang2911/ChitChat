@@ -8,13 +8,22 @@ import { faComments } from "@fortawesome/free-solid-svg-icons"
 import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 import { palette } from "../../theme/palette"
-import { mediaDevices, RTCView } from 'react-native-webrtc'
+import {
+  RTCPeerConnection,
+  RTCIceCandidate,
+  RTCSessionDescription,
+  RTCView,
+  MediaStream,
+  MediaStreamTrack,
+  mediaDevices,
+  registerGlobals
+} from 'react-native-webrtc'
 
 const ROOT: ViewStyle = {
   flex: 1,
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: color.background,
+  backgroundColor: color.text,
   width: "100%",
   // height: "100%"
 }
@@ -116,6 +125,7 @@ const styles = StyleSheet.create({
 export const VideoCallScreen = observer(function VideoCallScreen() {
   // Test
   const [localStream, setLocalStream] = useState(null)
+  const [removeStream, setRemoveStream] = useState(null)
   const [mic, setMic] = useState(true)
   const [camera, setCamera] = useState(true)
   const [isMuted, setMuted] = useState(false)
@@ -199,9 +209,9 @@ export const VideoCallScreen = observer(function VideoCallScreen() {
         /> */}
         <View style={styles.backgroundVideo}>
           {
-            localStream &&
+            removeStream &&
             <RTCView
-              streamURL={localStream.toURL()}
+              streamURL={removeStream.toURL()}
               // eslint-disable-next-line react-native/no-inline-styles
               style={{ flex: 1 }} />
           }
