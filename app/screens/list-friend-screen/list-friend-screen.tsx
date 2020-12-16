@@ -17,7 +17,7 @@ import { faComments } from "@fortawesome/free-solid-svg-icons"
 import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 import { palette } from "../../theme/palette"
-import { ADD_FRIEND } from "../../constants"
+import { ADD_FRIEND, PROFILE_USER } from "../../constants"
 import { getFriendList } from "../../services/api/friendsAPI"
 import { useStores } from "../../models"
 
@@ -116,7 +116,7 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
   }
 
   const handleViewProfile = (user: any) => {
-    // navigation.navigate()
+    navigation.navigate(PROFILE_USER, user)
   }
 
   return (

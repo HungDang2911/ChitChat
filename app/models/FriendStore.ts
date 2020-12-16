@@ -8,6 +8,9 @@ export const defaults = {
 
 const Info = types.model({
   _id: types.string,
+  fullName: types.string,
+  avatar: types.maybeNull(types.string),
+  username: types.string,
 })
 
 const Friend = types.model({

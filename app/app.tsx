@@ -24,10 +24,11 @@ import {
   useNavigationPersistence,
 } from "./navigation"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
+import { registerGlobals } from "react-native-webrtc"
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
 // https://github.com/kmagiera/react-native-screens#using-native-stack-navigator
-import { enableScreens } from 'react-native-screens'
+import { enableScreens } from "react-native-screens"
 import { SplashScreen } from "./screens"
 enableScreens()
 
@@ -43,6 +44,7 @@ function App() {
   const navigationRef = useRef<NavigationContainerRef>()
   const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
   global.rootStore = rootStore
+  registerGlobals()
   setRootNavigation(navigationRef)
   useBackButtonHandler(navigationRef, canExit)
   const { initialNavigationState, onNavigationStateChange } = useNavigationPersistence(
@@ -52,7 +54,7 @@ function App() {
 
   // Kick off initial async loading actions, like loading fonts and RootStore
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       setupRootStore().then(setRootStore)
     })()
   }, [])

@@ -286,7 +286,7 @@ export const MessageScreen = observer(function MessageScreen() {
       >
         <View style={styles.messageUser}>
           <Text style={styles.messageUserTextName}>{user.name}</Text>
-          <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
+          <Image source={ { uri: user.avatar }} style={styles.messageUserAvatar} />
           <Text style={styles.messageUserText}>{user.message}</Text>
           <Text style={styles.messageUserLastTime}>{user.lastTime}</Text>
           <StatusMessage status={user.status} />
