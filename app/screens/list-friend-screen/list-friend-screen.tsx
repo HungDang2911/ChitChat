@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  RefreshControl
 } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { useNavigation } from "@react-navigation/native"
@@ -85,6 +86,11 @@ const styles = StyleSheet.create({
     top: 14,
     width: 60,
   },
+  refreshControl: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
   username: {
     alignItems: "center",
     color: palette.black,
@@ -99,13 +105,22 @@ const styles = StyleSheet.create({
     top: 37,
   },
 })
-
+const wait = (timeout) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout)
+  })
+}
 export const ListFriendScreen = observer(function ListFriendScreen() {
   const { friendStore } = useStores()
 
   const [friendList, setFriendList] = useState([])
   const navigation = useNavigation()
+  const [refreshing, setRefreshing] = useState(false)
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true)
 
+    wait(2000).then(() => setRefreshing(false))
+  }, [])
   useEffect(() => {
     friendStore.getFriendList()
     setFriendList(friendStore.friends)
@@ -130,6 +145,13 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
             />
           </TouchableOpacity>
           <Text style={styles.headerContent}>Danh sách bạn bè</Text>
+          <ScrollView
+            contentContainerStyle={styles.refreshControl}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+          </ScrollView>
         </View>
         <View style={styles.body}>
           <FlatList
