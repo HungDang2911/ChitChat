@@ -29,6 +29,12 @@ const ROOT: ViewStyle = {
   // justifyContent: "center"
 }
 
+const FRIEND_STATUS = {
+  FRIEND: 1,
+  UN_FRIEND: -1,
+  ADD_FRIEND: 0
+}
+
 const styles = StyleSheet.create({
   iconView: {
     alignItems: "center",
@@ -107,9 +113,9 @@ function MessageUser(props) {
   const [isFriend, setIsFriend] = useState(user.isFriend)
 
   function handleIsFriend() {
-    if (isFriend === -1) {
-      setIsFriend(0)
-      user.isFriend = 0
+    if (isFriend === FRIEND_STATUS.UN_FRIEND) {
+      setIsFriend(FRIEND_STATUS.ADD_FRIEND)
+      user.isFriend = FRIEND_STATUS.ADD_FRIEND
     }
   }
 
@@ -134,7 +140,7 @@ function MessageUser(props) {
 
 function IconIsFriend(prop) {
   const isFriend = prop.isFriend
-  if (isFriend === 1) {
+  if (isFriend === FRIEND_STATUS.FRIEND) {
     return (
       <FontAwesomeIcon
         icon={faUserFriends}
@@ -143,7 +149,7 @@ function IconIsFriend(prop) {
       ></FontAwesomeIcon>
     )
   }
-  if (isFriend === -1) {
+  if (isFriend === FRIEND_STATUS.UN_FRIEND) {
     return (
       <FontAwesomeIcon icon={faUserPlus} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
     )

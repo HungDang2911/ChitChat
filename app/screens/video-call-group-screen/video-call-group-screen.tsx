@@ -3,14 +3,23 @@ import { observer } from "mobx-react-lite"
 import { color } from "../../theme"
 import { StyleSheet, ViewStyle, View, Image, FlatList, TouchableOpacity, ScrollView } from "react-native"
 import { Screen } from "../../components"
-import { mediaDevices, RTCView } from 'react-native-webrtc'
 import { scaledSize } from "../../theme/sizing"
+import {
+  RTCPeerConnection,
+  RTCIceCandidate,
+  RTCSessionDescription,
+  RTCView,
+  MediaStream,
+  MediaStreamTrack,
+  mediaDevices,
+  registerGlobals
+} from 'react-native-webrtc'
 
 const ROOT: ViewStyle = {
   flex: 1,
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: color.background,
+  backgroundColor: color.text,
   width: "100%",
   height: "100%"
 }
@@ -32,9 +41,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     flex: 1,
-    justifyContent: "space-evenly"
-    // height: "100%",
-    // width: "100%",
+    justifyContent: "space-evenly",
+    height: "100%",
+    width: "100%",
   },
   decline: {
     bottom: "10%",
@@ -70,7 +79,7 @@ const styles = StyleSheet.create({
   },
   videoView: {
     // flex: 1
-    height: 350,
+    minHeight: 350,
     width: "50%",
   }
 })
@@ -184,51 +193,21 @@ export const VideoCallGroupScreen = observer(function VideoCallGroupScreen() {
               />
             }
           </View>
-          {/* <FlatList
+          <View style = {styles.videoView}>
+            {
+              localStream &&
+              <RTCView
+                streamURL={localStream.toURL()}
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{ flex: 1 }}
+              />
+            }
+          </View>
+          <FlatList
             data={remoteStreams}
             renderItem={({ item }) => <VideoCallView stream={item} />}
             keyExtractor={(item, index) => `${index}`}
-          /> */}
-          <View style = {styles.videoView}>
-            {
-              localStream &&
-              <RTCView
-                streamURL={localStream.toURL()}
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{ flex: 1 }}
-              />
-            }
-          </View>
-          <View style = {styles.videoView}>
-            {
-              localStream &&
-              <RTCView
-                streamURL={localStream.toURL()}
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{ flex: 1 }}
-              />
-            }
-          </View>
-          <View style = {styles.videoView}>
-            {
-              localStream &&
-              <RTCView
-                streamURL={localStream.toURL()}
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{ flex: 1 }}
-              />
-            }
-          </View>
-          <View style = {styles.videoView}>
-            {
-              localStream &&
-              <RTCView
-                streamURL={localStream.toURL()}
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{ flex: 1 }}
-              />
-            }
-          </View>
+          />
         </View>
       </ScrollView>
       <TouchableOpacity
