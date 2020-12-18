@@ -39,6 +39,8 @@ const ROOT: ViewStyle = {
   backgroundColor: "#FFFFFF",
 }
 
+const SEEN = 0
+
 const styles = StyleSheet.create({
   gimView: {
     height: 52,
@@ -67,11 +69,11 @@ const styles = StyleSheet.create({
     top: 0,
     width: "100%",
   },
-  messageImage: {
-    bottom: 32,
-    left: 16,
-    position: "absolute",
-  },
+  // messageImage: {
+  //   bottom: 32,
+  //   left: 16,
+  //   position: "absolute",
+  // },
   // messageOption: {
   //   // borderBottomColor:"#E2E2E2",
   //   borderBottomWidth: 2,
@@ -358,7 +360,7 @@ export const MessageScreen = observer(function MessageScreen() {
 
   function StatusMessage(prop) {
     const status = prop.status
-    if (status > 0) {
+    if (status > SEEN) {
       return (
         <View style={styles.statusView}>
           <Text style={styles.statusContent}>{status}</Text>
