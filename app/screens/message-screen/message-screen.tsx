@@ -60,14 +60,15 @@ const styles = StyleSheet.create({
   },
   messageHeader: {
     alignItems: "center",
-    // backgroundColor: '#FCFCFC',
     backgroundColor: color.background,
+    borderBottomColor: color.backgroundSearch,
+    borderBottomWidth: 2,
     height: 85,
     justifyContent: "center",
     left: 0,
     position: "absolute",
     top: 0,
-    width: "100%",
+    width: "100%"
   },
   // messageImage: {
   //   bottom: 32,
@@ -248,7 +249,7 @@ const users = [
   {
     id: 1,
     name: "agdhagd",
-    avatar: "./people.jpg",
+    avatar: "",
     message: "hdjshdas",
     status: 3,
     lastTime: "11:09",
@@ -256,7 +257,7 @@ const users = [
   {
     id: 2,
     name: "agdassdhagd",
-    avatar: "./people.jpg",
+    avatar: "",
     message: "hdjsdsdas",
     status: 0,
     lastTime: "11:12",
@@ -291,11 +292,12 @@ export const MessageScreen = observer(function MessageScreen() {
         onPress={handleTouch}
       >
         <View style={styles.messageUser}>
-          <Text style={styles.messageUserTextName}>{user.name}</Text>
-          <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
-          <Text style={styles.messageUserText}>{user.message}</Text>
-          <Text style={styles.messageUserLastTime}>{user.lastTime}</Text>
-          <StatusMessage status={user.status} />
+          <Text style={styles.messageUserTextName}>{user.displayName}</Text>
+          {/* <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} /> */}
+          <Image source={ user.avatar ? { uri: user.avatar } : require("../../../assets/imgs/default-avatar.jpg")} style={styles.messageUserAvatar} />
+          <Text style={styles.messageUserText}>{user.messages[user.messages.length - 1].content}</Text>
+          <Text style={styles.messageUserLastTime}>{user.messages[user.messages.length - 1].createdAt.toLocaleTimeString('en-US')}</Text>
+          {/* <StatusMessage status={user.status} /> */}
         </View>
         <TouchOption option={isShowing} user={user} />
       </TouchableOpacity>
@@ -398,7 +400,7 @@ export const MessageScreen = observer(function MessageScreen() {
       </View>
       <View style={styles.messageContainer}>
         <FlatList
-          data={users}
+          data={conversations}
           renderItem={({ item }) => <MessageUser user={item} />}
           keyExtractor={(item) => `${item.id}`}
         />

@@ -23,6 +23,12 @@ const ROOT: ViewStyle = {
 }
 
 const styles = StyleSheet.create({
+  comment: {
+    height: 25,
+    position: "absolute",
+    right: 20,
+    width: 25
+  },
   containerView: {
     alignItems: "center",
     flex: 1,
@@ -96,12 +102,6 @@ const styles = StyleSheet.create({
     left: 16,
     position: "absolute",
     top: 30,
-  },
-  comment: {
-    height: 25,
-    position: "absolute",
-    right: 20,
-    width: 25
   }
 })
 
@@ -140,7 +140,7 @@ export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
   // const { isMe } = props.route.params
   // navigation.navigate("User", { user })
   const { userStore } = useStores()
-  const isMe = false
+  const isMe = true
 
   const handleSignOut = () => {
     userStore.signOut()
