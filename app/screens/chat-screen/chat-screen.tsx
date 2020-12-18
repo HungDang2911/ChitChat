@@ -186,15 +186,15 @@ export const ChatScreen = observer(function ChatScreen() {
     }
   }, [roomId])
 
-  function handelCall() {
+  function handleCall() {
     console.log()
   }
 
-  function handelVideoCall() {
+  function handleVideoCall() {
     console.log()
   }
 
-  function handelSendMessage() {
+  function handleSendMessage() {
     if (messageText.length > 0) {
       const date = new Date()
       const a = chat.slice()
@@ -213,7 +213,7 @@ export const ChatScreen = observer(function ChatScreen() {
     sendMessage(roomId, { id: userStore._id, type: "image", content: messageImage, createAt: date })
   }
 
-  function handelCamera() {
+  function handleCamera() {
     ImagePicker.openCamera({
       height: 1928,
       width: 1080,
@@ -223,7 +223,7 @@ export const ChatScreen = observer(function ChatScreen() {
     })
   }
 
-  function handelImage() {
+  function handleImage() {
     ImagePicker.openPicker({
       height: 1928,
       width: 1080,
@@ -297,10 +297,10 @@ export const ChatScreen = observer(function ChatScreen() {
   return (
     <Screen style={ROOT}>
       <View style = {styles.headerView}>
-        <TouchableOpacity style = {styles.call} onPress = {handelCall}>
+        <TouchableOpacity style = {styles.call} onPress = {handleCall}>
           <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
         </TouchableOpacity>
-        <TouchableOpacity style = {styles.video} onPress = {handelVideoCall}>
+        <TouchableOpacity style = {styles.video} onPress = {handleVideoCall}>
           <FontAwesomeIcon icon={faVideo} color={color.primary} size={scaledSize(25)} />
         </TouchableOpacity>
       </View>
@@ -315,12 +315,12 @@ export const ChatScreen = observer(function ChatScreen() {
       </View>
       <View style = {styles.inputContainerView}>
         <View>
-          <TouchableOpacity onPress = {handelCamera}>
+          <TouchableOpacity onPress = {handleCamera}>
             <FontAwesomeIcon icon={faCamera} style = {styles.cameraInput} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>
         <View>
-          <TouchableOpacity onPress = {handelImage}>
+          <TouchableOpacity onPress = {handleImage}>
             <FontAwesomeIcon icon={faImage} style = {styles.imageInput} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>
@@ -330,7 +330,7 @@ export const ChatScreen = observer(function ChatScreen() {
           </View>
         </View>
         <View>
-          <TouchableOpacity onPress = {handelSendMessage}>
+          <TouchableOpacity onPress = {handleSendMessage}>
             <FontAwesomeIcon icon={faPaperPlane} style = {styles.sendInput} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>

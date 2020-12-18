@@ -266,11 +266,15 @@ const users = [
 export const MessageScreen = observer(function MessageScreen() {
   const navigation = useNavigation()
   const { userStore, conversationStore } = useStores()
-  const [conservations, setConversations] = useState([])
+  const [conversations, setConversations] = useState([])
 
   useEffect(() => {
-    conversationStore.getConversations()
-    setConversations(conversationStore.conversations)
+    const fetchConversation = async () => {
+      await conversationStore.getConversations()
+      setConversations(conversationStore.conversations)
+      console.log(conversationStore.conversations)
+    }
+    fetchConversation()
   }, [])
 
   function handleTouch() {
@@ -288,7 +292,7 @@ export const MessageScreen = observer(function MessageScreen() {
       >
         <View style={styles.messageUser}>
           <Text style={styles.messageUserTextName}>{user.name}</Text>
-          <Image source={ { uri: user.avatar }} style={styles.messageUserAvatar} />
+          <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} />
           <Text style={styles.messageUserText}>{user.message}</Text>
           <Text style={styles.messageUserLastTime}>{user.lastTime}</Text>
           <StatusMessage status={user.status} />

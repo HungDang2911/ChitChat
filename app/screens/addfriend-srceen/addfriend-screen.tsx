@@ -31,8 +31,8 @@ const ROOT: ViewStyle = {
 
 const FRIEND_STATUS = {
   FRIEND: 1,
-  UN_FRIEND: -1,
-  ADD_FRIEND: 0
+  NOT_FRIEND: -1,
+  REQUEST_SENT: 0,
 }
 
 const styles = StyleSheet.create({
@@ -113,9 +113,9 @@ function MessageUser(props) {
   const [isFriend, setIsFriend] = useState(user.isFriend)
 
   function handleIsFriend() {
-    if (isFriend === FRIEND_STATUS.UN_FRIEND) {
-      setIsFriend(FRIEND_STATUS.ADD_FRIEND)
-      user.isFriend = FRIEND_STATUS.ADD_FRIEND
+    if (isFriend === FRIEND_STATUS.NOT_FRIEND) {
+      setIsFriend(FRIEND_STATUS.REQUEST_SENT)
+      user.isFriend = FRIEND_STATUS.REQUEST_SENT
     }
   }
 
@@ -149,7 +149,7 @@ function IconIsFriend(prop) {
       ></FontAwesomeIcon>
     )
   }
-  if (isFriend === FRIEND_STATUS.UN_FRIEND) {
+  if (isFriend === FRIEND_STATUS.NOT_FRIEND) {
     return (
       <FontAwesomeIcon icon={faUserPlus} color={"#ffffff"} size={scaledSize(25)}></FontAwesomeIcon>
     )
@@ -164,7 +164,9 @@ export const AddFriendScreen = observer(function AddFriendSrceen() {
   const [userList, setUserList] = useState([])
 
   const search = _.debounce(async (query) => {
+    console.log("Ok")
     const response = await searchUser(query)
+    console.log(response)
     setUserList(response.data)
   }, 300)
 

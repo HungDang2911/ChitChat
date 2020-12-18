@@ -24,6 +24,7 @@ axios.interceptors.response.use(
   (error) => {
     const globalAny: any = global
     // Handle response errors
+    console.log(error)
     if (error.response.status === 401) globalAny.rootStore.userStore.signOut()
     return Promise.reject(error)
   },

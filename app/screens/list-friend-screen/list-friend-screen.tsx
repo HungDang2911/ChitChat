@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
-  RefreshControl
+  RefreshControl,
+  Pressable,
 } from "react-native"
 import { Button, Screen, Text, TextField } from "../../components"
 import { useNavigation } from "@react-navigation/native"
@@ -31,10 +32,19 @@ const ROOT: ViewStyle = {
 
 const styles = StyleSheet.create({
   addFriendButton: {
-    height: 30,
-    left: 340,
-    top: 15,
-    width: 30,
+    height: "75%",
+    width: "75%",
+  },
+  addFriendButtonWrapper: {
+    alignItems: "center",
+    display: "flex",
+    height: 40,
+    justifyContent: "center",
+    position: "absolute",
+    right: 15,
+    top: 10,
+    width: 40,
+    zIndex: 100,
   },
   backgroundStyle: {
     alignItems: "stretch",
@@ -87,9 +97,9 @@ const styles = StyleSheet.create({
     width: 60,
   },
   refreshControl: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   username: {
     alignItems: "center",
@@ -106,7 +116,7 @@ const styles = StyleSheet.create({
   },
 })
 const wait = (timeout) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, timeout)
   })
 }
@@ -138,20 +148,17 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
     <Screen style={ROOT}>
       <View style={styles.backgroundStyle}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={handleAddFriend}>
+          <Pressable style={styles.addFriendButtonWrapper} onPressIn={handleAddFriend}>
             <Image
               source={require("../../../assets/call_icons/plus.png")}
               style={styles.addFriendButton}
             />
-          </TouchableOpacity>
+          </Pressable>
           <Text style={styles.headerContent}>Danh sách bạn bè</Text>
           <ScrollView
             contentContainerStyle={styles.refreshControl}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
-          </ScrollView>
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          ></ScrollView>
         </View>
         <View style={styles.body}>
           <FlatList
