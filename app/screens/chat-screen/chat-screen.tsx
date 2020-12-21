@@ -157,6 +157,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
+  nameMess: {
+    fontSize: 23,
+    marginLeft: 20,
+  },
+
   sendInput: {
     color: color.primary,
     marginLeft: 10,
@@ -172,13 +177,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 10,
   },
-
   video: {
     height: 25,
     position: "absolute",
     right: 40,
     width: 25,
-  },
+  }
 })
 
 export const ChatScreen = observer(function ChatScreen() {
@@ -195,6 +199,7 @@ export const ChatScreen = observer(function ChatScreen() {
       (conversation) => conversation._id === navigationStore.chatScreenParams.conversationId,
     )
     setConversation(conversationInStore)
+    setChat(conversationInStore.messages)
   }, [])
 
   useEffect(() => {
@@ -286,9 +291,8 @@ export const ChatScreen = observer(function ChatScreen() {
       return (
         <View style={styles.messContainer}>
           <View style={styles.timeContainer}>
-            <Text style={styles.time}>{`${mess.createAt.toLocaleTimeString(
-              "it-IT",
-            )} ${mess.createAt.toLocaleDateString(undefined, {
+            <Text style={styles.time}>{`${mess.createdAt.toLocaleTimeString("it-IT",
+            )} ${mess.createdAt.toLocaleDateString(undefined, {
               weekday: "long",
               year: "numeric",
               month: "long",
@@ -304,9 +308,9 @@ export const ChatScreen = observer(function ChatScreen() {
       return (
         <View style={styles.messContainer}>
           <View style={styles.timeContainer}>
-            <Text style={styles.time}>{`${mess.createAt.toLocaleTimeString(
+            <Text style={styles.time}>{`${mess.createdAt.toLocaleTimeString(
               "it-IT",
-            )} ${mess.createAt.toLocaleDateString(undefined, {
+            )} ${mess.createdAt.toLocaleDateString(undefined, {
               weekday: "long",
               year: "numeric",
               month: "long",
@@ -315,7 +319,14 @@ export const ChatScreen = observer(function ChatScreen() {
           </View>
           <View style={styles.friendContainer}>
             <View>
-              <Image style={styles.friendAvatar} source={require("../message-screen/people.jpg")} />
+              <Image
+                style={styles.friendAvatar}
+                source={
+                  mess.avatar
+                    ? { uri: mess.avatar }
+                    : require("../../../assets/imgs/default-avatar.jpg")
+                }
+              />
             </View>
             <View style={styles.friendContainer}>
               <Content mess={mess} />
@@ -329,6 +340,7 @@ export const ChatScreen = observer(function ChatScreen() {
   return (
     <Screen style={ROOT}>
       <View style={styles.headerView}>
+        <Text style = {styles.nameMess}>{(conversation) ? conversation.displayName : ""}</Text>
         <TouchableOpacity style={styles.call} onPress={handleCall}>
           <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
         </TouchableOpacity>
