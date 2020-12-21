@@ -128,11 +128,11 @@ var user = {
 }
 
 export const EditProfileScreen = observer(function EditProfileScreen() {
-  const { userStore } = useStores()
+  // const { userStore } = useStores()
   // const user = userStore
   // const user = useStores
 
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
 
   const [sourceAvartar, setsourceAvartar] = useState(user.avatar)
 

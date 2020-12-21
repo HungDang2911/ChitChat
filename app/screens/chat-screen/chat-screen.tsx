@@ -1,15 +1,35 @@
 import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { StyleSheet, ViewStyle, View, FlatList, Image, TextInput, TouchableOpacity } from "react-native"
+import {
+  StyleSheet,
+  ViewStyle,
+  View,
+  FlatList,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native"
 import { Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
 import { color } from "../../theme"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import { faCamera, faImage, faPaperPlane, faPhoneAlt, faVideo } from "@fortawesome/free-solid-svg-icons"
+import {
+  faCamera,
+  faImage,
+  faPaperPlane,
+  faPhoneAlt,
+  faVideo,
+} from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
-import ImagePicker from 'react-native-image-crop-picker'
-import { initiateSocket, disconnectSocket, subscribeToChat, sendMessage } from "../../services/socket/socket"
+import ImagePicker from "react-native-image-crop-picker"
+import {
+  initiateSocket,
+  disconnectSocket,
+  subscribeToChat,
+  sendMessage,
+} from "../../services/socket/socket"
+import { useRoute } from "@react-navigation/native"
 
 const ROOT: ViewStyle = {
   flexDirection: "column",
@@ -58,7 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     maxWidth: 280,
     padding: 8,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
 
   headerView: {
@@ -86,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginRight: 10,
     maxWidth: 280,
-    padding: 8
+    padding: 8,
   },
 
   image: {
@@ -121,7 +141,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 40,
     justifyContent: "center",
-    width: "92%"
+    width: "92%",
   },
 
   inputView: {
@@ -158,28 +178,30 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 40,
     width: 25,
-  }
-
+  },
 })
 
 export const ChatScreen = observer(function ChatScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
-  // OR
-  // const rootStore = useStores()
-  const { userStore } = useStores()
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
+  const { userStore, navigationStore, conversationStore } = useStores()
 
   const roomId = "1"
-  const [messageText, setMessageText] = useState('')
+  const [messageText, setMessageText] = useState("")
   const [chat, setChat] = useState([])
+
+  const [conversation, setConversation] = useState(null)
+
+  useEffect(() => {
+    const conversationInStore = conversationStore.conversations.find(
+      (conversation) => conversation._id === navigationStore.chatScreenParams.conversationId,
+    )
+    setConversation(conversationInStore)
+  }, [])
 
   useEffect(() => {
     if (roomId) initiateSocket(roomId)
     subscribeToChat((err, data) => {
       if (err) return
-      setChat(oldChats => [data, ...oldChats])
+      setChat((oldChats) => [data, ...oldChats])
     })
     return () => {
       disconnectSocket()
@@ -218,7 +240,7 @@ export const ChatScreen = observer(function ChatScreen() {
       height: 1928,
       width: 1080,
       cropping: false,
-    }).then(image => {
+    }).then((image) => {
       sendMessageImage(image.path)
     })
   }
@@ -228,7 +250,7 @@ export const ChatScreen = observer(function ChatScreen() {
       height: 1928,
       width: 1080,
       cropping: true,
-    }).then(image => {
+    }).then((image) => {
       sendMessageImage(image.path)
     })
   }
@@ -237,25 +259,21 @@ export const ChatScreen = observer(function ChatScreen() {
     const mess = prop.mess
     if (mess.id === userStore._id) {
       if (mess.type === "text") {
-        return (
-          <Text style = {styles.iContentText}>{mess.content}</Text>
-        )
+        return <Text style={styles.iContentText}>{mess.content}</Text>
       } else if (mess.type === "image") {
         return (
-          <View style = {styles.iContentImage}>
-            <Image source = {{ uri: mess.content }} style = {styles.image} />
+          <View style={styles.iContentImage}>
+            <Image source={{ uri: mess.content }} style={styles.image} />
           </View>
         )
       }
     } else {
       if (mess.type === "text") {
-        return (
-          <Text style = {styles.friendContentText}>{mess.content}</Text>
-        )
+        return <Text style={styles.friendContentText}>{mess.content}</Text>
       } else if (mess.type === "image") {
         return (
-          <View style = {styles.friendContentImage}>
-            <Image source = {{ uri: mess.content }} style = {styles.image} />
+          <View style={styles.friendContentImage}>
+            <Image source={{ uri: mess.content }} style={styles.image} />
           </View>
         )
       }
@@ -266,27 +284,41 @@ export const ChatScreen = observer(function ChatScreen() {
     const mess = prop.mess
     if (mess.id === userStore._id) {
       return (
-        <View style = {styles.messContainer}>
-          <View style = {styles.timeContainer}>
-            <Text style = {styles.time}>{`${mess.createAt.toLocaleTimeString('it-IT')} ${mess.createAt.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}</Text>
+        <View style={styles.messContainer}>
+          <View style={styles.timeContainer}>
+            <Text style={styles.time}>{`${mess.createAt.toLocaleTimeString(
+              "it-IT",
+            )} ${mess.createAt.toLocaleDateString(undefined, {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}`}</Text>
           </View>
-          <View style = {styles.iContainer}>
-            <Content mess = {mess}/>
+          <View style={styles.iContainer}>
+            <Content mess={mess} />
           </View>
         </View>
       )
     } else {
       return (
-        <View style = {styles.messContainer}>
-          <View style = {styles.timeContainer}>
-            <Text style = {styles.time}>{`${mess.createAt.toLocaleTimeString('it-IT')} ${mess.createAt.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}</Text>
+        <View style={styles.messContainer}>
+          <View style={styles.timeContainer}>
+            <Text style={styles.time}>{`${mess.createAt.toLocaleTimeString(
+              "it-IT",
+            )} ${mess.createAt.toLocaleDateString(undefined, {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}`}</Text>
           </View>
-          <View style = {styles.friendContainer}>
+          <View style={styles.friendContainer}>
             <View>
-              <Image style = {styles.friendAvatar} source = {require("../message-screen/people.jpg")}/>
+              <Image style={styles.friendAvatar} source={require("../message-screen/people.jpg")} />
             </View>
-            <View style = {styles.friendContainer}>
-              <Content mess = {mess}/>
+            <View style={styles.friendContainer}>
+              <Content mess={mess} />
             </View>
           </View>
         </View>
@@ -296,42 +328,42 @@ export const ChatScreen = observer(function ChatScreen() {
 
   return (
     <Screen style={ROOT}>
-      <View style = {styles.headerView}>
-        <TouchableOpacity style = {styles.call} onPress = {handleCall}>
+      <View style={styles.headerView}>
+        <TouchableOpacity style={styles.call} onPress={handleCall}>
           <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
         </TouchableOpacity>
-        <TouchableOpacity style = {styles.video} onPress = {handleVideoCall}>
+        <TouchableOpacity style={styles.video} onPress={handleVideoCall}>
           <FontAwesomeIcon icon={faVideo} color={color.primary} size={scaledSize(25)} />
         </TouchableOpacity>
       </View>
-      <View style = {styles.containerView}>
+      <View style={styles.containerView}>
         <View>
           <FlatList
             data={chat}
-            renderItem={({ item }) => (<Message mess={item} />)}
+            renderItem={({ item }) => <Message mess={item} />}
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
       </View>
-      <View style = {styles.inputContainerView}>
+      <View style={styles.inputContainerView}>
         <View>
-          <TouchableOpacity onPress = {handleCamera}>
-            <FontAwesomeIcon icon={faCamera} style = {styles.cameraInput} size={scaledSize(25)} />
+          <TouchableOpacity onPress={handleCamera}>
+            <FontAwesomeIcon icon={faCamera} style={styles.cameraInput} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>
         <View>
-          <TouchableOpacity onPress = {handleImage}>
-            <FontAwesomeIcon icon={faImage} style = {styles.imageInput} size={scaledSize(25)} />
+          <TouchableOpacity onPress={handleImage}>
+            <FontAwesomeIcon icon={faImage} style={styles.imageInput} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>
-        <View style = {styles.inputView}>
-          <View style = {styles.inputContent}>
-            <TextInput style= {styles.input} value = {messageText} onChangeText = {setMessageText} />
+        <View style={styles.inputView}>
+          <View style={styles.inputContent}>
+            <TextInput style={styles.input} value={messageText} onChangeText={setMessageText} />
           </View>
         </View>
         <View>
-          <TouchableOpacity onPress = {handleSendMessage}>
-            <FontAwesomeIcon icon={faPaperPlane} style = {styles.sendInput} size={scaledSize(25)} />
+          <TouchableOpacity onPress={handleSendMessage}>
+            <FontAwesomeIcon icon={faPaperPlane} style={styles.sendInput} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>
       </View>

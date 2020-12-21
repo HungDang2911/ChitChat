@@ -164,9 +164,7 @@ export const AddFriendScreen = observer(function AddFriendSrceen() {
   const [userList, setUserList] = useState([])
 
   const search = _.debounce(async (query) => {
-    console.log("Ok")
     const response = await searchUser(query)
-    console.log(response)
     setUserList(response.data)
   }, 300)
 

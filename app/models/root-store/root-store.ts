@@ -2,6 +2,7 @@ import { createFriendStoreModel } from "./../FriendStore"
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { createUserStoreModel } from "../UserStore"
 import { createConversationStoreModel } from "../ConversationStore"
+import { createNavigationStoreModel } from "../NavigationStore"
 
 /**
  * A RootStore model.
@@ -10,7 +11,8 @@ import { createConversationStoreModel } from "../ConversationStore"
 export const RootStoreModel = types.model("RootStore").props({
   userStore: createUserStoreModel(),
   friendStore: createFriendStoreModel(),
-  conversationStore: createConversationStoreModel()
+  conversationStore: createConversationStoreModel(),
+  navigationStore: createNavigationStoreModel()
 })
 
 /**

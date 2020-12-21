@@ -133,7 +133,7 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
   }, [])
   useEffect(() => {
     friendStore.getFriendList()
-    setFriendList(friendStore.friends)
+    setFriendList({ ...friendStore.friends })
   }, [])
 
   const handleAddFriend = () => {
@@ -141,7 +141,8 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
   }
 
   const handleViewProfile = (user: any) => {
-    navigation.navigate(PROFILE_USER, user)
+    const userObj = { ...user }
+    navigation.navigate(PROFILE_USER, userObj)
   }
 
   return (

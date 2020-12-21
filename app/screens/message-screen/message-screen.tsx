@@ -30,6 +30,7 @@ import { createInstanceofPredicate } from "mobx/lib/internal"
 import { construct } from "ramda"
 import { setInternetCredentials } from "react-native-keychain"
 import { useStores } from "../../models"
+import { CHAT } from "../../constants"
 
 const ROOT: ViewStyle = {
   position: "relative",
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
     top: 0,
-    width: "100%"
+    width: "100%",
   },
   // messageImage: {
   //   bottom: 32,
@@ -266,20 +267,20 @@ const users = [
 
 export const MessageScreen = observer(function MessageScreen() {
   const navigation = useNavigation()
-  const { userStore, conversationStore } = useStores()
+  const { userStore, conversationStore, navigationStore } = useStores()
   const [conversations, setConversations] = useState([])
 
   useEffect(() => {
     const fetchConversation = async () => {
       await conversationStore.getConversations()
-      setConversations(conversationStore.conversations)
-      console.log(conversationStore.conversations)
+      setConversations([...conversationStore.conversations])
     }
     fetchConversation()
   }, [])
 
-  function handleTouch() {
-    Alert.alert("sjgjg")
+  function handleTouch(conversation) {
+    navigationStore.setChatScreenParams({ conversationId: conversation._id })
+    navigation.navigate(CHAT)
   }
 
   function MessageUser(props) {
@@ -289,14 +290,27 @@ export const MessageScreen = observer(function MessageScreen() {
       <TouchableOpacity
         activeOpacity={0.2}
         onLongPress={() => setIsShowing(!isShowing)}
-        onPress={handleTouch}
+        onPress={() => {
+          handleTouch(user)
+        }}
       >
         <View style={styles.messageUser}>
           <Text style={styles.messageUserTextName}>{user.displayName}</Text>
           {/* <Image source={{ uri: user.avatar }} style={styles.messageUserAvatar} /> */}
-          <Image source={ user.avatar ? { uri: user.avatar } : require("../../../assets/imgs/default-avatar.jpg")} style={styles.messageUserAvatar} />
-          <Text style={styles.messageUserText}>{user.messages[user.messages.length - 1].content}</Text>
-          <Text style={styles.messageUserLastTime}>{user.messages[user.messages.length - 1].createdAt.toLocaleTimeString('en-US')}</Text>
+          <Image
+            source={
+              user.avatar
+                ? { uri: user.avatar }
+                : require("../../../assets/imgs/default-avatar.jpg")
+            }
+            style={styles.messageUserAvatar}
+          />
+          <Text style={styles.messageUserText}>
+            {user.messages[user.messages.length - 1].content}
+          </Text>
+          <Text style={styles.messageUserLastTime}>
+            {user.messages[user.messages.length - 1].createdAt.toLocaleTimeString("en-US")}
+          </Text>
           {/* <StatusMessage status={user.status} /> */}
         </View>
         <TouchOption option={isShowing} user={user} />
@@ -402,7 +416,7 @@ export const MessageScreen = observer(function MessageScreen() {
         <FlatList
           data={conversations}
           renderItem={({ item }) => <MessageUser user={item} />}
-          keyExtractor={(item) => `${item.id}`}
+          keyExtractor={(item) => `${item._id}`}
         />
       </View>
     </Screen>

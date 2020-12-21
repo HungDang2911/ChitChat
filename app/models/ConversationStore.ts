@@ -6,7 +6,7 @@ export const defaults = {
   conversations: [],
 }
 
-const Message = types.model({
+export const Message = types.model({
   _id: types.string,
   type: types.string,
   sender: types.string,
@@ -14,14 +14,14 @@ const Message = types.model({
   createdAt: types.Date,
 })
 
-const User = types.model({
+export const User = types.model({
   _id: types.string,
   fullName: types.string,
   username: types.string,
   avatar: types.maybeNull(types.string),
 })
 
-const Conversation = types.model({
+export const Conversation = types.model({
   _id: types.string,
   displayName: types.string,
   avatar: types.maybeNull(types.string),
@@ -36,11 +36,11 @@ export const ConversationStoreModel = types
   })
   .extend(withEnvironment) // ** IMPORTANT! **
   .actions((self) => ({
-    getConversations: flow(function* () {
+    getConversations: flow(function * () {
       const conversations = (yield getAllConversations()).data
       self.conversations = conversations
     }),
-    createConversation: flow(function* () {
+    createConversation: flow(function * () {
       return null
     }),
   }))
