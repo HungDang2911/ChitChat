@@ -416,7 +416,7 @@ export const MessageScreen = observer(function MessageScreen() {
         <FlatList
           data={conversations}
           renderItem={({ item }) => <MessageUser user={item} />}
-          keyExtractor={(item) => `${item._id}`}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     </Screen>

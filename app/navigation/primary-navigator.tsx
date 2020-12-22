@@ -44,8 +44,8 @@ export function PrimaryNavigator() {
 
   useEffect(() => {
     // conversationStore.getConversations()
-    // const rooms = conversationStore.conversations.map((conversation) => conversation._id)
-    // initiateSocket(rooms)
+    const rooms = conversationStore.conversations.map((conversation) => conversation._id)
+    initiateSocket(rooms)
   }, [])
 
   return (

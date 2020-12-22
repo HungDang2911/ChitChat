@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { color } from "../../theme"
 import {
@@ -15,6 +15,7 @@ import { useStores } from "../../models"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faEdit, faComment } from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
+import { useNavigation } from "@react-navigation/native"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.background,
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     height: 25,
     position: "absolute",
     right: 20,
-    width: 25
+    width: 25,
   },
   containerView: {
     alignItems: "center",
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     marginBottom: 10,
     marginLeft: 10,
-    marginTop: 10
+    marginTop: 10,
   },
   userView: {
     backgroundColor: color.background,
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     top: 335,
-    width: 300
+    width: 300,
   },
   value: {
     fontSize: 16,
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     left: 16,
     position: "absolute",
     top: 30,
-  }
+  },
 })
 
 function handelEdit() {
@@ -126,63 +127,85 @@ function Edit(props) {
   }
 }
 
-const user = {
-  id: 1,
-  name: "Thanh Thảo",
-  username: "agdhagd",
-  // avatar: "./people.jpg",
-  message: "hdjshdas",
-  status: 3,
-  lastTime: "11:09",
-}
-
 export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
   // const { isMe } = props.route.params
   // navigation.navigate("User", { user })
-  const { userStore } = useStores()
-  const isMe = true
+  const { userStore, navigationStore } = useStores()
+
+  const [user, setUser] = useState(null)
+
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    const userObj = {
+      _id: userStore._id,
+      fullName: userStore.fullName,
+      email: userStore.email,
+      username: userStore.username,
+      avatar: userStore.avatar,
+    }
+    if (navigationStore.profileScreenParams.isCurrentUser) setUser(userObj)
+    else setUser(navigationStore.profileScreenParams.user)
+  }, [])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      navigationStore.setProfileScreenParams({ isCurrentUser: true })
+    })
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe
+  }, [navigation])
 
   const handleSignOut = () => {
     userStore.signOut()
   }
 
   const handleComment = () => {
-    console.log()
   }
 
   return (
     <Screen style={ROOT} preset="scroll">
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.containerView}>
-          <Image source={ user.avatar ? { uri: user.avatar } : require("../../../assets/imgs/default-avatar.jpg")} style={styles.imageAvatar} />
-          <Text style={styles.userTextName}></Text>
-          <View style = {styles.userView}>
-            <Text style={styles.userTextName}>{user.username}</Text>
-            {!isMe && (
-              <TouchableOpacity style={styles.comment} onPress={handleComment}>
-                <FontAwesomeIcon icon={faComment} color = {color.primary} size={scaledSize(25)} />
-              </TouchableOpacity>
+      {user && (
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.containerView}>
+            <Image
+              source={
+                user.avatar
+                  ? { uri: user.avatar }
+                  : require("../../../assets/imgs/default-avatar.jpg")
+              }
+              style={styles.imageAvatar}
+            />
+            <Text style={styles.userTextName}></Text>
+            <View style={styles.userView}>
+              <Text style={styles.userTextName}>{user.username}</Text>
+              {!navigationStore.profileScreenParams.isCurrentUser && (
+                <TouchableOpacity style={styles.comment} onPress={handleComment}>
+                  <FontAwesomeIcon icon={faComment} color={color.primary} size={scaledSize(25)} />
+                </TouchableOpacity>
+              )}
+            </View>
+            <View style={styles.nameView}>
+              <Text style={styles.titleView}>Name</Text>
+              <Text style={styles.value}>{user.fullName}</Text>
+            </View>
+            <View style={styles.emailView}>
+              <Text style={styles.titleView}>Email</Text>
+              <Text style={styles.value}>{user.email}</Text>
+            </View>
+            <Edit isMe={navigationStore.profileScreenParams.isCurrentUser} />
+            {navigationStore.profileScreenParams.isCurrentUser && (
+              <Button
+                style={styles.signOutButton}
+                onPress={handleSignOut}
+                textStyle={styles.signOutButtonText}
+                text="Sign Out"
+              />
             )}
           </View>
-          <View style={styles.nameView}>
-            <Text style={styles.titleView}>Name</Text>
-            <Text style={styles.value}>{userStore.fullName}</Text>
-          </View>
-          <View style={styles.emailView}>
-            <Text style={styles.titleView}>Email</Text>
-            <Text style={styles.value}>{userStore.email}</Text>
-          </View>
-          <Edit isMe={isMe} />
-          {isMe && (
-            <Button
-              style={styles.signOutButton}
-              onPress={handleSignOut}
-              textStyle={styles.signOutButtonText}
-              text="Sign Out"
-            />
-          )}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      )}
     </Screen>
   )
 })

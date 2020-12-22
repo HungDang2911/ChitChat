@@ -29,7 +29,6 @@ import {
   subscribeToChat,
   sendMessage,
 } from "../../services/socket/socket"
-import { useRoute } from "@react-navigation/native"
 
 const ROOT: ViewStyle = {
   flexDirection: "column",
@@ -184,29 +183,30 @@ const styles = StyleSheet.create({
 export const ChatScreen = observer(function ChatScreen() {
   const { userStore, navigationStore, conversationStore } = useStores()
 
-  const roomId = "1"
   const [messageText, setMessageText] = useState("")
   const [chat, setChat] = useState([])
 
-  const [conversation, setConversation] = useState(null)
+  const [conversation, setConversation] = useState({
+    _id: "0",
+    displayName: "",
+    avatar: "",
+    members: [],
+    messages: [],
+  })
 
   useEffect(() => {
     const conversationInStore = conversationStore.conversations.find(
       (conversation) => conversation._id === navigationStore.chatScreenParams.conversationId,
     )
-    setConversation(conversationInStore)
+    setConversation({ ...conversationInStore })
   }, [])
 
   useEffect(() => {
-    if (roomId) initiateSocket(roomId)
     subscribeToChat((err, data) => {
       if (err) return
-      setChat((oldChats) => [data, ...oldChats])
+      console.log(data)
     })
-    return () => {
-      disconnectSocket()
-    }
-  }, [roomId])
+  }, [conversation._id])
 
   function handleCall() {
     console.log()
@@ -219,20 +219,30 @@ export const ChatScreen = observer(function ChatScreen() {
   function handleSendMessage() {
     if (messageText.length > 0) {
       const date = new Date()
-      const a = chat.slice()
-      a.push({ id: userStore._id, type: "text", content: messageText, createAt: date })
+      const a = conversation.messages.slice()
+      a.push({ id: userStore._id, type: "text", content: messageText, createdAt: date })
       setChat(a)
-      sendMessage(roomId, { id: userStore._id, type: "text", content: messageText, createAt: date })
+      sendMessage(conversation._id, {
+        sender: userStore._id,
+        type: "text",
+        content: messageText,
+        createdAt: date,
+      })
       setMessageText("")
     }
   }
 
   function sendMessageImage(messageImage) {
     const date = new Date()
-    const a = chat.slice()
-    a.push({ id: userStore._id, type: "image", content: messageImage, createAt: date })
+    const a = conversation.messages.slice()
+    a.push({ id: userStore._id, type: "image", content: messageImage, createdAt: date })
     setChat(a)
-    sendMessage(roomId, { id: userStore._id, type: "image", content: messageImage, createAt: date })
+    sendMessage(conversation._id, {
+      sender: userStore._id,
+      type: "image",
+      content: messageImage,
+      createdAt: date,
+    })
   }
 
   function handleCamera() {
@@ -257,7 +267,7 @@ export const ChatScreen = observer(function ChatScreen() {
 
   function Content(prop) {
     const mess = prop.mess
-    if (mess.id === userStore._id) {
+    if (mess._id === userStore._id) {
       if (mess.type === "text") {
         return <Text style={styles.iContentText}>{mess.content}</Text>
       } else if (mess.type === "image") {
@@ -282,13 +292,13 @@ export const ChatScreen = observer(function ChatScreen() {
 
   function Message(prop) {
     const mess = prop.mess
-    if (mess.id === userStore._id) {
+    if (mess.sender === userStore._id) {
       return (
         <View style={styles.messContainer}>
           <View style={styles.timeContainer}>
-            <Text style={styles.time}>{`${mess.createAt.toLocaleTimeString(
+            <Text style={styles.time}>{`${mess.createdAt.toLocaleTimeString(
               "it-IT",
-            )} ${mess.createAt.toLocaleDateString(undefined, {
+            )} ${mess.createdAt.toLocaleDateString(undefined, {
               weekday: "long",
               year: "numeric",
               month: "long",
@@ -304,9 +314,9 @@ export const ChatScreen = observer(function ChatScreen() {
       return (
         <View style={styles.messContainer}>
           <View style={styles.timeContainer}>
-            <Text style={styles.time}>{`${mess.createAt.toLocaleTimeString(
+            <Text style={styles.time}>{`${mess.createdAt.toLocaleTimeString(
               "it-IT",
-            )} ${mess.createAt.toLocaleDateString(undefined, {
+            )} ${mess.createdAt.toLocaleDateString(undefined, {
               weekday: "long",
               year: "numeric",
               month: "long",
@@ -327,46 +337,48 @@ export const ChatScreen = observer(function ChatScreen() {
   }
 
   return (
-    <Screen style={ROOT}>
-      <View style={styles.headerView}>
-        <TouchableOpacity style={styles.call} onPress={handleCall}>
-          <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.video} onPress={handleVideoCall}>
-          <FontAwesomeIcon icon={faVideo} color={color.primary} size={scaledSize(25)} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.containerView}>
-        <View>
-          <FlatList
-            data={chat}
-            renderItem={({ item }) => <Message mess={item} />}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      </View>
-      <View style={styles.inputContainerView}>
-        <View>
-          <TouchableOpacity onPress={handleCamera}>
-            <FontAwesomeIcon icon={faCamera} style={styles.cameraInput} size={scaledSize(25)} />
+    conversation && (
+      <Screen style={ROOT}>
+        <View style={styles.headerView}>
+          <TouchableOpacity style={styles.call} onPress={handleCall}>
+            <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.video} onPress={handleVideoCall}>
+            <FontAwesomeIcon icon={faVideo} color={color.primary} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>
-        <View>
-          <TouchableOpacity onPress={handleImage}>
-            <FontAwesomeIcon icon={faImage} style={styles.imageInput} size={scaledSize(25)} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.inputView}>
-          <View style={styles.inputContent}>
-            <TextInput style={styles.input} value={messageText} onChangeText={setMessageText} />
+        <View style={styles.containerView}>
+          <View>
+            <FlatList
+              data={conversation.messages}
+              renderItem={({ item }) => <Message mess={item} />}
+              keyExtractor={(message) => message._id}
+            />
           </View>
         </View>
-        <View>
-          <TouchableOpacity onPress={handleSendMessage}>
-            <FontAwesomeIcon icon={faPaperPlane} style={styles.sendInput} size={scaledSize(25)} />
-          </TouchableOpacity>
+        <View style={styles.inputContainerView}>
+          <View>
+            <TouchableOpacity onPress={handleCamera}>
+              <FontAwesomeIcon icon={faCamera} style={styles.cameraInput} size={scaledSize(25)} />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity onPress={handleImage}>
+              <FontAwesomeIcon icon={faImage} style={styles.imageInput} size={scaledSize(25)} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inputView}>
+            <View style={styles.inputContent}>
+              <TextInput style={styles.input} value={messageText} onChangeText={setMessageText} />
+            </View>
+          </View>
+          <View>
+            <TouchableOpacity onPress={handleSendMessage}>
+              <FontAwesomeIcon icon={faPaperPlane} style={styles.sendInput} size={scaledSize(25)} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </Screen>
+      </Screen>
+    )
   )
 })

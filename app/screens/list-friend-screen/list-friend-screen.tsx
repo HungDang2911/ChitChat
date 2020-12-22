@@ -20,7 +20,6 @@ import { color } from "../../theme"
 import { scaledSize } from "../../theme/sizing"
 import { palette } from "../../theme/palette"
 import { ADD_FRIEND, PROFILE_USER } from "../../constants"
-import { getFriendList } from "../../services/api/friendsAPI"
 import { useStores } from "../../models"
 
 const ROOT: ViewStyle = {
@@ -121,7 +120,7 @@ const wait = (timeout) => {
   })
 }
 export const ListFriendScreen = observer(function ListFriendScreen() {
-  const { friendStore } = useStores()
+  const { friendStore, navigationStore } = useStores()
 
   const [friendList, setFriendList] = useState([])
   const navigation = useNavigation()
@@ -132,8 +131,11 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
     wait(2000).then(() => setRefreshing(false))
   }, [])
   useEffect(() => {
-    friendStore.getFriendList()
-    setFriendList({ ...friendStore.friends })
+    const fetchFriends = async () => {
+      await friendStore.getFriendList()
+      setFriendList([...friendStore.friends])
+    }
+    fetchFriends()
   }, [])
 
   const handleAddFriend = () => {
@@ -142,7 +144,19 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
 
   const handleViewProfile = (user: any) => {
     const userObj = { ...user }
-    navigation.navigate(PROFILE_USER, userObj)
+    navigationStore.setProfileScreenParams({
+      isCurrentUser: false,
+      user: {
+        chatted: userObj.chatted,
+        info: {
+          _id: userObj.info._id,
+          fullName: userObj.info.fullName,
+          username: userObj.info.username,
+          avatar: userObj.info.avatar,
+        },
+      },
+    })
+    navigation.navigate(PROFILE_USER)
   }
 
   return (
