@@ -156,6 +156,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
+  nameMess: {
+    fontSize: 23,
+    marginLeft: 20,
+  },
+
   sendInput: {
     color: color.primary,
     marginLeft: 10,
@@ -171,7 +176,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 10,
   },
-
   video: {
     height: 25,
     position: "absolute",
@@ -325,7 +329,14 @@ export const ChatScreen = observer(function ChatScreen() {
           </View>
           <View style={styles.friendContainer}>
             <View>
-              <Image style={styles.friendAvatar} source={require("../message-screen/people.jpg")} />
+              <Image
+                style={styles.friendAvatar}
+                source={
+                  mess.avatar
+                    ? { uri: mess.avatar }
+                    : require("../../../assets/imgs/default-avatar.jpg")
+                }
+              />
             </View>
             <View style={styles.friendContainer}>
               <Content mess={mess} />
