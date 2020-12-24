@@ -245,26 +245,6 @@ const styles = StyleSheet.create({
   },
 })
 
-// Test
-const users = [
-  {
-    id: 1,
-    name: "agdhagd",
-    avatar: "",
-    message: "hdjshdas",
-    status: 3,
-    lastTime: "11:09",
-  },
-  {
-    id: 2,
-    name: "agdassdhagd",
-    avatar: "",
-    message: "hdjsdsdas",
-    status: 0,
-    lastTime: "11:12",
-  },
-]
-
 export const MessageScreen = observer(function MessageScreen() {
   const navigation = useNavigation()
   const { userStore, conversationStore, navigationStore } = useStores()
@@ -283,7 +263,7 @@ export const MessageScreen = observer(function MessageScreen() {
     navigation.navigate(CHAT)
   }
 
-  function MessageUser(props) {
+  const MessageUser = observer(function MessageUser(props: any) {
     const { user } = props
     const [isShowing, setIsShowing] = useState(false)
     return (
@@ -316,7 +296,7 @@ export const MessageScreen = observer(function MessageScreen() {
         <TouchOption option={isShowing} user={user} />
       </TouchableOpacity>
     )
-  }
+  })
 
   function TouchOption(prop) {
     const user = prop.user

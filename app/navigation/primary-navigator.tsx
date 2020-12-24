@@ -14,7 +14,7 @@ import { FRIENDS, MESSAGES, PROFILE_USER } from "../constants"
 import { useStores } from "../models"
 import { ProfileUserScreen } from "../screens"
 import { MessageScreen } from "../screens/message-screen/message-screen"
-import { initiateSocket } from "../services/socket/socket"
+import { initiateSocket, subscribeToChat } from "../services/socket/socket"
 import { color } from "../theme"
 import { FriendsNavigator } from "./friends-navigation"
 
@@ -46,6 +46,9 @@ export function PrimaryNavigator() {
     // conversationStore.getConversations()
     const rooms = conversationStore.conversations.map((conversation) => conversation._id)
     initiateSocket(rooms)
+    subscribeToChat((_err, data) => {
+      conversationStore.addMessageToConversation(data.room, data.message)
+    })
   }, [])
 
   return (
