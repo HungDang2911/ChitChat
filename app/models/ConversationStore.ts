@@ -43,6 +43,12 @@ export const ConversationStoreModel = types
     createConversation: flow(function * () {
       return null
     }),
+    addMessageToConversation: function (conversationId, message) {
+      const conversationIdx = self.conversations.findIndex(
+        (conversation) => conversation._id === conversationId,
+      )
+      self.conversations[conversationIdx].messages.push(message)
+    },
   }))
 
 export const createConversationStoreModel = () =>

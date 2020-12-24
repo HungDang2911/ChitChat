@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native"
 import { Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
 
   containerView: {
     height: "83%",
-    marginBottom: 10,
+    // marginBottom: 10,
   },
 
   friendAvatar: {
@@ -156,11 +157,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 
-  nameMess: {
-    fontSize: 23,
-    marginLeft: 20,
-  },
-
   sendInput: {
     color: color.primary,
     marginLeft: 10,
@@ -188,7 +184,6 @@ export const ChatScreen = observer(function ChatScreen() {
   const { userStore, navigationStore, conversationStore } = useStores()
 
   const [messageText, setMessageText] = useState("")
-  const [chat, setChat] = useState([])
 
   const [conversation, setConversation] = useState({
     _id: "0",
@@ -205,12 +200,12 @@ export const ChatScreen = observer(function ChatScreen() {
     setConversation({ ...conversationInStore })
   }, [])
 
-  useEffect(() => {
-    subscribeToChat((err, data) => {
-      if (err) return
-      console.log(data)
-    })
-  }, [conversation._id])
+  // useEffect(() => {
+  //   subscribeToChat((err, data) => {
+  //     if (err) return
+  //     console.log(data)
+  //   })
+  // }, [conversation._id])
 
   function handleCall() {
     console.log()
@@ -222,30 +217,26 @@ export const ChatScreen = observer(function ChatScreen() {
 
   function handleSendMessage() {
     if (messageText.length > 0) {
-      const date = new Date()
-      const a = conversation.messages.slice()
-      a.push({ id: userStore._id, type: "text", content: messageText, createdAt: date })
-      setChat(a)
+      // const a = conversation.messages.slice()
+      // a.push({ id: userStore._id, type: "text", content: messageText, createdAt: date })
+      // setChat(a)
       sendMessage(conversation._id, {
         sender: userStore._id,
         type: "text",
         content: messageText,
-        createdAt: date,
       })
       setMessageText("")
     }
   }
 
   function sendMessageImage(messageImage) {
-    const date = new Date()
-    const a = conversation.messages.slice()
-    a.push({ id: userStore._id, type: "image", content: messageImage, createdAt: date })
-    setChat(a)
+    // const a = conversation.messages.slice()
+    // a.push({ id: userStore._id, type: "image", content: messageImage, createdAt: date })
+    // setChat(a)
     sendMessage(conversation._id, {
       sender: userStore._id,
       type: "image",
       content: messageImage,
-      createdAt: date,
     })
   }
 
@@ -268,6 +259,8 @@ export const ChatScreen = observer(function ChatScreen() {
       sendMessageImage(image.path)
     })
   }
+
+  // const Content = observer()
 
   function Content(prop) {
     const mess = prop.mess
@@ -358,37 +351,43 @@ export const ChatScreen = observer(function ChatScreen() {
             <FontAwesomeIcon icon={faVideo} color={color.primary} size={scaledSize(25)} />
           </TouchableOpacity>
         </View>
-        <View style={styles.containerView}>
-          <View>
-            <FlatList
-              data={conversation.messages}
-              renderItem={({ item }) => <Message mess={item} />}
-              keyExtractor={(message) => message._id}
-            />
-          </View>
-        </View>
-        <View style={styles.inputContainerView}>
-          <View>
-            <TouchableOpacity onPress={handleCamera}>
-              <FontAwesomeIcon icon={faCamera} style={styles.cameraInput} size={scaledSize(25)} />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity onPress={handleImage}>
-              <FontAwesomeIcon icon={faImage} style={styles.imageInput} size={scaledSize(25)} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.inputView}>
-            <View style={styles.inputContent}>
-              <TextInput style={styles.input} value={messageText} onChangeText={setMessageText} />
+        <KeyboardAvoidingView behavior={"padding"}>
+          <View style={styles.containerView}>
+            <View>
+              <FlatList
+                data={conversation.messages}
+                renderItem={({ item }) => <Message mess={item} />}
+                keyExtractor={(message) => message._id}
+              />
             </View>
           </View>
-          <View>
-            <TouchableOpacity onPress={handleSendMessage}>
-              <FontAwesomeIcon icon={faPaperPlane} style={styles.sendInput} size={scaledSize(25)} />
-            </TouchableOpacity>
+          <View style={styles.inputContainerView}>
+            <View>
+              <TouchableOpacity onPress={handleCamera}>
+                <FontAwesomeIcon icon={faCamera} style={styles.cameraInput} size={scaledSize(25)} />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handleImage}>
+                <FontAwesomeIcon icon={faImage} style={styles.imageInput} size={scaledSize(25)} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.inputView}>
+              <View style={styles.inputContent}>
+                <TextInput style={styles.input} value={messageText} onChangeText={setMessageText} />
+              </View>
+            </View>
+            <View>
+              <TouchableOpacity onPress={handleSendMessage}>
+                <FontAwesomeIcon
+                  icon={faPaperPlane}
+                  style={styles.sendInput}
+                  size={scaledSize(25)}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Screen>
     )
   )
