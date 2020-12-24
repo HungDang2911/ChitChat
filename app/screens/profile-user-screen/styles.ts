@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     width: scaledSize(200),
   },
+  backButton: {
+    marginRight: 20,
+  },
   containerView: {
     alignItems: "center",
     flex: 1,
@@ -23,16 +26,18 @@ export const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     backgroundColor: "#FFF",
+    borderBottomWidth: 1,
+    borderColor: color.primary,
     flexDirection: "row",
     height: 50,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    width: "100%",
+    width: "100%"
   },
   headerName: {
     fontSize: 20,
     fontWeight: "bold",
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   profileItems: {
     // marginTop: 20,
@@ -47,5 +52,5 @@ export const styles = StyleSheet.create({
     marginBottom: 5,
     marginLeft: 20,
     marginTop: 10
-  },
+  }
 })

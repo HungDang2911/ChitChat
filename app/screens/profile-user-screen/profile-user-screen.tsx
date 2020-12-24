@@ -176,7 +176,16 @@ export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
   return (
     <Screen style={ROOT} preset="scroll">
       <View style={styles.header}>
-        <FontAwesomeIcon icon={faArrowLeft} size={20} />
+        {!navigationStore.profileScreenParams.isCurrentUser && (
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => {
+              navigation.goBack()
+            }}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} size={20} />
+          </TouchableOpacity>
+        )}
         <Text style={styles.headerName}>
           {navigationStore.profileScreenParams.isCurrentUser ? "Me" : user.fullName}
         </Text>

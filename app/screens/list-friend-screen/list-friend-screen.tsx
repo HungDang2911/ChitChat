@@ -1,124 +1,66 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-native/no-color-literals */
 import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import {
-  StyleSheet,
-  ViewStyle,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-  RefreshControl,
-  Pressable,
-} from "react-native"
-import { Button, Screen, Text, TextField } from "../../components"
+import { ViewStyle, View, Image, FlatList, TouchableOpacity } from "react-native"
+import { Screen, Text } from "../../components"
 import { useNavigation } from "@react-navigation/native"
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import { faComments } from "@fortawesome/free-solid-svg-icons"
-import { color } from "../../theme"
-import { scaledSize } from "../../theme/sizing"
-import { palette } from "../../theme/palette"
 import { ADD_FRIEND, PROFILE_USER } from "../../constants"
 import { useStores } from "../../models"
+import { styles } from "./styles"
+import { TextInput } from "react-native-gesture-handler"
 
 const ROOT: ViewStyle = {
+  backgroundColor: "#1A1A1A",
   flex: 1,
-  alignItems: "stretch",
-  justifyContent: "center",
-  backgroundColor: color.background,
+  alignItems: "center",
 }
 
-const styles = StyleSheet.create({
-  addFriendButton: {
-    height: "75%",
-    width: "75%",
-  },
-  addFriendButtonWrapper: {
-    alignItems: "center",
-    display: "flex",
-    height: 40,
-    justifyContent: "center",
-    position: "absolute",
-    right: 15,
-    top: 10,
-    width: 40,
-    zIndex: 100,
-  },
-  backgroundStyle: {
-    alignItems: "stretch",
-    justifyContent: "center",
-    position: "relative",
-  },
-  body: {
-    // backgroundColor: "#E6E6FA",
-    alignItems: "stretch",
-    height: "93%",
-    top: 5,
-  },
-  box: {
-    backgroundColor: palette.offWhite,
-    elevation: 2,
-    flexDirection: "row",
-    height: 100,
-    marginBottom: 5,
-    marginTop: 5,
-    padding: 5,
-    shadowColor: palette.black,
-    shadowOffset: {
-      height: 1,
-      width: -2,
-    },
-    shadowOpacity: 0.2,
-  },
-  header: {
-    backgroundColor: color.primary,
-    height: 60,
-    top: 5,
-  },
-  headerContent: {
-    alignItems: "center",
-    color: palette.offWhite,
-    fontFamily: "Roboto",
-    fontSize: 22,
-    fontStyle: "normal",
-    fontWeight: "500",
-    left: 75,
-    lineHeight: 13,
-    padding: 30,
-    position: "absolute",
-    textAlign: "center",
-  },
-  image: {
-    borderRadius: 50,
-    height: 60,
-    top: 14,
-    width: 60,
-  },
-  refreshControl: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-  username: {
-    alignItems: "center",
-    color: palette.black,
-    fontFamily: "Roboto",
-    fontSize: 28,
-    fontStyle: "normal",
-    fontWeight: "500",
-    left: 120,
-    lineHeight: 30,
-    position: "absolute",
-    textAlign: "center",
-    top: 37,
-  },
-})
 const wait = (timeout) => {
   return new Promise((resolve) => {
     setTimeout(resolve, timeout)
   })
 }
+
+const dummyFriendList = [
+  {
+    id: "1",
+    fullName: "Friend 1",
+    avatar: null,
+    online: true,
+  },
+  {
+    id: "2",
+    fullName: "Friend 2",
+    avatar: null,
+    online: false,
+  },
+  {
+    id: "3",
+    fullName: "Friend 3",
+    avatar: null,
+    online: true,
+  },
+  {
+    id: "4",
+    fullName: "Friend 4",
+    avatar: null,
+    online: true,
+  },
+  {
+    id: "5",
+    fullName: "Friend 5",
+    avatar: null,
+    online: false,
+  },
+  {
+    id: "6",
+    fullName: "Friend 6",
+    avatar: null,
+    online: true,
+  },
+]
+
 export const ListFriendScreen = observer(function ListFriendScreen() {
   const { friendStore, navigationStore } = useStores()
 
@@ -161,49 +103,99 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
 
   return (
     <Screen style={ROOT}>
-      <View style={styles.backgroundStyle}>
-        <View style={styles.header}>
-          <Pressable style={styles.addFriendButtonWrapper} onPressIn={handleAddFriend}>
-            <Image
-              source={require("../../../assets/call_icons/plus.png")}
-              style={styles.addFriendButton}
-            />
-          </Pressable>
-          <Text style={styles.headerContent}>Danh sách bạn bè</Text>
-          <ScrollView
-            contentContainerStyle={styles.refreshControl}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-          ></ScrollView>
+      <View style={styles.header}>
+        <View style={styles.headerTitle}>
+          <Text style={styles.title}>Contacts</Text>
+          <TouchableOpacity activeOpacity={0.8} onPress={() => handleAddFriend()}>
+            <View style={styles.addFriendButton}>
+              <Text style={styles.addFriendIcon}>+</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        <View style={styles.body}>
-          <FlatList
-            data={friendList}
-            keyExtractor={(user) => {
-              return user.info._id
-            }}
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    handleViewProfile(item)
-                  }}
-                >
-                  <View style={styles.box}>
-                    <Image
-                      style={styles.image}
-                      source={
-                        item.info.avatar
-                          ? { uri: item.info.avatar }
-                          : require("../../../assets/imgs/default-avatar.jpg")
-                      }
-                    />
-                    <Text style={styles.username}>{item.info.fullName}</Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            }}
+        <View style={styles.searchWrapper}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            placeholderTextColor={"grey"}
+            caretHidden
           />
         </View>
+        <Text style={styles.favoriteText}>Favorites</Text>
+        <FlatList
+          style={{ width: "100%", paddingHorizontal: 20 }}
+          horizontal
+          data={dummyFriendList}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={{ width: 25 }} />}
+          renderItem={({ item }) => (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  handleViewProfile(item)
+                }}
+              >
+                <View style={{ alignItems: "center", width: 60, overflow: "hidden" }}>
+                  <View style={styles.avatarWrapper}>
+                    <Image
+                      source={
+                        item.avatar
+                          ? { uri: item.avatar }
+                          : require("./../../../assets/imgs/default-avatar.jpg")
+                      }
+                      style={styles.avatar}
+                    />
+                    <View
+                      style={[
+                        styles.favoriteOnlineStatus,
+                        { backgroundColor: item.online ? "#1AD42D" : "red" },
+                      ]}
+                    />
+                  </View>
+                  <Text numberOfLines={1} style={styles.favoriteName}>
+                    {item.fullName}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+        />
+      </View>
+      <View style={styles.body}>
+        <FlatList
+          style={{ width: "100%", paddingHorizontal: 30 }}
+          data={friendList}
+          keyExtractor={(item) => item.info._id}
+          renderItem={({ item }) => (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  handleViewProfile(item)
+                }}
+              >
+                <View style={styles.bodyFriendWrapper}>
+                  <View style={styles.avatarWrapper}>
+                    <Image
+                      source={
+                        item.avatar
+                          ? { uri: item.info.avatar }
+                          : require("./../../../assets/imgs/default-avatar.jpg")
+                      }
+                      style={styles.avatar}
+                    />
+                  </View>
+                  <View style={styles.infoTextGroup}>
+                    <Text numberOfLines={1} style={styles.bodyName}>
+                      {item.info.fullName}
+                    </Text>
+                    <Text style={styles.onlineStatusText}>
+                      {item.online ? "Online" : "Last activity 35min"}
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+        />
       </View>
     </Screen>
   )
