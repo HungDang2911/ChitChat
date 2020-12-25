@@ -12,11 +12,11 @@ import React, { useEffect } from "react"
 
 import { FRIENDS, MESSAGES, PROFILE_USER } from "../constants"
 import { useStores } from "../models"
-import { ProfileUserScreen } from "../screens"
 import { MessageScreen } from "../screens/message-screen/message-screen"
 import { initiateSocket, subscribeToChat } from "../services/socket/socket"
 import { color } from "../theme"
 import { FriendsNavigator } from "./friends-navigation"
+import { ProfileNavigator } from "./profile-navigation"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -76,7 +76,7 @@ export function PrimaryNavigator() {
     >
       <Tab.Screen name={MESSAGES} component={MessageScreen} />
       <Tab.Screen name={FRIENDS} component={FriendsNavigator} />
-      <Tab.Screen name={PROFILE_USER} component={ProfileUserScreen} />
+      <Tab.Screen name={PROFILE_USER} component={ProfileNavigator} />
     </Tab.Navigator>
   )
 }
