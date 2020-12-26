@@ -1,14 +1,15 @@
+/* eslint-disable react-native/no-color-literals */
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import {
-  StyleSheet,
   ViewStyle,
   View,
   FlatList,
   Image,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  Dimensions,
 } from "react-native"
 import { Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
@@ -16,13 +17,13 @@ import { useStores } from "../../models"
 import { color } from "../../theme"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import {
+  faArrowLeft,
   faCamera,
   faImage,
   faPaperPlane,
   faPhoneAlt,
   faVideo,
 } from "@fortawesome/free-solid-svg-icons"
-import { scaledSize } from "../../theme/sizing"
 import ImagePicker from "react-native-image-crop-picker"
 import {
   initiateSocket,
@@ -30,160 +31,126 @@ import {
   subscribeToChat,
   sendMessage,
 } from "../../services/socket/socket"
+import { styles } from "./styles"
+import { useNavigation } from "@react-navigation/native"
+import { MessageTime } from "./components/time"
 
 const ROOT: ViewStyle = {
-  flexDirection: "column",
-  height: "100%",
-  width: "100%",
+  flex: 1,
 }
 
-const styles = StyleSheet.create({
-  call: {
-    height: 25,
-    position: "absolute",
-    right: 100,
-    width: 25,
+const dummyConversation = [
+  {
+    _id: "1",
+    type: "text",
+    sender: "1",
+    content: "Hello",
+    createdAt: "2020-12-26T14:20:09.495Z",
   },
-
-  cameraInput: {
-    color: color.primary,
-    marginLeft: 20,
-    marginRight: 10,
+  {
+    _id: "2",
+    type: "text",
+    sender: "2",
+    content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    createdAt: "2020-12-26T14:32:10.495Z",
   },
-
-  containerView: {
-    height: "83%",
-    // marginBottom: 10,
+  {
+    _id: "3",
+    type: "text",
+    sender: "1",
+    content:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    createdAt: "2020-12-26T14:45:11.495Z",
   },
-
-  friendAvatar: {
-    borderRadius: 25,
-    height: 30,
-    margin: 10,
-    width: 30,
+  {
+    _id: "4",
+    type: "text",
+    sender: "1",
+    content: "Hello",
+    createdAt: "2020-12-26T14:46:12.495Z",
   },
-
-  friendContainer: {
-    flexDirection: "row",
+  {
+    _id: "5",
+    type: "text",
+    sender: "2",
+    content: "Hello",
+    createdAt: "2020-12-26T15:02:13.495Z",
   },
-
-  friendContentImage: {
-    maxHeight: 500,
-    width: 250,
+  {
+    _id: "6",
+    type: "text",
+    sender: "1",
+    content: "Hello",
+    createdAt: "2020-12-26T15:03:13.495Z",
   },
-
-  friendContentText: {
-    backgroundColor: color.backgroundSearch,
-    borderRadius: 20,
-    fontSize: 18,
-    maxWidth: 280,
-    padding: 8,
-    paddingBottom: 5,
+  {
+    _id: "7",
+    type: "text",
+    sender: "1",
+    content:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    createdAt: "2020-12-26T15:12:11.495Z",
   },
-
-  headerView: {
-    borderBottomWidth: 2,
-    borderColor: color.backgroundSearch,
-    height: "10%",
-    justifyContent: "center",
-    width: "100%",
+  {
+    _id: "8",
+    type: "text",
+    sender: "1",
+    content: "Hello",
+    createdAt: "2020-12-26T15:13:12.495Z",
   },
-
-  iContainer: {
-    flexDirection: "row-reverse",
+  {
+    _id: "9",
+    type: "text",
+    sender: "2",
+    content:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    createdAt: "2020-12-26T15:20:11.495Z",
   },
-
-  iContentImage: {
-    marginRight: 10,
-    maxHeight: 500,
-    width: 280,
+  {
+    _id: "10",
+    type: "text",
+    sender: "2",
+    content: "Hello",
+    createdAt: "2020-12-26T15:21:12.495Z",
   },
-
-  iContentText: {
-    backgroundColor: color.primary,
-    borderRadius: 20,
-    color: color.line,
-    fontSize: 18,
-    marginRight: 10,
-    maxWidth: 280,
-    padding: 8,
+  {
+    _id: "11",
+    type: "text",
+    sender: "2",
+    content:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    createdAt: "2020-12-26T15:23:11.495Z",
   },
-
-  image: {
-    borderRadius: 15,
-    height: "100%",
-    width: "100%",
+  {
+    _id: "12",
+    type: "text",
+    sender: "2",
+    content: "Hello",
+    createdAt: "2020-12-26T15:24:12.495Z",
   },
-
-  imageInput: {
-    color: color.primary,
-    marginLeft: 10,
-    marginRight: 10,
+  {
+    _id: "13",
+    type: "text",
+    sender: "1",
+    content:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    createdAt: "2020-12-26T15:25:11.495Z",
   },
-
-  input: {
-    fontSize: 18,
+  {
+    _id: "14",
+    type: "text",
+    sender: "2",
+    content: "Hello",
+    createdAt: "2020-12-26T15:26:12.495Z",
   },
-
-  inputContainerView: {
-    borderColor: color.backgroundSearch,
-    borderTopWidth: 2,
-    bottom: 0,
-    flexDirection: "row",
-    height: "7%",
-    justifyContent: "center",
-    paddingTop: 5,
-    position: "absolute",
-    width: "100%",
-  },
-
-  inputContent: {
-    bottom: 0,
-    height: 40,
-    justifyContent: "center",
-    width: "92%",
-  },
-
-  inputView: {
-    alignItems: "center",
-    backgroundColor: color.backgroundSearch,
-    borderRadius: 25,
-    height: 30,
-    justifyContent: "center",
-    width: "58%",
-  },
-
-  messContainer: {
-    width: "100%",
-  },
-
-  sendInput: {
-    color: color.primary,
-    marginLeft: 10,
-    marginRight: 20,
-  },
-
-  time: {
-    fontSize: 10,
-  },
-
-  timeContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 10,
-  },
-  video: {
-    height: 25,
-    position: "absolute",
-    right: 40,
-    width: 25,
-  },
-})
+]
 
 export const ChatScreen = observer(function ChatScreen() {
   const { userStore, navigationStore, conversationStore } = useStores()
 
   const [messageText, setMessageText] = useState("")
+
+  const [isInputFocused, setInputFocused] = useState<boolean>(false)
 
   const [conversation, setConversation] = useState({
     _id: "0",
@@ -192,6 +159,8 @@ export const ChatScreen = observer(function ChatScreen() {
     members: [],
     messages: [],
   })
+
+  const navigation = useNavigation()
 
   useEffect(() => {
     const conversationInStore = conversationStore.conversations.find(
@@ -260,134 +229,192 @@ export const ChatScreen = observer(function ChatScreen() {
     })
   }
 
-  // const Content = observer()
-
-  function Content(prop) {
-    const mess = prop.mess
-    if (mess._id === userStore._id) {
-      if (mess.type === "text") {
-        return <Text style={styles.iContentText}>{mess.content}</Text>
-      } else if (mess.type === "image") {
-        return (
-          <View style={styles.iContentImage}>
-            <Image source={{ uri: mess.content }} style={styles.image} />
-          </View>
-        )
-      }
-    } else {
-      if (mess.type === "text") {
-        return <Text style={styles.friendContentText}>{mess.content}</Text>
-      } else if (mess.type === "image") {
-        return (
-          <View style={styles.friendContentImage}>
-            <Image source={{ uri: mess.content }} style={styles.image} />
-          </View>
-        )
-      }
-    }
-  }
-
-  function Message(prop) {
-    const mess = prop.mess
-    if (mess.sender === userStore._id) {
-      return (
-        <View style={styles.messContainer}>
-          <View style={styles.timeContainer}>
-            <Text style={styles.time}>{`${mess.createdAt.toLocaleTimeString(
-              "it-IT",
-            )} ${mess.createdAt.toLocaleDateString(undefined, {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}`}</Text>
-          </View>
-          <View style={styles.iContainer}>
-            <Content mess={mess} />
-          </View>
-        </View>
-      )
-    } else {
-      return (
-        <View style={styles.messContainer}>
-          <View style={styles.timeContainer}>
-            <Text style={styles.time}>{`${mess.createdAt.toLocaleTimeString(
-              "it-IT",
-            )} ${mess.createdAt.toLocaleDateString(undefined, {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}`}</Text>
-          </View>
-          <View style={styles.friendContainer}>
-            <View>
-              <Image
-                style={styles.friendAvatar}
-                source={
-                  mess.avatar
-                    ? { uri: mess.avatar }
-                    : require("../../../assets/imgs/default-avatar.jpg")
-                }
-              />
-            </View>
-            <View style={styles.friendContainer}>
-              <Content mess={mess} />
-            </View>
-          </View>
-        </View>
-      )
-    }
+  const handleViewProfile = () => {
+    console.log("View profile")
   }
 
   return (
     conversation && (
       <Screen style={ROOT}>
-        <View style={styles.headerView}>
-          <TouchableOpacity style={styles.call} onPress={handleCall}>
-            <FontAwesomeIcon icon={faPhoneAlt} color={color.primary} size={scaledSize(25)} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.video} onPress={handleVideoCall}>
-            <FontAwesomeIcon icon={faVideo} color={color.primary} size={scaledSize(25)} />
+        <View style={styles.header}>
+          <View style={styles.headerSection}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => {
+                navigation.goBack()
+              }}
+            >
+              <FontAwesomeIcon color={color.primary} icon={faArrowLeft} size={20} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                handleViewProfile()
+              }}
+              style={styles.headerInfo}
+            >
+              <Image
+                source={
+                  conversation.avatar
+                    ? { uri: conversation.avatar }
+                    : require("./../../../assets/imgs/default-avatar.jpg")
+                }
+                style={styles.avatar}
+              />
+              <Text numberOfLines={1} style={styles.displayName}>
+                {conversation.displayName}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerSection}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => {
+                handleCall()
+              }}
+            >
+              <FontAwesomeIcon color={color.primary} icon={faPhoneAlt} size={18} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                handleVideoCall()
+              }}
+            >
+              <FontAwesomeIcon color={color.primary} icon={faVideo} size={20} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.body}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={dummyConversation}
+            renderItem={({ item, index }) => {
+              if (item.sender === "1") {
+                return (
+                  <>
+                    {dummyConversation[index - 1] ? (
+                      <MessageTime
+                        time={item.createdAt}
+                        preTime={dummyConversation[index - 1].createdAt}
+                      />
+                    ) : (
+                      <MessageTime time={item.createdAt} />
+                    )}
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginRight: Dimensions.get("window").width * 0.2,
+                        marginTop:
+                          dummyConversation[index - 1] &&
+                          dummyConversation[index - 1].sender === item.sender
+                            ? 3
+                            : 10,
+                      }}
+                    >
+                      <Image
+                        source={
+                          conversation.avatar
+                            ? { uri: conversation.avatar }
+                            : require("./../../../assets/imgs/default-avatar.jpg")
+                        }
+                        style={{ height: 30, width: 30, borderRadius: 15 }}
+                      />
+                      <View
+                        style={{
+                          marginLeft: 10,
+                          backgroundColor: "#EFEFEF",
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          borderRadius: 20,
+                        }}
+                      >
+                        <Text>{item.content}</Text>
+                      </View>
+                    </View>
+                  </>
+                )
+              } else {
+                return (
+                  <>
+                    {dummyConversation[index - 1] ? (
+                      <MessageTime
+                        time={item.createdAt}
+                        preTime={dummyConversation[index - 1].createdAt}
+                      />
+                    ) : (
+                      <MessageTime time={item.createdAt} />
+                    )}
+                    <View style={{ flexDirection: "row-reverse" }}>
+                      <View
+                        style={{
+                          backgroundColor: color.primary,
+                          paddingHorizontal: 15,
+                          paddingVertical: 10,
+                          borderRadius: 20,
+                          marginLeft: Dimensions.get("window").width * 0.2,
+                          marginTop:
+                            dummyConversation[index - 1] &&
+                            dummyConversation[index - 1].sender === item.sender
+                              ? 3
+                              : 10,
+                        }}
+                      >
+                        <Text style={{ color: "#FFF" }}>{item.content}</Text>
+                      </View>
+                    </View>
+                  </>
+                )
+              }
+            }}
+            keyExtractor={(message) => message._id}
+          />
+        </View>
+        <View style={styles.footer}>
+          {!isInputFocused && (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => {
+                handleCamera()
+              }}
+            >
+              <FontAwesomeIcon color={color.primary} icon={faCamera} size={22} />
+            </TouchableOpacity>
+          )}
+          {!isInputFocused && (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => {
+                handleImage()
+              }}
+            >
+              <FontAwesomeIcon color={color.primary} icon={faImage} size={22} />
+            </TouchableOpacity>
+          )}
+          <View style={{ flex: 1, paddingVertical: 10 }}>
+            <TextInput
+              style={styles.input}
+              value={messageText}
+              onChangeText={setMessageText}
+              placeholder={isInputFocused ? "Type a message..." : "Aa"}
+              placeholderTextColor={"grey"}
+              underlineColorAndroid="transparent"
+              onBlur={() => {
+                setInputFocused(false)
+              }}
+              onFocus={() => {
+                setInputFocused(true)
+              }}
+            />
+          </View>
+          <TouchableOpacity
+            style={{ marginLeft: 20 }}
+            onPress={() => {
+              handleSendMessage()
+            }}
+          >
+            <FontAwesomeIcon color={color.primary} icon={faPaperPlane} size={22} />
           </TouchableOpacity>
         </View>
-        <KeyboardAvoidingView behavior={"padding"}>
-          <View style={styles.containerView}>
-            <View>
-              <FlatList
-                data={conversation.messages}
-                renderItem={({ item }) => <Message mess={item} />}
-                keyExtractor={(message) => message._id}
-              />
-            </View>
-          </View>
-          <View style={styles.inputContainerView}>
-            <View>
-              <TouchableOpacity onPress={handleCamera}>
-                <FontAwesomeIcon icon={faCamera} style={styles.cameraInput} size={scaledSize(25)} />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity onPress={handleImage}>
-                <FontAwesomeIcon icon={faImage} style={styles.imageInput} size={scaledSize(25)} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.inputView}>
-              <View style={styles.inputContent}>
-                <TextInput style={styles.input} value={messageText} onChangeText={setMessageText} />
-              </View>
-            </View>
-            <View>
-              <TouchableOpacity onPress={handleSendMessage}>
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  style={styles.sendInput}
-                  size={scaledSize(25)}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </KeyboardAvoidingView>
       </Screen>
     )
   )
