@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native"
 import { Screen, Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
@@ -24,12 +25,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { scaledSize } from "../../theme/sizing"
 import ImagePicker from "react-native-image-crop-picker"
-import {
-  initiateSocket,
-  disconnectSocket,
-  subscribeToChat,
-  sendMessage,
-} from "../../services/socket/socket"
+import { sendMessage } from "../../services/socket/socket"
+import { cloudinaryUpload } from "../../services/api/cloudinaryAPI"
 
 const ROOT: ViewStyle = {
   flexDirection: "column",
@@ -250,17 +247,22 @@ export const ChatScreen = observer(function ChatScreen() {
     })
   }
 
-  function handleImage() {
-    ImagePicker.openPicker({
-      height: 1928,
-      width: 1080,
-      cropping: true,
-    }).then((image) => {
-      sendMessageImage(image.path)
-    })
-  }
+  async function handleImage() {
+    try {
+      const image = await ImagePicker.openPicker({
+        height: 1928,
+        width: 1080,
+        includeBase64: true,
+        mediaType: "photo",
+      })
 
-  // const Content = observer()
+      const file = `data:${image.mime};base64,${image.data}`
+      const uploadedImageUrl = await cloudinaryUpload(file)
+      sendMessageImage(uploadedImageUrl)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   function Content(prop) {
     const mess = prop.mess

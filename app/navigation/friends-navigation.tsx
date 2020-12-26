@@ -1,13 +1,13 @@
 import React from "react"
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
-import { ADD_FRIEND, FRIENDS, PROFILE_USER } from "../constants"
-import { AddFriendScreen, ListFriendScreen, ProfileUserScreen } from "../screens"
+import { ADD_FRIEND, FRIENDS, PROFILE_FRIEND } from "../constants"
+import { AddFriendScreen, ListFriendScreen, ProfileFriendScreen } from "../screens"
 
 export type PrimaryParamList = {
   [FRIENDS]: undefined
   [ADD_FRIEND]: undefined
-  [PROFILE_USER]: undefined
+  [PROFILE_FRIEND]: undefined
 }
 
 // Documentation: https://github.com/software-mansion/react-native-screens/tree/master/native-stack
@@ -24,7 +24,7 @@ export function FriendsNavigator() {
     >
       <Stack.Screen name={FRIENDS} component={ListFriendScreen} />
       <Stack.Screen name={ADD_FRIEND} component={AddFriendScreen} />
-      <Stack.Screen name={PROFILE_USER} component={ProfileUserScreen} />
+      <Stack.Screen name={PROFILE_FRIEND} component={ProfileFriendScreen} />
     </Stack.Navigator>
   )
 }

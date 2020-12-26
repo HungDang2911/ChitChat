@@ -5,8 +5,7 @@ export const defaults = {
   chatScreenParams: {
     conversationId: "",
   },
-  profileScreenParams: {
-    isCurrentUser: true,
+  profileFriendScreenParams: {
     user: null,
   },
 }
@@ -29,8 +28,7 @@ export const NavigationStoreModel = types
     chatScreenParams: types.model({
       conversationId: types.string,
     }),
-    profileScreenParams: types.model({
-      isCurrentUser: types.boolean,
+    profileFriendScreenParams: types.model({
       user: types.maybeNull(Friend),
     }),
   })
@@ -39,9 +37,8 @@ export const NavigationStoreModel = types
     setChatScreenParams: function (params) {
       self.chatScreenParams = { ...self.chatScreenParams, ...params }
     },
-    setProfileScreenParams: function (params) {
-      console.log(params)
-      self.profileScreenParams = { ...self.profileScreenParams, ...params }
+    setProfileFriendScreenParams: function (params) {
+      self.profileFriendScreenParams = { ...self.profileFriendScreenParams, ...params }
     },
   }))
 export const createNavigationStoreModel = () =>

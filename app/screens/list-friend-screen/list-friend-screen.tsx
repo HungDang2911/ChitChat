@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, View, Image, FlatList, TouchableOpacity } from "react-native"
 import { Screen, Text } from "../../components"
 import { useNavigation } from "@react-navigation/native"
-import { ADD_FRIEND, PROFILE_USER } from "../../constants"
+import { ADD_FRIEND, PROFILE_FRIEND } from "../../constants"
 import { useStores } from "../../models"
 import { styles } from "./styles"
 import { TextInput } from "react-native-gesture-handler"
@@ -86,8 +86,7 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
 
   const handleViewProfile = (user: any) => {
     const userObj = { ...user }
-    navigationStore.setProfileScreenParams({
-      isCurrentUser: false,
+    navigationStore.setProfileFriendScreenParams({
       user: {
         chatted: userObj.chatted,
         info: {
@@ -98,7 +97,7 @@ export const ListFriendScreen = observer(function ListFriendScreen() {
         },
       },
     })
-    navigation.navigate(PROFILE_USER)
+    navigation.navigate(PROFILE_FRIEND)
   }
 
   return (

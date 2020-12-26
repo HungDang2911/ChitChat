@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable camelcase */
+import { firebase } from "@react-native-firebase/messaging"
 import { Instance, types, flow, applySnapshot } from "mobx-state-tree"
 import { login, register } from "../services/api/authAPI"
 import { getOneUserByUsername } from "../services/api/usersAPI"
@@ -14,6 +15,7 @@ export const defaults = {
   email: "",
   accessToken: "",
   refreshToken: "",
+  fcmToken: "",
 }
 
 export const UserStoreModel = types
@@ -26,12 +28,14 @@ export const UserStoreModel = types
     email: types.string,
     accessToken: types.string,
     refreshToken: types.string,
+    fcmToken: types.string,
   })
   .extend(withEnvironment) // ** IMPORTANT! **
   .actions((self) => ({
-    login: flow(function* (account) {
+    login: flow(function * (account) {
       const { accessToken, refreshToken } = (yield login(account)).data
       const user = (yield getOneUserByUsername(account.username)).data
+      const fcmToken = yield firebase.messaging().getToken()
       self._id = user._id
       self.username = user.username
       self.avatar = user.avatar
@@ -39,8 +43,9 @@ export const UserStoreModel = types
       self.email = user.email
       self.accessToken = accessToken
       self.refreshToken = refreshToken
+      self.fcmToken = fcmToken
     }),
-    register: flow(function* (account) {
+    register: flow(function * (account) {
       yield register(account)
     }),
     signOut: function () {
