@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable camelcase */
 import { firebase } from "@react-native-firebase/messaging"
-import { Instance, types, flow, applySnapshot } from "mobx-state-tree"
+import { Instance, types, flow, applySnapshot, applyPatch } from "mobx-state-tree"
 import { login, register } from "../services/api/authAPI"
 import { getOneUserByUsername } from "../services/api/usersAPI"
 import { withEnvironment } from "./extensions/with-environment"
@@ -32,7 +32,7 @@ export const UserStoreModel = types
   })
   .extend(withEnvironment) // ** IMPORTANT! **
   .actions((self) => ({
-    login: flow(function * (account) {
+    login: flow(function* (account) {
       const { accessToken, refreshToken } = (yield login(account)).data
       const user = (yield getOneUserByUsername(account.username)).data
       const fcmToken = yield firebase.messaging().getToken()
@@ -47,6 +47,9 @@ export const UserStoreModel = types
     }),
     register: flow(function * (account) {
       yield register(account)
+    }),
+    editProfile: flow(function * (newUserProfile) {
+      self = { ...self, ...newUserProfile }
     }),
     signOut: function () {
       applySnapshot(self, defaults)

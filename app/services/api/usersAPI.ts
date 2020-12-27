@@ -7,3 +7,7 @@ export const searchUser = (username: string) => {
 export const getOneUserByUsername = (username: string) => {
   return Api.post(`/users/username`, { username })
 }
+
+export const editProfile = (user) => {
+  return Api.post(`/users/edit`, user)
+}
