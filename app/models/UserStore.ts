@@ -49,7 +49,9 @@ export const UserStoreModel = types
       yield register(account)
     }),
     editProfile: flow(function * (newUserProfile) {
-      self = { ...self, ...newUserProfile }
+      if (newUserProfile.avatar) self.avatar = newUserProfile.avatar
+      self.fullName = newUserProfile.fullName
+      self.email = newUserProfile.email
     }),
     signOut: function () {
       applySnapshot(self, defaults)

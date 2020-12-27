@@ -1,16 +1,11 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
 import { color } from "../../theme"
-import { View, ViewStyle, Image, TouchableOpacity, Alert, ScrollView } from "react-native"
+import { View, ViewStyle, Image, ScrollView } from "react-native"
 import { Screen, Text } from "../../components"
 import { useStores } from "../../models"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import {
-  faArrowLeft,
-  faSignOutAlt,
-  faPenSquare,
-  faGlobeAmericas,
-} from "@fortawesome/free-solid-svg-icons"
+import { faSignOutAlt, faPenSquare, faGlobeAmericas } from "@fortawesome/free-solid-svg-icons"
 import { useNavigation } from "@react-navigation/native"
 import { styles } from "./styles"
 import { ProfileItem } from "./components/profileItem"
@@ -22,7 +17,7 @@ const ROOT: ViewStyle = {
   alignItems: "center",
 }
 
-export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
+export const ProfileUserScreen = observer(function ProfileUserScreen() {
   const { userStore } = useStores()
   const navigation = useNavigation()
 
