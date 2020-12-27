@@ -5,7 +5,11 @@ import { View, ViewStyle, Image, ScrollView } from "react-native"
 import { Screen, Text } from "../../components"
 import { useStores } from "../../models"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import { faSignOutAlt, faPenSquare, faGlobeAmericas } from "@fortawesome/free-solid-svg-icons"
+import {
+  faSignOutAlt,
+  faPenSquare,
+  faGlobeAmericas,
+} from "@fortawesome/free-solid-svg-icons"
 import { useNavigation } from "@react-navigation/native"
 import { styles } from "./styles"
 import { ProfileItem } from "./components/profileItem"
@@ -17,8 +21,11 @@ const ROOT: ViewStyle = {
   alignItems: "center",
 }
 
-export const ProfileUserScreen = observer(function ProfileUserScreen() {
+export const ProfileUserScreen = observer(function ProfileUserScreen(props) {
+  // const { isMe } = props.route.params
+  // navigation.navigate("User", { user })
   const { userStore } = useStores()
+
   const navigation = useNavigation()
 
   const handleSignOut = () => {
